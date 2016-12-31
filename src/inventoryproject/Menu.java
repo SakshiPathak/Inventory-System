@@ -244,7 +244,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void mnubillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnubillActionPerformed
         // TODO add your handling code here:
-        Bill bill=new Bill();
+        Bill bill=new Bill(desktoppane);
         desktoppane.add(bill);
         bill.setVisible(true);
     }//GEN-LAST:event_mnubillActionPerformed

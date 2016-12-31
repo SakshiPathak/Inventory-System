@@ -66,7 +66,6 @@ public class Category extends javax.swing.JInternalFrame {
         txtcategoryname = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnsave = new javax.swing.JButton();
-        btnupdate = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
         btnrefresh = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -110,14 +109,6 @@ public class Category extends javax.swing.JInternalFrame {
             }
         });
 
-        btnupdate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnupdate.setText("Update");
-        btnupdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnupdateActionPerformed(evt);
-            }
-        });
-
         btndelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btndelete.setText("Delete");
         btndelete.addActionListener(new java.awt.event.ActionListener() {
@@ -139,13 +130,11 @@ public class Category extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(47, 47, 47)
                 .addComponent(btnsave, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnupdate)
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addComponent(btndelete)
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addComponent(btnrefresh)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -155,7 +144,6 @@ public class Category extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnsave)
-                    .addComponent(btnupdate)
                     .addComponent(btndelete)
                     .addComponent(btnrefresh))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -263,58 +251,6 @@ public class Category extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnsaveActionPerformed
 
-    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
-        // TODO add your handling code here:
-       String categoryid = (String) combocategoryid.getSelectedItem();
-        String name=txtcategoryname.getText();
-        
-        /*if(categoryid.isEmpty())
-            {
-                JOptionPane.showMessageDialog(this, "Category id field is empty...please fill it first");
-            }*/
-        if(name.isEmpty())
-            {
-            JOptionPane.showMessageDialog(this, "Name field is empty... please fill it first!!");
-            }
-            
-            /*else if(!(Pattern.matches("^[0-9]+", txtcategoryid.getText())))
-            {
-                JOptionPane.showMessageDialog(this, "Please enter valid category id");
-            }*/
-            
-        else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtcategoryname.getText())))
-        {
-            JOptionPane.showMessageDialog(this, "Please enter valid name");
-        }
-        
-        else
-        {
-            try
-            {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-                pst=con.prepareStatement("update category set Name=? where ID=?");
-                pst.setString(1, name);
-                pst.setString(2, categoryid);
-               
-                int i=pst.executeUpdate();
-                if(i>0)
-                {
-                    JOptionPane.showMessageDialog(this, "Updated Successfully");
-                    clear();
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "Not updated Successfully");
-                }
-                
-            }
-            catch(Exception e)
-            {
-                JOptionPane.showMessageDialog(this, e);
-            }
-        }
-    }//GEN-LAST:event_btnupdateActionPerformed
-
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         // TODO add your handling code here:
         //String categoryid=txtcategoryid.getText();
@@ -383,7 +319,6 @@ public class Category extends javax.swing.JInternalFrame {
     private javax.swing.JButton btndelete;
     private javax.swing.JButton btnrefresh;
     private javax.swing.JButton btnsave;
-    private javax.swing.JButton btnupdate;
     private javax.swing.JComboBox combocategoryid;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;

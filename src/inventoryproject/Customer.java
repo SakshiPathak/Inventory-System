@@ -124,6 +124,7 @@ public class Customer extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Customer Detail");
+        setName("customer"); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Customer Basic Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 51, 0))); // NOI18N
 
@@ -540,7 +541,7 @@ public class Customer extends javax.swing.JInternalFrame {
         } else {
             try {
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-                pst = con.prepareStatement("update customer set Last_Name=?,Gender=?,Email=?,Address=?,City=?,Pincode=?,State=?,Phone=?,Customer_Type=? where First_Name=(select * from (select First_Name from customer where ID=?))");
+                pst = con.prepareStatement("update customer set Last_Name=?,Gender=?,Email=?,Address=?,City=?,Pincode=?,State=?,Phone=?,Customer_Type=? where ID=?");
 
                 pst.setString(1, lastname);
                 pst.setString(2, Gender);
@@ -551,7 +552,8 @@ public class Customer extends javax.swing.JInternalFrame {
                 pst.setString(7, state);
                 pst.setString(8, phoneno);
                 pst.setString(9, customertype);
-                pst.setString(10, firstname);
+                //pst.setString(10, firstname);
+                pst.setInt(10, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
                 int i = pst.executeUpdate();
                 if (i > 0) {
                     JOptionPane.showMessageDialog(this, "Updated Successfully");
@@ -568,7 +570,7 @@ public class Customer extends javax.swing.JInternalFrame {
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         // TODO add your handling code here:
-        String phoneno = txtphoneno.getText();
+      // String firstname = txtfirstname.getText();
         /*if(customerid.isEmpty())
          {
          JOptionPane.showMessageDialog(this, "Customer ID field is empty...please fill it first");
@@ -582,8 +584,8 @@ public class Customer extends javax.swing.JInternalFrame {
         try {
 
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-            pst = con.prepareStatement("DELETE FROM customer WHERE Phone=?");
-            pst.setString(1, phoneno);
+            pst = con.prepareStatement("DELETE FROM customer WHERE ID=?");
+            pst.setInt(1, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
             int i = pst.executeUpdate();
             if (i > 0) {
                 JOptionPane.showMessageDialog(this, "data deleted successfully");

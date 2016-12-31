@@ -39,12 +39,11 @@ public class Role extends javax.swing.JInternalFrame {
         populateRoleIdCombo();
     }
     public void clear() {
-
-         comborolename.setSelectedIndex(0);
-        txtname.setText("");
-        combopermission.setSelectedIndex(0);
         
-    }
+         txtname.setText("");
+         combopermission.setSelectedIndex(0);
+         comborolename.setSelectedIndex(0);
+         }
     
     private void populateRoleIdCombo() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -326,7 +325,7 @@ public class Role extends javax.swing.JInternalFrame {
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
         // TODO add your handling code here:
-         String rolename = (String) comborolename.getSelectedItem();
+        // String rolename = (String) comborolename.getSelectedItem();
         String name=txtname.getText();
         String permission=combopermission.getSelectedItem().toString();
         /*if(roleid.isEmpty())
@@ -355,10 +354,12 @@ public class Role extends javax.swing.JInternalFrame {
             try
             {
                 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-                pst=con.prepareStatement("update role set Permission=? where Name=?");
+                pst=con.prepareStatement("update role set Name=?,Permission=? where ID=?");
                 
-                pst.setString(1, permission);
-                pst.setString(2, name);
+                pst.setString(1, name);
+                pst.setString(2, permission);
+                
+                pst.setInt(3, Integer.parseInt(roleList.get(comborolename.getSelectedIndex()-1).getId()));
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
@@ -381,7 +382,7 @@ public class Role extends javax.swing.JInternalFrame {
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         // TODO add your handling code here:
-        String name=txtname.getText();
+       // String name=txtname.getText();
         //String permission=combopermission.getSelectedItem().toString();
         /*if(roleid.isEmpty())
         {
@@ -397,8 +398,8 @@ public class Role extends javax.swing.JInternalFrame {
         {
             
             con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-            pst=con.prepareStatement("delete from role where Name=(select Name from role where ID=?)");
-            pst.setString(1, name);
+            pst=con.prepareStatement("delete from role where ID=?");
+            pst.setInt(1, Integer.parseInt(roleList.get(comborolename.getSelectedIndex()-1).getId()));
             int i=pst.executeUpdate();
             if(i>0)
             {

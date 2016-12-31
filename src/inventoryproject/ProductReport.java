@@ -36,11 +36,13 @@ public class ProductReport extends javax.swing.JInternalFrame {
             Class.forName("com.mysql.jdbc.Driver");
             con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
             Statement st=con.createStatement();
-            rs=st.executeQuery("select Name,Units,Quantity,Cost_Price,Sale_Price,Status,Re_Order_Level from product where ID IN(select C.Name,S.Name from Product P,Category C,Supplier S where P.Category_ID=C.ID AND P.Supplier_ID=S.ID)");
+            rs=st.executeQuery("select P.Name, Units, Quantity, Cost_Price, Sale_Price, Status, Re_Order_Level, C.Name, S.Name from Product P, Category C, Supplier S where P.Category_ID=C.ID and P.Supplier_ID=S.ID");
+            
+            //
             ProductClass product;
             while(rs.next())
             {
-            product=new ProductClass(rs.getString("Name"), rs.getString("Units"), rs.getString("Quantity"), rs.getString("Cost_Price"), rs.getString("Sale_Price"), rs.getString("Status"), rs.getString("Re_Order_Level"), rs.getString("Name"), rs.getString("Name"));
+            product=new ProductClass(rs.getString("Name"), rs.getString("Units"), rs.getString("Quantity"), rs.getString("Cost_Price"), rs.getString("Sale_Price"), rs.getString("Status"), rs.getString("Re_Order_Level"), rs.getString("C.Name"), rs.getString("S.Name"));
             productList.add(product);
             }
         }

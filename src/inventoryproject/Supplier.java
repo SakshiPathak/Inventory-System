@@ -45,7 +45,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         txtpincode.setText("");
         txtstate.setText("");
         txtphoneno.setText("");
-        combosuppliername.setSelectedIndex(1);
+        combosuppliername.setSelectedIndex(0);
     }
     
     private void populateSupplierNameCombo() {
@@ -511,14 +511,14 @@ public class Supplier extends javax.swing.JInternalFrame {
             try
             {
                 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-                pst=con.prepareStatement("update supplier set Address=?,City=?,Pincode=?,State=?,Phone=? where Name=?");
+                pst=con.prepareStatement("update supplier set Address=?,City=?,Pincode=?,State=?,Phone=? where ID=?");
              
                 pst.setString(1, address);
                 pst.setString(2, city);
                 pst.setString(3, pincode);
                 pst.setString(4, state);
                 pst.setString(5, phoneno);
-                pst.setString(6, name);
+                 pst.setInt(6, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
@@ -540,7 +540,7 @@ public class Supplier extends javax.swing.JInternalFrame {
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         // TODO add your handling code here:
-        String phoneno=txtphoneno.getText();
+        //String phoneno=txtphoneno.getText();
         /*if(supplierid.isEmpty())
         {
             JOptionPane.showMessageDialog(this, "Supplier ID field is empty...please fill it first");
@@ -555,8 +555,8 @@ public class Supplier extends javax.swing.JInternalFrame {
         {
             
             con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-            pst=con.prepareStatement("delete from supplier where Phone=?");
-            pst.setString(1, phoneno);
+            pst=con.prepareStatement("delete from supplier where ID=?");
+            pst.setInt(1, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
             int i=pst.executeUpdate();
             if(i>0)
             {
