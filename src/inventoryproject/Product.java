@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 package inventoryproject;
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -47,12 +46,12 @@ public class Product extends javax.swing.JInternalFrame {
     
      private void populateCategoryNameCombo() {
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT Name FROM category ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from category order by name");
         
         ResultSet rs = pstmt.executeQuery();
         while (rs.next())
-            combocategory.addItem(rs.getString("Name"));
+            combocategory.addItem(rs.getString("name"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,12 +60,12 @@ public class Product extends javax.swing.JInternalFrame {
     
      private void populateSupplierNameCombo() {
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT Name FROM supplier ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from supplier order by name");
         
         ResultSet rs = pstmt.executeQuery();
         while (rs.next())
-            combosupplier.addItem(rs.getString("Name"));
+            combosupplier.addItem(rs.getString("name"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -363,21 +362,21 @@ public class Product extends javax.swing.JInternalFrame {
         {
             try
             {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+                con=DBConnection.getConnection();
              
-                pst = con.prepareStatement("SELECT ID FROM Category WHERE Name = ?");
+                pst = con.prepareStatement("select id from category where name = ?");
                 pst.setString(1, combocategory.getSelectedItem().toString());
                 ResultSet rs = pst.executeQuery();
                 rs.next();
-                int categoryID = rs.getInt("ID");
+                int categoryID = rs.getInt("id");
                 
-                pst = con.prepareStatement("SELECT ID FROM Supplier WHERE Name = ?");
+                pst = con.prepareStatement("select id from supplier where name = ?");
                 pst.setString(1, combosupplier.getSelectedItem().toString());
                 rs = pst.executeQuery();
                 rs.next();
-                int supplierID = rs.getInt("ID");
+                int supplierID = rs.getInt("id");
                 
-                pst=con.prepareStatement("INSERT INTO product (Name,Units,Quantity,Cost_Price,Sale_Price,Status,Re_Order_Level,Category_ID,Supplier_ID)values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                pst=con.prepareStatement("insert into product (name,units,quantity,cost_price,sale_price,status,re_order_level,category_id,supplier_id)values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 pst.setString(1, productname);
                 pst.setString(2, units);
                 pst.setString(3, quantity);

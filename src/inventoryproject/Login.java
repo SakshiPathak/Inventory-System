@@ -169,7 +169,7 @@ public class Login extends javax.swing.JFrame {
             con=DBConnection.getConnection();
             pst=con.prepareStatement("select username,password, role_id from user where username=? and password=?");
             pst.setString(1, username);
-            pst.setString(2, password   );
+            pst.setString(2, password);
             rs=pst.executeQuery();
             if(rs.next())
             {

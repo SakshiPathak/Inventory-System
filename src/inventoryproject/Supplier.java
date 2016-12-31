@@ -5,6 +5,7 @@
  */
 package inventoryproject;
 
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -51,8 +52,8 @@ public class Supplier extends javax.swing.JInternalFrame {
     private void populateSupplierNameCombo() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM supplier ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select * from supplier order by name");
         
         ResultSet rs = pstmt.executeQuery();
         int index = 1;
@@ -61,18 +62,18 @@ public class Supplier extends javax.swing.JInternalFrame {
             
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
-                Supplier.Item item = new Supplier.Item(index++, rs.getString("Name"));
+                Supplier.Item item = new Supplier.Item(index++, rs.getString("name"));
                 model.addElement(item);
                 
                 supplierList.add(
                         new SupplierClass(
-                               String.valueOf(rs.getInt("ID")), 
-                                rs.getString("Name"),
-                                rs.getString("Address"),
-                                rs.getString("City"),
-                                String.valueOf(rs.getInt("Pincode")),
-                                rs.getString("State"),
-                                rs.getString("Phone")
+                               String.valueOf(rs.getInt("id")), 
+                                rs.getString("name"),
+                                rs.getString("address"),
+                                rs.getString("city"),
+                                String.valueOf(rs.getInt("pincode")),
+                                rs.getString("state"),
+                                rs.getString("phone")
                             
                         ));
             }
@@ -390,9 +391,9 @@ public class Supplier extends javax.swing.JInternalFrame {
               boolean unique = true;
              try
              {
-                 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+                 con=DBConnection.getConnection();
             Statement st=con.createStatement();
-            rs=st.executeQuery("select Address,Phone from supplier");
+            rs=st.executeQuery("select address,phone from supplier");
             
             
             int c=0;
@@ -400,8 +401,8 @@ public class Supplier extends javax.swing.JInternalFrame {
             {
             c++;
             
-           String add=rs.getString("Address");
-            String phno=rs.getString("Phone");
+           String add=rs.getString("address");
+            String phno=rs.getString("phone");
             
             if (address.equals(add))
       {
@@ -418,7 +419,7 @@ public class Supplier extends javax.swing.JInternalFrame {
          
             if(unique)
             {
-            pst=con.prepareStatement("insert into supplier(Name,Address,City,Pincode,State,Phone) values(?,?,?,?,?,?)");
+            pst=con.prepareStatement("insert into supplier(name,address,city,pincode,state,phone) values(?,?,?,?,?,?)");
             pst.setString(1, name);
             pst.setString(2, address);
             pst.setString(3, city);
@@ -510,8 +511,8 @@ public class Supplier extends javax.swing.JInternalFrame {
         {
             try
             {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-                pst=con.prepareStatement("update supplier set Address=?,City=?,Pincode=?,State=?,Phone=? where ID=?");
+                con=DBConnection.getConnection();
+                pst=con.prepareStatement("update supplier set address=?,city=?,pincode=?,state=?,phone=? where id=?");
              
                 pst.setString(1, address);
                 pst.setString(2, city);
@@ -554,8 +555,8 @@ public class Supplier extends javax.swing.JInternalFrame {
         try
         {
             
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-            pst=con.prepareStatement("delete from supplier where ID=?");
+            con=DBConnection.getConnection();
+            pst=con.prepareStatement("delete from supplier where id=?");
             pst.setInt(1, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
             int i=pst.executeUpdate();
             if(i>0)
@@ -589,20 +590,20 @@ public class Supplier extends javax.swing.JInternalFrame {
             if (supplierList == null)
                 return;
         
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        pst = con.prepareStatement("SELECT * FROM supplier WHERE ID = ?");
+        con = DBConnection.getConnection();
+        pst = con.prepareStatement("select * from supplier where id = ?");
         //pst.setString(1, selectedName);
         pst.setInt(1, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
         ResultSet rs = pst.executeQuery();
         rs.next();
         
         
-        txtsuppliername.setText(rs.getString("Name"));
-        txtaddress.setText(rs.getString("Address"));
-        txtcity.setText(rs.getString("City"));
-        txtpincode.setText(rs.getString("Pincode"));
-        txtstate.setText(rs.getString("State"));
-        txtphoneno.setText(rs.getString("Phone"));
+        txtsuppliername.setText(rs.getString("name"));
+        txtaddress.setText(rs.getString("address"));
+        txtcity.setText(rs.getString("city"));
+        txtpincode.setText(rs.getString("pincode"));
+        txtstate.setText(rs.getString("state"));
+        txtphoneno.setText(rs.getString("phone"));
        
         
     } catch (SQLException ex) {

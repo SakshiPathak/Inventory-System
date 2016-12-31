@@ -5,6 +5,7 @@
  */
 package inventoryproject;
 
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -45,12 +46,12 @@ public class Register extends javax.swing.JInternalFrame {
     
     private void populateRoleNameCombo() {
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT Name FROM role ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from role order by name");
         
         ResultSet rs = pstmt.executeQuery();
         while (rs.next())
-            comborolename.addItem(rs.getString("Name"));
+            comborolename.addItem(rs.getString("name"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -214,7 +215,7 @@ public class Register extends javax.swing.JInternalFrame {
         boolean unique = true;
              try
              {
-                 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+                 con=DBConnection.getConnection();
             Statement st=con.createStatement();
             rs=st.executeQuery("select Password from user");
             
@@ -223,7 +224,7 @@ public class Register extends javax.swing.JInternalFrame {
             while(rs.next())
             {
             c++;
-            String pass=rs.getString("Password");
+            String pass=rs.getString("password");
             
             if (password.equals(pass))
             {
@@ -236,12 +237,12 @@ public class Register extends javax.swing.JInternalFrame {
             if(unique)
             {
                 
-            pst = con.prepareStatement("SELECT ID FROM role WHERE Name = ?");
+            pst = con.prepareStatement("select id from role where name = ?");
             pst.setString(1, comborolename.getSelectedItem().toString());
             ResultSet rs = pst.executeQuery();
             rs.next();
-            int roleID = rs.getInt("ID");
-            pst=con.prepareStatement("insert into user(Username,Password,Role_ID) values(?,?,?)");
+            int roleID = rs.getInt("id");
+            pst=con.prepareStatement("insert into user(username,password,role_id) values(?,?,?)");
             pst.setString(1, username);
             pst.setString(2, password);
             pst.setInt(3, roleID);

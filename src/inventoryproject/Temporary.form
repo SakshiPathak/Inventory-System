@@ -326,13 +326,15 @@
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboproductname8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtqty8" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtprice8" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtdiscount8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txttotal8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboproductname8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtqty8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtdiscount8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txttotal8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">

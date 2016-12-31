@@ -6,6 +6,7 @@
 package inventoryproject;
 
 
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -48,8 +49,8 @@ public class Role extends javax.swing.JInternalFrame {
     private void populateRoleIdCombo() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM role ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select * from role order by name");
         
         ResultSet rs = pstmt.executeQuery();
         int index = 1;
@@ -58,14 +59,14 @@ public class Role extends javax.swing.JInternalFrame {
             
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
-                Role.Item item = new Role.Item(index++, rs.getString("Name"));
+                Role.Item item = new Role.Item(index++, rs.getString("name"));
                 model.addElement(item);
                 
                 roleList.add(
                         new RoleClass(
-                               String.valueOf(rs.getInt("ID")), 
-                                rs.getString("Name"),
-                                rs.getString("Permission")
+                               String.valueOf(rs.getInt("id")), 
+                                rs.getString("name"),
+                                rs.getString("permission")
                                 
                             
                         ));
@@ -299,8 +300,8 @@ public class Role extends javax.swing.JInternalFrame {
         {
             try
             {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-                pst=con.prepareStatement("insert into role(Name,Permission) values(?,?)");
+                con=DBConnection.getConnection();
+                pst=con.prepareStatement("insert into role(name,permission) values(?,?)");
                 pst.setString(1, name);
                 pst.setString(2, permission);
                 int i=pst.executeUpdate();
@@ -353,8 +354,8 @@ public class Role extends javax.swing.JInternalFrame {
         {
             try
             {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-                pst=con.prepareStatement("update role set Name=?,Permission=? where ID=?");
+                con=DBConnection.getConnection();
+                pst=con.prepareStatement("update role set name=?,permission=? where id=?");
                 
                 pst.setString(1, name);
                 pst.setString(2, permission);
@@ -397,8 +398,8 @@ public class Role extends javax.swing.JInternalFrame {
         try
         {
             
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-            pst=con.prepareStatement("delete from role where ID=?");
+            con=DBConnection.getConnection();
+            pst=con.prepareStatement("delete from role where id=?");
             pst.setInt(1, Integer.parseInt(roleList.get(comborolename.getSelectedIndex()-1).getId()));
             int i=pst.executeUpdate();
             if(i>0)
@@ -435,16 +436,16 @@ public class Role extends javax.swing.JInternalFrame {
              if (roleList == null)
                 return;
         
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        pst = con.prepareStatement("SELECT * FROM role WHERE ID=?");
+        con = DBConnection.getConnection();
+        pst = con.prepareStatement("select * from role where id=?");
         //pst.setString(1, selectedName);
         pst.setInt(1, Integer.parseInt(roleList.get(comborolename.getSelectedIndex()-1).getId()));
         
         ResultSet rs = pst.executeQuery();
         rs.next();
         
-        txtname.setText(rs.getString("Name"));
-        combopermission.setSelectedItem(rs.getString("Permission"));
+        txtname.setText(rs.getString("name"));
+        combopermission.setSelectedItem(rs.getString("permission"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
