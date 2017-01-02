@@ -5,6 +5,7 @@
  */
 package inventoryproject;
 
+import com.inventorysystem.helpers.DBConnection;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.plaf.DesktopPaneUI;
 
@@ -33,6 +35,7 @@ public class Bill extends javax.swing.JInternalFrame {
     PreparedStatement pst;
     List<CustomerClass> billList;
     List<ProductBillClass> productList;
+    
     
     //DateFormat format = new SimpleDateFormat("DD/MM/YYYY");
     //JFormattedTextField txtdate = new JFormattedTextField(format);
@@ -57,17 +60,31 @@ public class Bill extends javax.swing.JInternalFrame {
     public Bill(JDesktopPane desktopPane) {
         this.desktopPane = desktopPane;
         initComponents();
+        
         billList = new ArrayList<>();
         productList = new ArrayList<>();
+        
         populateCustomerNameCombo();
-        populateProductNameCombo();
+        populateProductNameCombo1();
+        populateProductNameCombo2();
+        populateProductNameCombo3();
+        populateProductNameCombo4();
+        populateProductNameCombo5();
+        populateProductNameCombo6();
+        populateProductNameCombo7();
+        populateProductNameCombo8();
+        populateProductNameCombo9();
+        populateProductNameCombo10();
         
         Date date=new Date();
-        SimpleDateFormat formatdate = new SimpleDateFormat("dd/MM/YYYY");
+        SimpleDateFormat formatdate = new SimpleDateFormat("YYYY-MM-dd");
                     String newdate = formatdate.format(date);
                     txtdate.setText(newdate);
                     //System.out.println(newdate);
     }
+    
+    
+    
     
     private void populateCustomerNameCombo() {
     DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -109,8 +126,173 @@ public class Bill extends javax.swing.JInternalFrame {
     }
     
     
-    private void populateProductNameCombo() {
-    DefaultComboBoxModel model = new DefaultComboBoxModel();
+    private void populateProductNameCombo1() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname1.addItem("");
+        while (rs.next())
+            comboproductname1.addItem(rs.getString("name"));
+        
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+     private void populateProductNameCombo2() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname2.addItem("");
+        while (rs.next())
+            comboproductname2.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+      private void populateProductNameCombo3() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname3.addItem("");
+        while (rs.next())
+            comboproductname3.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+       private void populateProductNameCombo4() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname4.addItem("");
+        while (rs.next())
+            comboproductname4.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+        private void populateProductNameCombo5() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname5.addItem("");
+        while (rs.next())
+            comboproductname5.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+         private void populateProductNameCombo6() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname6.addItem("");
+        while (rs.next())
+            comboproductname6.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+          private void populateProductNameCombo7() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname7.addItem("");
+        while (rs.next())
+            comboproductname7.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+           private void populateProductNameCombo8() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname8.addItem("");
+        while (rs.next())
+            comboproductname8.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+            private void populateProductNameCombo9() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname9.addItem("");
+        while (rs.next())
+            comboproductname9.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+             private void populateProductNameCombo10() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname10.addItem("");
+        while (rs.next())
+            comboproductname10.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+    
+    
+    
+    /*try {
+            if (productList == null)
+                return;
+            
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
+            pst = con.prepareStatement("SELECT * FROM product WHERE ID = ?");
+            //System.out.println(Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()).getId()));
+            
+            //System.out.println(billList.size());
+            
+            pst.setInt(1, Integer.parseInt(productList.get(combocustomername.getSelectedIndex()-1).getId()));
+
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+
+           
+            txtaddress.setText(rs.getString("Address"));
+           
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    /*DefaultComboBoxModel model = new DefaultComboBoxModel();
         
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
@@ -155,7 +337,7 @@ public class Bill extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
     
     class Item {
         private int index;
@@ -182,6 +364,7 @@ public class Bill extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -375,6 +558,11 @@ public class Bill extends javax.swing.JInternalFrame {
 
         btngeneratebill.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btngeneratebill.setText("Generate Bill");
+        btngeneratebill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngeneratebillActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Quantity");
@@ -385,9 +573,11 @@ public class Bill extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("Grand Total");
 
+        buttonGroup1.add(radiocash);
         radiocash.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         radiocash.setText("Cash");
 
+        buttonGroup1.add(radiocredit);
         radiocredit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         radiocredit.setText("Credit");
 
@@ -533,6 +723,74 @@ public class Bill extends javax.swing.JInternalFrame {
         txtqty10.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtqty10FocusLost(evt);
+            }
+        });
+
+        txtdiscount1.setText("0.0");
+        txtdiscount1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount1KeyReleased(evt);
+            }
+        });
+
+        txtdiscount2.setText("0.0");
+        txtdiscount2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount2KeyReleased(evt);
+            }
+        });
+
+        txtdiscount3.setText("0.0");
+        txtdiscount3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount3KeyReleased(evt);
+            }
+        });
+
+        txtdiscount4.setText("0.0");
+        txtdiscount4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount4KeyReleased(evt);
+            }
+        });
+
+        txtdiscount5.setText("0.0");
+        txtdiscount5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount5KeyReleased(evt);
+            }
+        });
+
+        txtdiscount6.setText("0.0");
+        txtdiscount6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount6KeyReleased(evt);
+            }
+        });
+
+        txtdiscount7.setText("0.0");
+        txtdiscount7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtdiscount7ActionPerformed(evt);
+            }
+        });
+        txtdiscount7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount7KeyReleased(evt);
+            }
+        });
+
+        txtdiscount8.setText("0.0");
+        txtdiscount8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount8KeyReleased(evt);
+            }
+        });
+
+        txtdiscount9.setText("0.0");
+        txtdiscount9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdiscount9KeyReleased(evt);
             }
         });
 
@@ -866,14 +1124,61 @@ public class Bill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_combocustomernameItemStateChanged
 
     private void getProductDetails(JComboBox cmb, JTextField txt1, JTextField txt2) {
-        if (productList == null)
+       //if (productList == null)
+         //   return;
+        //txt1.setText(productList.get(cmb.getSelectedIndex()-1).getQuantity());
+        //txt2.setText(productList.get(cmb.getSelectedIndex()-1).getSaleprice());
+        //txt1.setText(productList.get(cmb.getSelectedIndex()-1).getQuantity());
+        //txt2.setText(productList.get(cmb.getSelectedIndex()-1).getSaleprice());
+        //txt1.setText(cmb.getSelectedItem().toString());
+        //txt2.setText(cmb.getSelectedItem().toString());
+        try {
+        
+        String selectedName = (String) cmb.getSelectedItem();
+        
+        if(selectedName.equals("") || selectedName == null)
             return;
-
-        txt1.setText(productList.get(cmb.getSelectedIndex()-1).getQuantity());
-        txt2.setText(productList.get(cmb.getSelectedIndex()-1).getSaleprice());
+        
+        con = DBConnection.getConnection();
+        pst = con.prepareStatement("select * from product where id in (select id from product where name = ?)");
+        pst.setString(1, selectedName);
+        
+        ResultSet rs = pst.executeQuery();
+        rs.next();
+        
+        txt1.setText(rs.getString("Quantity"));
+        txt2.setText(rs.getString("Sale_Price"));
+        
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
     /* Create and display the form */
+    private void getTextValues(JTextField txt1, JTextField txt2, JTextField txt3, JTextField txt4, JTextField txt5, JTextField txt6, JTextField txt7,JTextField txt8)
+    {
+        //float tax = 0.143f;
+        int qty = Integer.parseInt(txt1.getText());
+        float discount = Float.parseFloat(txt2.getText());
+        float price = Float.parseFloat(txt3.getText());
         
+        float disc = price-discount;
+        float amount = (qty * disc);
+        float tax = (amount * 0.143f);
+        float bill = amount + tax;
+        
+        //float tax = Float.parseFloat((amount*0.143));
+        txt4.setText(String.valueOf(amount));
+        txt5.setText(String.valueOf(amount));
+        txt6.setText(String.valueOf(tax));
+         txt7.setText(String.valueOf(bill));
+         txt8.setText(String.valueOf(bill));
+        
+        //txt6.setText(String.valueOf(tax));
+       
+        
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -889,6 +1194,7 @@ public class Bill extends javax.swing.JInternalFrame {
 
     private void comboproductname1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboproductname1ItemStateChanged
         getProductDetails(comboproductname1, txtqty1, txtprice1);
+       
     }//GEN-LAST:event_comboproductname1ItemStateChanged
 
     private void comboproductname2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboproductname2ItemStateChanged
@@ -928,101 +1234,155 @@ public class Bill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboproductname10ItemStateChanged
 
     private void txtqty1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty1FocusLost
-        int qty = Integer.parseInt(txtqty1.getText());
-        float discount = Float.parseFloat(txtdiscount1.getText());
-        float price = Float.parseFloat(txtprice1.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal1.setText(String.valueOf(amount));
-        txtgrandtotal.setText(String.valueOf(amount));
+        getTextValues(txtqty1, txtdiscount1, txtprice1, txttotal1, txtgrandtotal, txttax, txtbill, txtcredit);
+       
     }//GEN-LAST:event_txtqty1FocusLost
 
     private void txtqty2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty2FocusLost
-       int qty = Integer.parseInt(txtqty2.getText());
-        float discount = Float.parseFloat(txtdiscount2.getText());
-        float price = Float.parseFloat(txtprice2.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal2.setText(String.valueOf(amount));
+      getTextValues(txtqty2, txtdiscount2, txtprice2, txttotal2, txtgrandtotal, txttax, txtbill, txtcredit);
         float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float amt=t1+t2;
        txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+        float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
+       
     }//GEN-LAST:event_txtqty2FocusLost
 
     private void txtqty3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty3FocusLost
-        int qty = Integer.parseInt(txtqty3.getText());
-        float discount = Float.parseFloat(txtdiscount3.getText());
-        float price = Float.parseFloat(txtprice3.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal3.setText(String.valueOf(amount));
+       getTextValues(txtqty3, txtdiscount3, txtprice3, txttotal3, txtgrandtotal, txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal3.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float amt=t1+t2+t3;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty3FocusLost
 
     private void txtqty4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty4FocusLost
-        int qty = Integer.parseInt(txtqty4.getText());
-        float discount = Float.parseFloat(txtdiscount4.getText());
-        float price = Float.parseFloat(txtprice4.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal4.setText(String.valueOf(amount));
+        getTextValues(txtqty4, txtdiscount4, txtprice4, txttotal4, txtgrandtotal, txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal1.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float t4 = Float.parseFloat(txttotal4.getText());
+       float amt=t1+t2+t3+t4;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty4FocusLost
 
     private void txtqty5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty5FocusLost
-        int qty = Integer.parseInt(txtqty5.getText());
-        float discount = Float.parseFloat(txtdiscount5.getText());
-        float price = Float.parseFloat(txtprice5.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal5.setText(String.valueOf(amount));
+       getTextValues(txtqty5, txtdiscount5, txtprice5, txttotal5, txtgrandtotal,txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal1.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float t4 = Float.parseFloat(txttotal4.getText());
+       float t5 = Float.parseFloat(txttotal5.getText());
+       float amt=t1+t2+t3+t4+t5;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty5FocusLost
 
     private void txtqty6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty6FocusLost
-        int qty = Integer.parseInt(txtqty6.getText());
-        float discount = Float.parseFloat(txtdiscount6.getText());
-        float price = Float.parseFloat(txtprice6.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal6.setText(String.valueOf(amount));
+        getTextValues(txtqty6, txtdiscount6, txtprice6, txttotal6, txtgrandtotal, txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal1.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float t4 = Float.parseFloat(txttotal4.getText());
+       float t5 = Float.parseFloat(txttotal5.getText());
+       float t6 = Float.parseFloat(txttotal6.getText());
+       float amt=t1+t2+t3+t4+t5+t6;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty6FocusLost
 
     private void txtqty7FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty7FocusLost
-        int qty = Integer.parseInt(txtqty7.getText());
-        float discount = Float.parseFloat(txtdiscount7.getText());
-        float price = Float.parseFloat(txtprice7.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal7.setText(String.valueOf(amount));
+        getTextValues(txtqty7, txtdiscount7, txtprice7, txttotal7, txtgrandtotal, txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal1.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float t4 = Float.parseFloat(txttotal4.getText());
+       float t5 = Float.parseFloat(txttotal5.getText());
+       float t6 = Float.parseFloat(txttotal6.getText());
+       float t7 = Float.parseFloat(txttotal7.getText());
+       float amt=t1+t2+t3+t4+t5+t6+t7;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty7FocusLost
 
     private void txtqty8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty8FocusLost
-        int qty = Integer.parseInt(txtqty8.getText());
-        float discount = Float.parseFloat(txtdiscount8.getText());
-        float price = Float.parseFloat(txtprice8.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal8.setText(String.valueOf(amount));
+        getTextValues(txtqty8, txtdiscount8, txtprice8, txttotal8, txtgrandtotal, txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal1.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float t4 = Float.parseFloat(txttotal4.getText());
+       float t5 = Float.parseFloat(txttotal5.getText());
+       float t6 = Float.parseFloat(txttotal6.getText());
+       float t7 = Float.parseFloat(txttotal7.getText());
+       float t8 = Float.parseFloat(txttotal8.getText());
+       float amt=t1+t2+t3+t4+t5+t6+t7+t8;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty8FocusLost
 
     private void txtqty9FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty9FocusLost
-        int qty = Integer.parseInt(txtqty9.getText());
-        float discount = Float.parseFloat(txtdiscount9.getText());
-        float price = Float.parseFloat(txtprice9.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal9.setText(String.valueOf(amount));
+        getTextValues(txtqty9, txtdiscount9, txtprice9, txttotal9, txtgrandtotal,txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal1.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float t4 = Float.parseFloat(txttotal4.getText());
+       float t5 = Float.parseFloat(txttotal5.getText());
+       float t6 = Float.parseFloat(txttotal6.getText());
+       float t7 = Float.parseFloat(txttotal7.getText());
+       float t8 = Float.parseFloat(txttotal8.getText());
+       float t9 = Float.parseFloat(txttotal9.getText());
+       float amt=t1+t2+t3+t4+t5+t6+t7+t8+t9;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty9FocusLost
 
     private void txtqty10FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty10FocusLost
       
 //       txtdiscount10.setText(String.valueOf(dis));
-        int qty = Integer.parseInt(txtqty10.getText());
-      
-        float discount = Float.parseFloat(txtdiscount10.getText());
-        float price = Float.parseFloat(txtprice10.getText());
-        float disc = qty-discount;
-        float amount = (price * disc);
-        txttotal10.setText(String.valueOf(amount));
+        getTextValues(txtqty10, txtdiscount10, txtprice10, txttotal10, txtgrandtotal,txttax, txtbill, txtcredit);
+       float t1 = Float.parseFloat(txttotal1.getText());
+       float t2 = Float.parseFloat(txttotal2.getText());
+       float t3 = Float.parseFloat(txttotal3.getText());
+       float t4 = Float.parseFloat(txttotal4.getText());
+       float t5 = Float.parseFloat(txttotal5.getText());
+       float t6 = Float.parseFloat(txttotal6.getText());
+       float t7 = Float.parseFloat(txttotal7.getText());
+       float t8 = Float.parseFloat(txttotal8.getText());
+       float t9 = Float.parseFloat(txttotal9.getText());
+       float t10 = Float.parseFloat(txttotal10.getText());
+       float amt=t1+t2+t3+t4+t5+t6+t7+t8+t9+t10;
+       txtgrandtotal.setText(String.valueOf(amt));
+       float tax = (amt * 0.143f);
+       txttax.setText(String.valueOf(tax));
+       float bill = amt + tax;
+        txtbill.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty10FocusLost
 
     private void txtgrandtotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtgrandtotalFocusLost
@@ -1030,35 +1390,331 @@ public class Bill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtgrandtotalFocusLost
 
     private void txtgrandtotalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtgrandtotalFocusGained
-        float t1 = Float.parseFloat(txttotal1.getText());
-       float t2 = Float.parseFloat(txttotal2.getText()); 
-       float t3 = Float.parseFloat(txttotal3.getText()); 
-       float t4 = Float.parseFloat(txttotal4.getText()); 
-       float t5 = Float.parseFloat(txttotal5.getText()); 
-       float t6 = Float.parseFloat(txttotal6.getText()); 
-       float t7 = Float.parseFloat(txttotal7.getText()); 
-       float t8 = Float.parseFloat(txttotal8.getText()); 
-       float t9 = Float.parseFloat(txttotal9.getText()); 
-       float t10 = Float.parseFloat(txttotal10.getText()); 
-       float grand= t1+t2+t3+t4+t5+t6+t7+t8+t9+t10;
-       txtgrandtotal.setText(String.valueOf(grand));
+        
     }//GEN-LAST:event_txtgrandtotalFocusGained
 
     private void txtdiscount10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount10KeyReleased
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                float discount = Float.parseFloat(txtdiscount10.getText());
-                float price = Float.parseFloat(txtprice10.getText());
-                float quantity = Float.parseFloat(txtqty10.getText());
-
-                txttotal10.setText(String.valueOf((price - discount) * quantity));
+                 getTextValues(txtqty10, txtdiscount10, txtprice10, txttotal10, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    float t4 = Float.parseFloat(txttotal4.getText());
+                    float t5 = Float.parseFloat(txttotal5.getText());
+                    float t6 = Float.parseFloat(txttotal6.getText());
+                    float t7 = Float.parseFloat(txttotal7.getText());
+                    float t8 = Float.parseFloat(txttotal8.getText());
+                    float t9 = Float.parseFloat(txttotal9.getText());
+                    float t10 = Float.parseFloat(txttotal10.getText());
+                    float amt=t1+t2+t3+t4+t5+t6+t7+t8+t9+t10;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
             }
         } catch (NumberFormatException | NullPointerException e) {}
     }//GEN-LAST:event_txtdiscount10KeyReleased
 
+    private void txtdiscount1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount1KeyReleased
+        // TODO add your handling code here:
+        try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty1, txtdiscount1, txtprice1, txttotal1, txtgrandtotal, txttax, txtbill, txtcredit);  
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount1KeyReleased
+
+    private void txtdiscount2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount2KeyReleased
+        try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty2, txtdiscount2, txtprice2, txttotal2, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                   
+                    float amt=t1+t2;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount2KeyReleased
+
+    private void txtdiscount3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount3KeyReleased
+        try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty3, txtdiscount3, txtprice3, txttotal3, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    
+                    float amt=t1+t2+t3;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount3KeyReleased
+
+    private void txtdiscount4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount4KeyReleased
+       try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty4, txtdiscount4, txtprice4, txttotal4, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    float t4 = Float.parseFloat(txttotal4.getText());
+                    
+                    float amt=t1+t2+t3+t4;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount4KeyReleased
+
+    private void txtdiscount5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount5KeyReleased
+        try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty5, txtdiscount5, txtprice5, txttotal5, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    float t4 = Float.parseFloat(txttotal4.getText());
+                    float t5 = Float.parseFloat(txttotal5.getText());
+                    
+                    float amt=t1+t2+t3+t4+t5;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount5KeyReleased
+
+    private void txtdiscount6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount6KeyReleased
+        try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty6, txtdiscount6, txtprice6, txttotal6, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    float t4 = Float.parseFloat(txttotal4.getText());
+                    float t5 = Float.parseFloat(txttotal5.getText());
+                    float t6 = Float.parseFloat(txttotal6.getText());
+                   
+                    float amt=t1+t2+t3+t4+t5+t6;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount6KeyReleased
+
+    private void txtdiscount7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount7KeyReleased
+       try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty7, txtdiscount7, txtprice7, txttotal7, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    float t4 = Float.parseFloat(txttotal4.getText());
+                    float t5 = Float.parseFloat(txttotal5.getText());
+                    float t6 = Float.parseFloat(txttotal6.getText());
+                    float t7 = Float.parseFloat(txttotal7.getText());
+                    
+                    float amt=t1+t2+t3+t4+t5+t6+t7;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount7KeyReleased
+
+    private void txtdiscount8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount8KeyReleased
+       try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty8, txtdiscount8, txtprice8, txttotal8, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    float t4 = Float.parseFloat(txttotal4.getText());
+                    float t5 = Float.parseFloat(txttotal5.getText());
+                    float t6 = Float.parseFloat(txttotal6.getText());
+                    float t7 = Float.parseFloat(txttotal7.getText());
+                    float t8 = Float.parseFloat(txttotal8.getText());
+                   
+                    float amt=t1+t2+t3+t4+t5+t6+t7+t8;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount8KeyReleased
+
+    private void txtdiscount9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount9KeyReleased
+        try {
+            if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
+                 getTextValues(txtqty9, txtdiscount9, txtprice9, txttotal9, txtgrandtotal, txttax, txtbill, txtcredit);
+                    float t1 = Float.parseFloat(txttotal1.getText());
+                    float t2 = Float.parseFloat(txttotal2.getText());
+                    float t3 = Float.parseFloat(txttotal3.getText());
+                    float t4 = Float.parseFloat(txttotal4.getText());
+                    float t5 = Float.parseFloat(txttotal5.getText());
+                    float t6 = Float.parseFloat(txttotal6.getText());
+                    float t7 = Float.parseFloat(txttotal7.getText());
+                    float t8 = Float.parseFloat(txttotal8.getText());
+                    float t9 = Float.parseFloat(txttotal9.getText());
+                    
+                    float amt=t1+t2+t3+t4+t5+t6+t7+t8+t9;
+                    txtgrandtotal.setText(String.valueOf(amt));
+                    float tax = (amt * 0.143f);
+                    txttax.setText(String.valueOf(tax));
+                    float bill = amt + tax;
+                    txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
+                
+            }
+        } catch (NumberFormatException | NullPointerException e) {}
+    }//GEN-LAST:event_txtdiscount9KeyReleased
+
+    private void txtdiscount7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdiscount7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtdiscount7ActionPerformed
+
+    private void btngeneratebillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngeneratebillActionPerformed
+       String address=txtaddress.getText();
+        String date=txtdate.getText();
+        String discount=txtdiscount1.getText();
+        String payment=txtbill.getText();
+        String total=txtgrandtotal.getText();
+        boolean status=radiocash.isSelected();
+        String credit=txtcredit.getText();
+        
+       
+        
+        if(status == true)
+        try
+            {
+                con=DBConnection.getConnection();
+                
+                pst = con.prepareStatement("select id from user where name = ?");
+                //pst.setString(1, combocustomername.getSelectedItem().toString());
+                ResultSet rs = pst.executeQuery();
+                rs.next();
+                int userID = rs.getInt("id");
+             
+                pst = con.prepareStatement("select id from customer where name = ?");
+                pst.setString(1, combocustomername.getSelectedItem().toString());
+                rs = pst.executeQuery();
+                rs.next();
+                int customerID = rs.getInt("id");
+                
+                
+                
+                pst=con.prepareStatement("insert into bill (User_ID,Customer_ID,Date,Discount,Payment,Total,Status)values(?, ?, ?, ?, ?, ?, ?)");
+                pst.setInt(1, userID);
+                pst.setInt(2, customerID);
+                pst.setString(3, date);
+                pst.setString(4, discount);
+                pst.setString(5, payment);
+                pst.setString(6, total);
+                pst.setBoolean(7, status);
+                //pst.setString(8, credit);
+                //pst.setInt(8, categoryID);
+                //pst.setInt(9, supplierID);
+                int i=pst.executeUpdate();
+                if(i>0)
+                {
+                    JOptionPane.showMessageDialog(this, "Added Successfully");
+                    //clear();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Not added Successfully");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        else
+        {
+            try
+            {
+                con=DBConnection.getConnection();
+                
+                pst = con.prepareStatement("select id from user where name = ?");
+                //pst.setString(1, combocustomername.getSelectedItem().toString());
+                ResultSet rs = pst.executeQuery();
+                rs.next();
+                int userID = rs.getInt("id");
+             
+                pst = con.prepareStatement("select id from customer where name = ?");
+                pst.setString(1, combocustomername.getSelectedItem().toString());
+                rs = pst.executeQuery();
+                rs.next();
+                int customerID = rs.getInt("id");
+                
+                
+                
+                pst=con.prepareStatement("insert into bill (User_ID,Customer_ID,Date,Discount,Payment,Total,Status,credit)values(?, ?, ?, ?, ?, ?, ?, ?)");
+                pst.setInt(1, userID);
+                pst.setInt(2, customerID);
+                pst.setString(3, date);
+                pst.setString(4, discount);
+                pst.setString(5, payment);
+                pst.setString(6, total);
+                pst.setBoolean(7, status);
+                pst.setString(8, credit);
+                
+                int i=pst.executeUpdate();
+                if(i>0)
+                {
+                    JOptionPane.showMessageDialog(this, "Added Successfully");
+                    //clear();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Not added Successfully");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        }
+        
+    }//GEN-LAST:event_btngeneratebillActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btngeneratebill;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox combocustomername;
     private javax.swing.JComboBox comboproductname1;
     private javax.swing.JComboBox comboproductname10;

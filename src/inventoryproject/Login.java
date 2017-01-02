@@ -5,6 +5,7 @@
  */
 package inventoryproject;
 
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -165,8 +166,8 @@ public class Login extends javax.swing.JFrame {
         {
             try
             {
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-            pst=con.prepareStatement("select Username,Password, Role_ID from User where Username=? and Password=?");
+            con=DBConnection.getConnection();
+            pst=con.prepareStatement("select username,password, role_id from user where username=? and password=?");
             pst.setString(1, username);
             pst.setString(2, password);
             rs=pst.executeQuery();
@@ -176,7 +177,7 @@ public class Login extends javax.swing.JFrame {
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
                         try {
-                            new Menu(rs.getInt("Role_ID")).setVisible(true);
+                            new Menu(rs.getInt("role_id")).setVisible(true);
                         } catch (SQLException ex) {
                             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                         }

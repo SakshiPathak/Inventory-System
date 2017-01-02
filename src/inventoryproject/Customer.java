@@ -5,8 +5,8 @@
  */
 package inventoryproject;
 
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -435,16 +435,16 @@ public class Customer extends javax.swing.JInternalFrame {
         } else {
             boolean unique = true;
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
+                con = DBConnection.getConnection();
                 Statement st = con.createStatement();
-                rs = st.executeQuery("select Email,Address,Phone from customer");
+                rs = st.executeQuery("select email,address,phone from customer");
 
                 int c = 0;
                 while (rs.next()) {
                     c++;
-                    String eid = rs.getString("Email");
-                    String add = rs.getString("Address");
-                    String phno = rs.getString("Phone");
+                    String eid = rs.getString("email");
+                    String add = rs.getString("address");
+                    String phno = rs.getString("phone");
 
                     if (emailid.equals(eid)) {
                         JOptionPane.showMessageDialog(this, "Email ID already exists");
@@ -460,7 +460,7 @@ public class Customer extends javax.swing.JInternalFrame {
                 }
 
                 if (unique) {
-                    pst = con.prepareStatement("insert into customer(First_Name,Last_Name,Gender,Email,Address,City,Pincode,State,Phone,Customer_Type) values(?,?,?,?,?,?,?,?,?,?)");
+                    pst = con.prepareStatement("insert into customer(first_name,last_name,gender,email,address,city,pincode,state,phone,customer_type) values(?,?,?,?,?,?,?,?,?,?)");
                     pst.setString(1, firstname);
                     pst.setString(2, lastname);
                     pst.setString(3, Gender);
@@ -540,8 +540,8 @@ public class Customer extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please select item first!!");
         } else {
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-                pst = con.prepareStatement("update customer set Last_Name=?,Gender=?,Email=?,Address=?,City=?,Pincode=?,State=?,Phone=?,Customer_Type=? where ID=?");
+                con = DBConnection.getConnection();
+                pst = con.prepareStatement("update customer set last_name=?,gender=?,email=?,address=?,city=?,pincode=?,state=?,phone=?,customer_type=? where id=?");
 
                 pst.setString(1, lastname);
                 pst.setString(2, Gender);
@@ -583,8 +583,8 @@ public class Customer extends javax.swing.JInternalFrame {
         //{
         try {
 
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-            pst = con.prepareStatement("DELETE FROM customer WHERE ID=?");
+            con = DBConnection.getConnection();
+            pst = con.prepareStatement("delete from customer where id=?");
             pst.setInt(1, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
             int i = pst.executeUpdate();
             if (i > 0) {
@@ -612,8 +612,8 @@ public class Customer extends javax.swing.JInternalFrame {
             if (customerList == null)
                 return;
             
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-            pst = con.prepareStatement("SELECT * FROM customer WHERE ID = ?");
+            con = DBConnection.getConnection();
+            pst = con.prepareStatement("select * from customer where id = ?");
             //System.out.println(Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()).getId()));
             
             System.out.println(customerList.size());
@@ -623,15 +623,15 @@ public class Customer extends javax.swing.JInternalFrame {
             ResultSet rs = pst.executeQuery();
             rs.next();
 
-            txtfirstname.setText(rs.getString("First_Name"));
-            txtlastname.setText(rs.getString("Last_Name"));
-            txtemailid.setText(rs.getString("Email"));
-            txtaddress.setText(rs.getString("Address"));
-            txtcity.setText(rs.getString("City"));
-            txtpincode.setText(rs.getString("Pincode"));
-            txtstate.setText(rs.getString("State"));
-            txtphoneno.setText(rs.getString("Phone"));
-            combocustomertype.setSelectedItem(rs.getString("Customer_Type"));
+            txtfirstname.setText(rs.getString("first_name"));
+            txtlastname.setText(rs.getString("last_name"));
+            txtemailid.setText(rs.getString("email"));
+            txtaddress.setText(rs.getString("address"));
+            txtcity.setText(rs.getString("city"));
+            txtpincode.setText(rs.getString("pincode"));
+            txtstate.setText(rs.getString("state"));
+            txtphoneno.setText(rs.getString("phone"));
+            combocustomertype.setSelectedItem(rs.getString("customer_type"));
 
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -678,8 +678,8 @@ public class Customer extends javax.swing.JInternalFrame {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM CUSTOMER ORDER BY First_Name");
+            con = DBConnection.getConnection();
+            PreparedStatement pstmt = con.prepareStatement("select * from customer order by first_name");
 
             ResultSet rs = pstmt.executeQuery();
             int index = 1;
@@ -688,22 +688,22 @@ public class Customer extends javax.swing.JInternalFrame {
             
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
-                Item item = new Item(index++, rs.getString("First_Name"));
+                Item item = new Item(index++, rs.getString("first_name"));
                 model.addElement(item);
                 
                 customerList.add(
                         new CustomerClass(
-                                String.valueOf(rs.getInt("ID")), 
-                                rs.getString("First_Name"),
-                                rs.getString("Last_Name"),
-                                rs.getString("Gender"), 
-                                rs.getString("Email"),
-                                rs.getString("Address"),
-                                rs.getString("City"),
-                                String.valueOf(rs.getInt("Pincode")),
-                                rs.getString("State"),
-                                rs.getString("Phone"),
-                                rs.getString("Customer_Type")
+                                String.valueOf(rs.getInt("id")), 
+                                rs.getString("first_name"),
+                                rs.getString("last_name"),
+                                rs.getString("gender"), 
+                                rs.getString("email"),
+                                rs.getString("address"),
+                                rs.getString("city"),
+                                String.valueOf(rs.getInt("pincode")),
+                                rs.getString("state"),
+                                rs.getString("phone"),
+                                rs.getString("customer_type")
                         ));
             }
 

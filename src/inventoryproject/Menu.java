@@ -52,7 +52,7 @@ public class Menu extends javax.swing.JFrame {
         desktoppane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnulogout = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuexit = new javax.swing.JMenuItem();
         mnuadmin = new javax.swing.JMenu();
         mnusupplier = new javax.swing.JMenuItem();
         mnurole = new javax.swing.JMenuItem();
@@ -84,13 +84,13 @@ public class Menu extends javax.swing.JFrame {
 
         mnulogout.setText("File");
 
-        jMenuItem1.setText("Logout");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        mnuexit.setText("Logout");
+        mnuexit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                mnuexitActionPerformed(evt);
             }
         });
-        mnulogout.add(jMenuItem1);
+        mnulogout.add(mnuexit);
 
         jMenuBar1.add(mnulogout);
 
@@ -237,10 +237,12 @@ public class Menu extends javax.swing.JFrame {
         prod.setVisible(true);
     }//GEN-LAST:event_mnuproductActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void mnuexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuexitActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        Login login = new Login();
+        login.setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_mnuexitActionPerformed
 
     private void mnubillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnubillActionPerformed
         // TODO add your handling code here:
@@ -301,7 +303,6 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktoppane;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu mnuadmin;
     private javax.swing.JMenuItem mnubill;
     private javax.swing.JMenu mnubillgenerate;
@@ -309,6 +310,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu mnucategorydetail;
     private javax.swing.JMenuItem mnucustomer;
     private javax.swing.JMenu mnucustomerdetail;
+    private javax.swing.JMenuItem mnuexit;
     private javax.swing.JMenu mnulogout;
     private javax.swing.JMenuItem mnuproduct;
     private javax.swing.JMenu mnuproductdetail;

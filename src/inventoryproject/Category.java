@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package inventoryproject;
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,13 +38,13 @@ public class Category extends javax.swing.JInternalFrame {
     
     private void populateCategoryIdCombo() {
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT ID FROM category");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select id from category");
         
         ResultSet rs = pstmt.executeQuery();
         combocategoryid.addItem("");
         while (rs.next())
-            combocategoryid.addItem(rs.getString("ID"));
+            combocategoryid.addItem(rs.getString("id"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -227,8 +227,8 @@ public class Category extends javax.swing.JInternalFrame {
         {
             try
             {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-                pst=con.prepareStatement("insert into category(Name) values(?)");
+                con=DBConnection.getConnection();
+                pst=con.prepareStatement("insert into category(name) values(?)");
                 pst.setString(1, name);
                 int i=pst.executeUpdate();
                 if(i>0)
@@ -268,8 +268,8 @@ public class Category extends javax.swing.JInternalFrame {
         try
         {
             
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
-            pst=con.prepareStatement("delete from category where Name=?");
+            con=DBConnection.getConnection();
+            pst=con.prepareStatement("delete from category where name=?");
             pst.setString(1, categoryname);
             int i=pst.executeUpdate();
             if(i>0)
@@ -299,14 +299,14 @@ public class Category extends javax.swing.JInternalFrame {
         if(selectedId.equals("") || selectedId == null)
             return;
         
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        pst = con.prepareStatement("SELECT * FROM category WHERE Name IN (SELECT Name FROM category WHERE ID = ?)");
+        con = DBConnection.getConnection();
+        pst = con.prepareStatement("select * from category where name in (select name from category where id = ?)");
         pst.setString(1, selectedId);
         
         ResultSet rs = pst.executeQuery();
         rs.next();
         
-        txtcategoryname.setText(rs.getString("Name"));
+        txtcategoryname.setText(rs.getString("name"));
         
         
     } catch (SQLException ex) {

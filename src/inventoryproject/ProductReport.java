@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package inventoryproject;
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,15 +35,15 @@ public class ProductReport extends javax.swing.JInternalFrame {
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+            con=DBConnection.getConnection();
             Statement st=con.createStatement();
-            rs=st.executeQuery("select P.Name, Units, Quantity, Cost_Price, Sale_Price, Status, Re_Order_Level, C.Name, S.Name from Product P, Category C, Supplier S where P.Category_ID=C.ID and P.Supplier_ID=S.ID");
+            rs=st.executeQuery("select P.name, units, quantity, cost_price, sale_price, status, re_order_level, C.name, S.name from product P, category C, supplier S where P.category_id=C.id and P.supplier_id=S.id");
             
             //
             ProductClass product;
             while(rs.next())
             {
-            product=new ProductClass(rs.getString("Name"), rs.getString("Units"), rs.getString("Quantity"), rs.getString("Cost_Price"), rs.getString("Sale_Price"), rs.getString("Status"), rs.getString("Re_Order_Level"), rs.getString("C.Name"), rs.getString("S.Name"));
+            product=new ProductClass(rs.getString("name"), rs.getString("units"), rs.getString("quantity"), rs.getString("cost_price"), rs.getString("sale_price"), rs.getString("status"), rs.getString("re_order_level"), rs.getString("C.name"), rs.getString("S.name"));
             productList.add(product);
             }
         }

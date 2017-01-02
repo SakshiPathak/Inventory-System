@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 package inventoryproject;
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -38,6 +37,7 @@ public class Product extends javax.swing.JInternalFrame {
         txtquantity.setText("");
         txtcostprice.setText("");
         txtsaleprice.setText("");
+        txtmrp.setText("");
         txtreorderlevel.setText("");
         combocategory.setSelectedIndex(-1);
         combosupplier.setSelectedIndex(-1);
@@ -47,12 +47,12 @@ public class Product extends javax.swing.JInternalFrame {
     
      private void populateCategoryNameCombo() {
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT Name FROM category ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from category order by name");
         
         ResultSet rs = pstmt.executeQuery();
         while (rs.next())
-            combocategory.addItem(rs.getString("Name"));
+            combocategory.addItem(rs.getString("name"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,12 +61,12 @@ public class Product extends javax.swing.JInternalFrame {
     
      private void populateSupplierNameCombo() {
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT Name FROM supplier ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from supplier order by name");
         
         ResultSet rs = pstmt.executeQuery();
         while (rs.next())
-            combosupplier.addItem(rs.getString("Name"));
+            combosupplier.addItem(rs.getString("name"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,6 +103,8 @@ public class Product extends javax.swing.JInternalFrame {
         combosupplier = new javax.swing.JComboBox();
         radiotrue = new javax.swing.JRadioButton();
         radiofalse = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtmrp = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btnsave = new javax.swing.JButton();
         btnrefresh = new javax.swing.JButton();
@@ -147,51 +149,80 @@ public class Product extends javax.swing.JInternalFrame {
         buttonGroup1.add(radiofalse);
         radiofalse.setText("False");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("MRP");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(radiotrue, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(radiofalse, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(radiotrue, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(radiofalse, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel1))
+                        .addGap(128, 128, 128)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtreorderlevel, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(combosupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(combocategory, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtmrp))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
-                        .addComponent(jLabel10)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabel8)
                         .addComponent(jLabel6)
                         .addComponent(jLabel5)
                         .addComponent(jLabel4)
                         .addComponent(jLabel3))
-                    .addGap(128, 128, 128)
+                    .addGap(135, 135, 135)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(comboproductname, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtunit, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                        .addComponent(txtreorderlevel, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                         .addComponent(txtsaleprice)
                         .addComponent(txtcostprice)
-                        .addComponent(txtquantity)
-                        .addComponent(combocategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(combosupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtquantity))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(184, Short.MAX_VALUE)
+                .addContainerGap(191, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radiotrue)
-                    .addComponent(radiofalse)
-                    .addComponent(jLabel7))
-                .addGap(123, 123, 123))
+                    .addComponent(jLabel1)
+                    .addComponent(txtmrp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(radiotrue)
+                        .addComponent(radiofalse)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtreorderlevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(combocategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(combosupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -214,19 +245,7 @@ public class Product extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtsaleprice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6))
-                    .addGap(44, 44, 44)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtreorderlevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(combocategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9))
-                    .addGap(18, 18, 18)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(combosupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(190, Short.MAX_VALUE)))
         );
 
         btnsave.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -254,7 +273,7 @@ public class Product extends javax.swing.JInternalFrame {
                 .addComponent(btnsave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69)
                 .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,11 +299,11 @@ public class Product extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -297,6 +316,7 @@ public class Product extends javax.swing.JInternalFrame {
         String quantity=txtquantity.getText();
         String costprice=txtcostprice.getText();
         String saleprice=txtsaleprice.getText();
+        String mrp=txtmrp.getText();
         boolean status=radiotrue.isSelected();
         String reorder=txtreorderlevel.getText();
        // String categoryname=combocategory.getSelectedItem().toString();
@@ -322,6 +342,10 @@ public class Product extends javax.swing.JInternalFrame {
          else if(saleprice.isEmpty())
          {
              JOptionPane.showMessageDialog(this, "Sale Price field is empty... please fill it first!!");
+         }
+         else if(mrp.isEmpty())
+         {
+             JOptionPane.showMessageDialog(this, "MRP field is empty... please fill it first!!");
          }
          
          else if(reorder.isEmpty())
@@ -354,6 +378,10 @@ public class Product extends javax.swing.JInternalFrame {
             {
                 JOptionPane.showMessageDialog(this, "Please enter valid Sale Price");
             }
+         else if(!(Pattern.matches("^[0-9]+", txtmrp.getText())))
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid MRP");
+            }
         else if(!(Pattern.matches("^[0-9]+", txtreorderlevel.getText())))
             {
                 JOptionPane.showMessageDialog(this, "Please enter valid Reorder Level");
@@ -363,30 +391,31 @@ public class Product extends javax.swing.JInternalFrame {
         {
             try
             {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+                con=DBConnection.getConnection();
              
-                pst = con.prepareStatement("SELECT ID FROM Category WHERE Name = ?");
+                pst = con.prepareStatement("select id from category where name = ?");
                 pst.setString(1, combocategory.getSelectedItem().toString());
                 ResultSet rs = pst.executeQuery();
                 rs.next();
-                int categoryID = rs.getInt("ID");
+                int categoryID = rs.getInt("id");
                 
-                pst = con.prepareStatement("SELECT ID FROM Supplier WHERE Name = ?");
+                pst = con.prepareStatement("select id from supplier where name = ?");
                 pst.setString(1, combosupplier.getSelectedItem().toString());
                 rs = pst.executeQuery();
                 rs.next();
-                int supplierID = rs.getInt("ID");
+                int supplierID = rs.getInt("id");
                 
-                pst=con.prepareStatement("INSERT INTO product (Name,Units,Quantity,Cost_Price,Sale_Price,Status,Re_Order_Level,Category_ID,Supplier_ID)values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                pst=con.prepareStatement("insert into product (name,units,quantity,cost_price,sale_price,mrp,status,re_order_level,category_id,supplier_id)values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 pst.setString(1, productname);
                 pst.setString(2, units);
                 pst.setString(3, quantity);
                 pst.setString(4, costprice);
                 pst.setString(5, saleprice);
-                pst.setBoolean(6, status);
-                pst.setString(7, reorder);
-                pst.setInt(8, categoryID);
-                pst.setInt(9, supplierID);
+                pst.setString(6, mrp);
+                pst.setBoolean(7, status);
+                pst.setString(8, reorder);
+                pst.setInt(9, categoryID);
+                pst.setInt(10, supplierID);
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
@@ -420,6 +449,7 @@ public class Product extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox combocategory;
     private javax.swing.JComboBox comboproductname;
     private javax.swing.JComboBox combosupplier;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -434,6 +464,7 @@ public class Product extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton radiofalse;
     private javax.swing.JRadioButton radiotrue;
     private javax.swing.JTextField txtcostprice;
+    private javax.swing.JTextField txtmrp;
     private javax.swing.JTextField txtquantity;
     private javax.swing.JTextField txtreorderlevel;
     private javax.swing.JTextField txtsaleprice;

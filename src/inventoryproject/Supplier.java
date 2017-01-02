@@ -5,6 +5,7 @@
  */
 package inventoryproject;
 
+import com.inventorysystem.helpers.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -51,8 +52,8 @@ public class Supplier extends javax.swing.JInternalFrame {
     private void populateSupplierNameCombo() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
     try {
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM supplier ORDER BY Name");
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select * from supplier order by Name");
         
         ResultSet rs = pstmt.executeQuery();
         int index = 1;
@@ -390,7 +391,7 @@ public class Supplier extends javax.swing.JInternalFrame {
               boolean unique = true;
              try
              {
-                 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+                 con=DBConnection.getConnection();
             Statement st=con.createStatement();
             rs=st.executeQuery("select Address,Phone from supplier");
             
@@ -510,7 +511,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         {
             try
             {
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+                con=DBConnection.getConnection();
                 pst=con.prepareStatement("update supplier set Address=?,City=?,Pincode=?,State=?,Phone=? where ID=?");
              
                 pst.setString(1, address);
@@ -554,7 +555,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         try
         {
             
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","sakshi");
+            con=DBConnection.getConnection();
             pst=con.prepareStatement("delete from supplier where ID=?");
             pst.setInt(1, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
             int i=pst.executeUpdate();
@@ -589,8 +590,8 @@ public class Supplier extends javax.swing.JInternalFrame {
             if (supplierList == null)
                 return;
         
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
-        pst = con.prepareStatement("SELECT * FROM supplier WHERE ID = ?");
+        con = DBConnection.getConnection();
+        pst = con.prepareStatement("select * from supplier where ID = ?");
         //pst.setString(1, selectedName);
         pst.setInt(1, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
         ResultSet rs = pst.executeQuery();
