@@ -1628,16 +1628,32 @@ public class Bill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtdiscount7ActionPerformed
 
     private void btngeneratebillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngeneratebillActionPerformed
-       
+        String quantity1=txtqty1.getText();
+        String quantity2=txtqty2.getText();
+        String quantity3=txtqty3.getText();
+        String quantity4=txtqty4.getText();
+        String quantity5=txtqty5.getText();
+        String quantity6=txtqty6.getText();
+        String quantity7=txtqty7.getText();
+        String quantity8=txtqty8.getText();
+        String quantity9=txtqty9.getText();
+        String quantity10=txtqty10.getText();
         String address=txtaddress.getText();
         String date=txtdate.getText();
-        String discount=txtdiscount1.getText();
+        String discount1=txtdiscount1.getText();
+        String discount2=txtdiscount2.getText();
+        String discount3=txtdiscount3.getText();
+        String discount4=txtdiscount4.getText();
+        String discount5=txtdiscount5.getText();
+        String discount6=txtdiscount6.getText();
+        String discount7=txtdiscount7.getText();
+        String discount8=txtdiscount8.getText();
+        String discount9=txtdiscount9.getText();
+        String discount10=txtdiscount10.getText();
         String payment=txtbill.getText();
         String total=txtgrandtotal.getText();
         boolean status=radiocash.isSelected();
         String credit=txtcredit.getText();
-        
-       
         
         
         try
@@ -1662,7 +1678,7 @@ public class Bill extends javax.swing.JInternalFrame {
                 pst.setInt(1, userID);
                 pst.setInt(2, customerID);
                 pst.setString(3, date);
-                pst.setString(4, discount);
+                pst.setString(4, discount1);
                 pst.setString(5, payment);
                 pst.setString(6, total);
                 pst.setBoolean(7, status);
@@ -1686,50 +1702,30 @@ public class Bill extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         
-            try
-            {
-                con=DBConnection.getConnection();
+        
+        try {
+            
+                //int quantity=
+                con = DBConnection.getConnection();
+                pst = con.prepareStatement("update product set quantity=? where id=?");
+
+                //pst.setString(1, quantity);
+               
+                //pst.setString(10, firstname);
                 
-                pst = con.prepareStatement("select id from user where name = ?");
-                //pst.setString(1, combocustomername.getSelectedItem().toString());
-                ResultSet rs = pst.executeQuery();
-                rs.next();
-                int userID = rs.getInt("id");
-             
-                pst = con.prepareStatement("select id from customer where name = ?");
-                pst.setString(1, combocustomername.getSelectedItem().toString());
-                rs = pst.executeQuery();
-                rs.next();
-                int customerID = rs.getInt("id");
-                
-                
-                
-                pst=con.prepareStatement("insert into bill (User_ID,Customer_ID,Date,Discount,Payment,Total,Status,credit)values(?, ?, ?, ?, ?, ?, ?, ?)");
-                pst.setInt(1, userID);
-                pst.setInt(2, customerID);
-                pst.setString(3, date);
-                pst.setString(4, discount);
-                pst.setString(5, payment);
-                pst.setString(6, total);
-                pst.setBoolean(7, status);
-                pst.setString(8, credit);
-                
-                int i=pst.executeUpdate();
-                if(i>0)
-                {
-                    JOptionPane.showMessageDialog(this, "Added Successfully");
+                int i = pst.executeUpdate();
+                if (i > 0) {
+                    JOptionPane.showMessageDialog(this, "Updated Successfully");
                     //clear();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not updated Successfully");
                 }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "Not added Successfully");
-                }
-                
-            }
-            catch(Exception e)
-            {
+
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
+        
+            
             
             JFileChooser fileChooser = new JFileChooser();
         fileChooser.showSaveDialog(null);
