@@ -25,7 +25,13 @@ import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.plaf.DesktopPaneUI;
-
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JFileChooser;
 /**
  *
  * @author HP
@@ -1622,7 +1628,8 @@ public class Bill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtdiscount7ActionPerformed
 
     private void btngeneratebillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngeneratebillActionPerformed
-       String address=txtaddress.getText();
+       
+        String address=txtaddress.getText();
         String date=txtdate.getText();
         String discount=txtdiscount1.getText();
         String payment=txtbill.getText();
@@ -1632,7 +1639,7 @@ public class Bill extends javax.swing.JInternalFrame {
         
        
         
-        if(status == true)
+        
         try
             {
                 con=DBConnection.getConnection();
@@ -1678,8 +1685,7 @@ public class Bill extends javax.swing.JInternalFrame {
             {
                 JOptionPane.showMessageDialog(this, e);
             }
-        else
-        {
+        
             try
             {
                 con=DBConnection.getConnection();
@@ -1724,7 +1730,23 @@ public class Bill extends javax.swing.JInternalFrame {
             {
                 JOptionPane.showMessageDialog(this, e);
             }
+            
+            JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showSaveDialog(null);
+        
+        File file = fileChooser.getSelectedFile();
+        
+        try {
+            PdfDocument pdf = new PdfDocument(new PdfWriter(file.getCanonicalPath()));
+            Document document = new Document(pdf);
+            
+            document.add(new Paragraph("Hello, World!"));
+            document.close();
+            pdf.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         
     }//GEN-LAST:event_btngeneratebillActionPerformed
 
