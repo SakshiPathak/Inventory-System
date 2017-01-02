@@ -1248,6 +1248,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
         float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
        
     }//GEN-LAST:event_txtqty2FocusLost
 
@@ -1262,6 +1263,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty3FocusLost
 
     private void txtqty4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty4FocusLost
@@ -1276,6 +1278,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty4FocusLost
 
     private void txtqty5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty5FocusLost
@@ -1291,6 +1294,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty5FocusLost
 
     private void txtqty6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty6FocusLost
@@ -1307,6 +1311,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty6FocusLost
 
     private void txtqty7FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty7FocusLost
@@ -1324,6 +1329,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty7FocusLost
 
     private void txtqty8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty8FocusLost
@@ -1342,6 +1348,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty8FocusLost
 
     private void txtqty9FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty9FocusLost
@@ -1361,6 +1368,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty9FocusLost
 
     private void txtqty10FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty10FocusLost
@@ -1383,6 +1391,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
+        txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty10FocusLost
 
     private void txtgrandtotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtgrandtotalFocusLost
@@ -1413,6 +1422,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1440,6 +1450,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1459,6 +1470,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1479,6 +1491,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1500,6 +1513,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1522,6 +1536,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1545,7 +1560,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                
+                    txtcredit.setText(String.valueOf(bill));
             }
         } catch (NumberFormatException | NullPointerException e) {}
     }//GEN-LAST:event_txtdiscount7KeyReleased
@@ -1569,6 +1584,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
+                    txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1587,6 +1603,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     float t7 = Float.parseFloat(txttotal7.getText());
                     float t8 = Float.parseFloat(txttotal8.getText());
                     float t9 = Float.parseFloat(txttotal9.getText());
+                    
                     
                     float amt=t1+t2+t3+t4+t5+t6+t7+t8+t9;
                     txtgrandtotal.setText(String.valueOf(amt));
