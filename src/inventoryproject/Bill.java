@@ -1655,7 +1655,18 @@ public class Bill extends javax.swing.JInternalFrame {
         boolean status=radiocash.isSelected();
         String credit=txtcredit.getText();
         
+        /*here i dont recognise how to insert discount in bill table bcz there is 1-10 discount field
+            after that how to insert selected items in bill table like i want to add only 4 items from 10 in bill table
+            but it generate one bill id how?? also tell me about the query of it
+            
+            After that how to update quantity in product table because there are 10 field of quantity in bill table
+            and how to substract bill table's quantity with product table's quantity before updation??
+            also tell me about the query of it..
         
+        */
+        
+        
+        //Insertione part(Bill table)
         try
             {
                 con=DBConnection.getConnection();
@@ -1702,6 +1713,7 @@ public class Bill extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         
+        //Updation Part
         
         try {
             
@@ -1742,6 +1754,51 @@ public class Bill extends javax.swing.JInternalFrame {
         } catch (IOException ex) {
             Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //Insertione part(Bill details table)
+        
+        try
+            {
+                con=DBConnection.getConnection();
+             
+                /*here 1 problem how to fetch product id and product quantity 
+                    according to perticular product name in following query??
+                Also please check the query..
+                */
+                
+                pst = con.prepareStatement("select B.ID, P.ID,P.Quantity,B.Payment from Bill B, Product P");
+               
+                ResultSet rs = pst.executeQuery();
+                rs.next();
+                int billID = rs.getInt("B.ID");
+                int productID=rs.getInt("P.ID");
+                int quantity=rs.getInt("P.Quantity");
+                int total_bill=rs.getInt("P.Payment");
+                
+               
+                
+                pst=con.prepareStatement("insert into bill_detail (bill_id, product_id, quantity, payment)values(?, ?, ?, ?)");
+                pst.setInt(1, billID);
+                pst.setInt(2, productID);
+                pst.setInt(3, quantity);
+                pst.setInt(4, total_bill);
+                
+                int i=pst.executeUpdate();
+                if(i>0)
+                {
+                    JOptionPane.showMessageDialog(this, "Added to bill detail table Successfully");
+                    //clear();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Not added to bill detail table Successfully");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
         
         
     }//GEN-LAST:event_btngeneratebillActionPerformed
