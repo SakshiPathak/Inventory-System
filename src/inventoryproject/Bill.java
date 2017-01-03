@@ -1718,6 +1718,9 @@ public class Bill extends javax.swing.JInternalFrame {
             }
         
         //Updation Part
+        /* After that how to update quantity in product table because there are 10 field of quantity in bill table
+            and how to substract bill table's quantity with product table's quantity before updation??
+            also tell me about the query of it.. */
         
         try {
             
@@ -1741,7 +1744,10 @@ public class Bill extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         
-            
+           //PDF Part
+        /* Its simple pdf file generator program which works fine
+            how to add bill layout and generate pdf according to billing */
+        
             
             JFileChooser fileChooser = new JFileChooser();
         fileChooser.showSaveDialog(null);
@@ -1760,15 +1766,16 @@ public class Bill extends javax.swing.JInternalFrame {
         }
         
         //Insertione part(Bill details table)
+        /*here 1 problem how to fetch product id and product quantity 
+                    according to perticular product name in following query??
+                Also please check the query..
+                */
         
         try
             {
                 con=DBConnection.getConnection();
              
-                /*here 1 problem how to fetch product id and product quantity 
-                    according to perticular product name in following query??
-                Also please check the query..
-                */
+                
                 
                 pst = con.prepareStatement("select B.ID, P.ID,P.Quantity,B.Payment from Bill B, Product P");
                
