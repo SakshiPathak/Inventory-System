@@ -1663,6 +1663,10 @@ public class Bill extends javax.swing.JInternalFrame {
             and how to substract bill table's quantity with product table's quantity before updation??
             also tell me about the query of it..
         
+           how to select the status according to radio button of cash and credit before generate bill and 
+                insert into bill table?? and when status true for credit only that time credit textfield shows the
+                payement part means bill part if cash part is clicked and true then no payement is shown in credit textfield
+        
         */
         
         
