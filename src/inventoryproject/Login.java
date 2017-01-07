@@ -167,7 +167,7 @@ public class Login extends javax.swing.JFrame {
             try
             {
             con=DBConnection.getConnection();
-            pst=con.prepareStatement("select username,password, role_id from user where username=? and password=?");
+            pst=con.prepareStatement("select id, username,password, role_id from user where username=? and password=?");
             pst.setString(1, username);
             pst.setString(2, password);
             rs=pst.executeQuery();
@@ -177,6 +177,7 @@ public class Login extends javax.swing.JFrame {
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
                         try {
+                            UserClass.userid = rs.getInt("id");
                             new Menu(rs.getInt("role_id")).setVisible(true);
                         } catch (SQLException ex) {
                             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

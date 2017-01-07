@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package inventoryproject;
+
 import com.inventorysystem.helpers.DBConnection;
-import java.sql.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -18,59 +18,57 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author HP
  */
-public class ProductReport extends javax.swing.JInternalFrame {
+public class ReorderReport extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ProductReport
+     * Creates new form ReorderReport
      */
-    public ProductReport() {
+    public ReorderReport() {
         initComponents();
     }
     
-    public ArrayList<ProductClass> getProductList()
+    public ArrayList<ReorderClass> getReorderList()
     {
-        ArrayList<ProductClass> productList=new ArrayList<ProductClass>();
+        ArrayList<ReorderClass> reorderList=new ArrayList<ReorderClass>();
         Connection con=null;
         ResultSet rs=null;
+        PreparedStatement pst;
+       
         try
         {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
-            Statement st=con.createStatement();
-            rs=st.executeQuery("select P.name, units, quantity, cost_price, sale_price, status, re_order_level, C.name, S.name from product P, category C, supplier S where P.category_id=C.id and P.supplier_id=S.id");
+            PreparedStatement pstmt = con.prepareStatement("select * from product where quantity < re_order_level");
+
+            rs = pstmt.executeQuery();
             
             //
-            ProductClass product;
+            ReorderClass reorder;
             while(rs.next())
             {
-            product=new ProductClass(rs.getString("name"), rs.getString("units"), rs.getString("quantity"), rs.getString("cost_price"), rs.getString("sale_price"), rs.getString("status"), rs.getString("re_order_level"), rs.getString("C.name"), rs.getString("S.name"));
-            productList.add(product);
+            reorder=new ReorderClass(rs.getString("id"), rs.getString("name"), rs.getString("quantity"), rs.getString("re_order_level"));
+            reorderList.add(reorder);
             }
         }
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        return productList;
+        return reorderList;
     }
     
     public void showData()
     {
-        ArrayList<ProductClass> list= getProductList();
+        ArrayList<ReorderClass> list= getReorderList();
         DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
         Object[] row=new Object[9];
         for(int i=0;i<list.size();i++)
         {
-            
-            row[0]=list.get(i).getProductname();
-            row[1]=list.get(i).getUnits();
+            row[0]=list.get(i).getProductid();
+            row[1]=list.get(i).getProductname();
             row[2]=list.get(i).getQuantity();
-            row[3]=list.get(i).getCostprice();
-            row[4]=list.get(i).getSaleprice();
-            row[5]=list.get(i).getStatus();
-            row[6]=list.get(i).getReorderlevel();
-            row[7]=list.get(i).getCategoryname();
-            row[8]=list.get(i).getSuppliername();
+            row[3]=list.get(i).getReorderlevel();
+            
             model.addRow(row);
         }
     }
@@ -89,7 +87,7 @@ public class ProductReport extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
-        setTitle("Product Report");
+        setTitle("Stock Reorder Report");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -113,7 +111,7 @@ public class ProductReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Product Name", "Units", "Quantity", "Cost Price", "Sale Price", "Status", "Reorder Level", "Category Name", "Supplier Name"
+                "Product ID", "Product Name", "Quantity", "Reorder Level"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -123,23 +121,22 @@ public class ProductReport extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
-                .addGap(68, 68, 68))
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        // TODO add your handling code here:
         showData();
     }//GEN-LAST:event_formInternalFrameOpened
 

@@ -31,7 +31,7 @@ public class Menu extends javax.swing.JFrame {
     
         if (roleId != 1) {
             mnuadmin.setEnabled(false);
-            mnucustomerdetail.setEnabled(false);
+           // mnucustomerdetail.setEnabled(false);
             mnucategorydetail.setEnabled(false);
             mnuproductdetail.setEnabled(false);
             mnureport.setEnabled(false);
@@ -66,6 +66,8 @@ public class Menu extends javax.swing.JFrame {
         mnubill = new javax.swing.JMenuItem();
         mnureport = new javax.swing.JMenu();
         mnustockreport = new javax.swing.JMenuItem();
+        mnureorderreport = new javax.swing.JMenuItem();
+        mnubillreport = new javax.swing.JMenuItem();
         mnuregister = new javax.swing.JMenu();
         mnustockreport1 = new javax.swing.JMenuItem();
 
@@ -172,6 +174,22 @@ public class Menu extends javax.swing.JFrame {
         });
         mnureport.add(mnustockreport);
 
+        mnureorderreport.setText("Stock Reorder Report");
+        mnureorderreport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnureorderreportActionPerformed(evt);
+            }
+        });
+        mnureport.add(mnureorderreport);
+
+        mnubillreport.setText("Bill Report");
+        mnubillreport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnubillreportActionPerformed(evt);
+            }
+        });
+        mnureport.add(mnubillreport);
+
         jMenuBar1.add(mnureport);
 
         mnuregister.setText("Register User");
@@ -265,6 +283,18 @@ public class Menu extends javax.swing.JFrame {
         reg.setVisible(true);
     }//GEN-LAST:event_mnustockreport1ActionPerformed
 
+    private void mnureorderreportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnureorderreportActionPerformed
+        ReorderReport reorder=new ReorderReport();
+        desktoppane.add(reorder);
+        reorder.setVisible(true);
+    }//GEN-LAST:event_mnureorderreportActionPerformed
+
+    private void mnubillreportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnubillreportActionPerformed
+        BillReport bill=new BillReport();
+        desktoppane.add(bill);
+        bill.setVisible(true);
+    }//GEN-LAST:event_mnubillreportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -306,6 +336,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu mnuadmin;
     private javax.swing.JMenuItem mnubill;
     private javax.swing.JMenu mnubillgenerate;
+    private javax.swing.JMenuItem mnubillreport;
     private javax.swing.JMenuItem mnucategory;
     private javax.swing.JMenu mnucategorydetail;
     private javax.swing.JMenuItem mnucustomer;
@@ -315,6 +346,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuproduct;
     private javax.swing.JMenu mnuproductdetail;
     private javax.swing.JMenu mnuregister;
+    private javax.swing.JMenuItem mnureorderreport;
     private javax.swing.JMenu mnureport;
     private javax.swing.JMenuItem mnurole;
     private javax.swing.JMenuItem mnustockreport;

@@ -40,7 +40,7 @@ public class Role extends javax.swing.JInternalFrame {
         populateRoleIdCombo();
     }
     public void clear() {
-        
+        //roleList.clear();
          txtname.setText("");
          combopermission.setSelectedIndex(0);
          comborolename.setSelectedIndex(0);
@@ -433,7 +433,7 @@ public class Role extends javax.swing.JInternalFrame {
         
         if(selectedName.equals("") || selectedName == null)
             return;*/
-             if (roleList == null)
+             if (roleList == null || comborolename.getSelectedIndex() == 0)
                 return;
         
         con = DBConnection.getConnection();

@@ -39,7 +39,7 @@ public class Supplier extends javax.swing.JInternalFrame {
     }
     public void clear()
     {
-        
+        //supplierList.clear();
         txtsuppliername.setText("");
         txtaddress.setText("");
         txtcity.setText("");
@@ -587,7 +587,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         
         if(selectedName.equals("") || selectedName == null)
             return;*/
-            if (supplierList == null)
+            if (supplierList == null || combosuppliername.getSelectedIndex() == 0)
                 return;
         
         con = DBConnection.getConnection();

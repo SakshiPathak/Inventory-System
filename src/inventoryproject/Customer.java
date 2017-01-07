@@ -42,6 +42,7 @@ public class Customer extends javax.swing.JInternalFrame {
     }
 
     public void clear() {
+        //customerList.clear();
         //txtcustomerid.setText("");
         txtfirstname.setText("");
         txtlastname.setText("");
@@ -609,7 +610,7 @@ public class Customer extends javax.swing.JInternalFrame {
 
     private void combocustomernameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combocustomernameItemStateChanged
         try {
-            if (customerList == null)
+            if (customerList == null || combocustomername.getSelectedIndex() == 0)
                 return;
             
             con = DBConnection.getConnection();

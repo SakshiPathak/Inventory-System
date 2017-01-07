@@ -90,6 +90,72 @@ public class Bill extends javax.swing.JInternalFrame {
     }
     
     
+    public void clear()
+    {
+        //billList.clear();
+        combocustomername.setSelectedIndex(0);
+        txtaddress.setText("");
+        
+        comboproductname1.setSelectedIndex(0);
+        comboproductname2.setSelectedIndex(0);
+        comboproductname3.setSelectedIndex(0);
+        comboproductname4.setSelectedIndex(0);
+        comboproductname5.setSelectedIndex(0);
+        comboproductname6.setSelectedIndex(0);
+        comboproductname7.setSelectedIndex(0);
+        comboproductname8.setSelectedIndex(0);
+        comboproductname9.setSelectedIndex(0);
+        comboproductname10.setSelectedIndex(0);
+        
+        txtqty1.setText("");
+        txtqty2.setText("");
+        txtqty3.setText("");
+        txtqty4.setText("");
+        txtqty5.setText("");
+        txtqty6.setText("");
+        txtqty7.setText("");
+        txtqty8.setText("");
+        txtqty9.setText("");
+        txtqty10.setText("");
+        
+        txtprice1.setText("");
+        txtprice2.setText("");
+        txtprice3.setText("");
+        txtprice4.setText("");
+        txtprice5.setText("");
+        txtprice6.setText("");
+        txtprice7.setText("");
+        txtprice8.setText("");
+        txtprice9.setText("");
+        txtprice10.setText("");
+        
+        txtdiscount1.setText("0.0");
+        txtdiscount2.setText("0.0");
+        txtdiscount3.setText("0.0");
+        txtdiscount4.setText("0.0");
+        txtdiscount5.setText("0.0");
+        txtdiscount6.setText("0.0");
+        txtdiscount7.setText("0.0");
+        txtdiscount8.setText("0.0");
+        txtdiscount9.setText("0.0");
+        txtdiscount10.setText("0.0");
+        
+        txttotal1.setText("");
+        txttotal2.setText("");
+        txttotal3.setText("");
+        txttotal4.setText("");
+        txttotal5.setText("");
+        txttotal6.setText("");
+        txttotal7.setText("");
+        txttotal8.setText("");
+        txttotal9.setText("");
+        txttotal10.setText("");
+        
+        txtgrandtotal.setText("");
+        txttax.setText("");
+        txtbill.setText("");
+        txtcredit.setText("0.0");
+    }
     
     
     private void populateCustomerNameCombo() {
@@ -460,6 +526,7 @@ public class Bill extends javax.swing.JInternalFrame {
         txttotal8 = new javax.swing.JTextField();
         txttotal9 = new javax.swing.JTextField();
         txttotal10 = new javax.swing.JTextField();
+        btnrefresh = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Bill of Customer");
@@ -581,11 +648,24 @@ public class Bill extends javax.swing.JInternalFrame {
 
         buttonGroup1.add(radiocash);
         radiocash.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        radiocash.setSelected(true);
         radiocash.setText("Cash");
+        radiocash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiocashActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(radiocredit);
         radiocredit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         radiocredit.setText("Credit");
+        radiocredit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiocreditActionPerformed(evt);
+            }
+        });
+
+        txtcredit.setEnabled(false);
 
         jLabel9.setText("/");
 
@@ -807,6 +887,14 @@ public class Bill extends javax.swing.JInternalFrame {
             }
         });
 
+        btnrefresh.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnrefresh.setText("Refresh");
+        btnrefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -923,32 +1011,35 @@ public class Bill extends javax.swing.JInternalFrame {
                         .addGap(61, 61, 61))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(radiocash)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(radiocredit))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(txtgrandtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(radiocash)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(radiocredit))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtbill, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txttax, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtcredit, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(59, 59, 59))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btngeneratebill)
-                .addGap(119, 119, 119))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
+                                        .addComponent(txtgrandtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtbill, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txttax, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtcredit, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(btngeneratebill)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1066,7 +1157,9 @@ public class Bill extends javax.swing.JInternalFrame {
                     .addComponent(radiocredit)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btngeneratebill)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btngeneratebill, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnrefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(126, Short.MAX_VALUE))
         );
 
@@ -1105,7 +1198,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void combocustomernameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combocustomernameItemStateChanged
         // TODO add your handling code here:
         try {
-            if (billList == null)
+            if (billList == null || combocustomername.getSelectedIndex() == 0)
                 return;
             
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory", "root", "sakshi");
@@ -1161,27 +1254,54 @@ public class Bill extends javax.swing.JInternalFrame {
     }
     }
     /* Create and display the form */
-    private void getTextValues(JTextField txt1, JTextField txt2, JTextField txt3, JTextField txt4, JTextField txt5, JTextField txt6, JTextField txt7,JTextField txt8)
+    private void getTextValues(JComboBox cmb, JTextField txt1, JTextField txt2, JTextField txt3, JTextField txt4, JTextField txt5, JTextField txt6, JTextField txt7)
     {
         //float tax = 0.143f;
         int qty = Integer.parseInt(txt1.getText());
-        float discount = Float.parseFloat(txt2.getText());
+        float discount = 0.0f;
+        try {
+            discount = Float.parseFloat(txt2.getText());
+        } catch (Exception e) { }
         float price = Float.parseFloat(txt3.getText());
+        try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name =?");
+                    //pst.setInt(1,id);
+                    pst.setString(1, cmb.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int qty1 = rs.getInt("quantity");
+                    if(qty > qty1)
+                    {
+                        JOptionPane.showMessageDialog(this, "Qunatity is higher than available stock quantity.. please fill right quantity");
+                    }
+                    else
+                    {
+                    float disc = price-discount;
+                    float amount = (qty * disc);
+                    float tax = (amount * 0.143f);
+                    float bill = amount + tax;
+
+                    //float tax = Float.parseFloat((amount*0.143));
+                    txt4.setText(String.valueOf(amount));
+                    txt5.setText(String.valueOf(amount));
+                    txt6.setText(String.valueOf(tax));
+                    txt7.setText(String.valueOf(bill));
+                     //txt8.setText(String.valueOf(bill));
+
+                    //txt6.setText(String.valueOf(tax));
+
+                    }
+                    
+                    
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
         
-        float disc = price-discount;
-        float amount = (qty * disc);
-        float tax = (amount * 0.143f);
-        float bill = amount + tax;
-        
-        //float tax = Float.parseFloat((amount*0.143));
-        txt4.setText(String.valueOf(amount));
-        txt5.setText(String.valueOf(amount));
-        txt6.setText(String.valueOf(tax));
-         txt7.setText(String.valueOf(bill));
-         txt8.setText(String.valueOf(bill));
-        
-        //txt6.setText(String.valueOf(tax));
-       
         
     }
     
@@ -1240,12 +1360,12 @@ public class Bill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboproductname10ItemStateChanged
 
     private void txtqty1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty1FocusLost
-        getTextValues(txtqty1, txtdiscount1, txtprice1, txttotal1, txtgrandtotal, txttax, txtbill, txtcredit);
+        getTextValues(comboproductname1, txtqty1, txtdiscount1, txtprice1, txttotal1, txtgrandtotal, txttax, txtbill);
        
     }//GEN-LAST:event_txtqty1FocusLost
 
     private void txtqty2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty2FocusLost
-      getTextValues(txtqty2, txtdiscount2, txtprice2, txttotal2, txtgrandtotal, txttax, txtbill, txtcredit);
+        getTextValues(comboproductname2, txtqty2, txtdiscount2, txtprice2, txttotal2, txtgrandtotal, txttax, txtbill);
         float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float amt=t1+t2;
@@ -1254,12 +1374,12 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
         float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+        //txtcredit.setText(String.valueOf(bill));
        
     }//GEN-LAST:event_txtqty2FocusLost
 
     private void txtqty3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty3FocusLost
-       getTextValues(txtqty3, txtdiscount3, txtprice3, txttotal3, txtgrandtotal, txttax, txtbill, txtcredit);
+       getTextValues(comboproductname3, txtqty3, txtdiscount3, txtprice3, txttotal3, txtgrandtotal, txttax, txtbill);
        float t1 = Float.parseFloat(txttotal3.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1269,11 +1389,11 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+        //txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty3FocusLost
 
     private void txtqty4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty4FocusLost
-        getTextValues(txtqty4, txtdiscount4, txtprice4, txttotal4, txtgrandtotal, txttax, txtbill, txtcredit);
+        getTextValues(comboproductname4, txtqty4, txtdiscount4, txtprice4, txttotal4, txtgrandtotal, txttax, txtbill);
        float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1284,11 +1404,11 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+        //txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty4FocusLost
 
     private void txtqty5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty5FocusLost
-       getTextValues(txtqty5, txtdiscount5, txtprice5, txttotal5, txtgrandtotal,txttax, txtbill, txtcredit);
+       getTextValues(comboproductname5, txtqty5, txtdiscount5, txtprice5, txttotal5, txtgrandtotal,txttax, txtbill);
        float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1300,11 +1420,11 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+       // txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty5FocusLost
 
     private void txtqty6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty6FocusLost
-        getTextValues(txtqty6, txtdiscount6, txtprice6, txttotal6, txtgrandtotal, txttax, txtbill, txtcredit);
+        getTextValues(comboproductname6, txtqty6, txtdiscount6, txtprice6, txttotal6, txtgrandtotal, txttax, txtbill);
        float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1317,11 +1437,11 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+        //txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty6FocusLost
 
     private void txtqty7FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty7FocusLost
-        getTextValues(txtqty7, txtdiscount7, txtprice7, txttotal7, txtgrandtotal, txttax, txtbill, txtcredit);
+       getTextValues(comboproductname7, txtqty7, txtdiscount7, txtprice7, txttotal7, txtgrandtotal, txttax, txtbill);
        float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1335,11 +1455,11 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+       // txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty7FocusLost
 
     private void txtqty8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty8FocusLost
-        getTextValues(txtqty8, txtdiscount8, txtprice8, txttotal8, txtgrandtotal, txttax, txtbill, txtcredit);
+        getTextValues(comboproductname8, txtqty8, txtdiscount8, txtprice8, txttotal8, txtgrandtotal, txttax, txtbill);
        float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1354,11 +1474,11 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+        //txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty8FocusLost
 
     private void txtqty9FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty9FocusLost
-        getTextValues(txtqty9, txtdiscount9, txtprice9, txttotal9, txtgrandtotal,txttax, txtbill, txtcredit);
+        getTextValues(comboproductname9, txtqty9, txtdiscount9, txtprice9, txttotal9, txtgrandtotal,txttax, txtbill);
        float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1374,13 +1494,13 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+        //txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty9FocusLost
 
     private void txtqty10FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtqty10FocusLost
       
 //       txtdiscount10.setText(String.valueOf(dis));
-        getTextValues(txtqty10, txtdiscount10, txtprice10, txttotal10, txtgrandtotal,txttax, txtbill, txtcredit);
+       getTextValues(comboproductname10, txtqty10, txtdiscount10, txtprice10, txttotal10, txtgrandtotal,txttax, txtbill);
        float t1 = Float.parseFloat(txttotal1.getText());
        float t2 = Float.parseFloat(txttotal2.getText());
        float t3 = Float.parseFloat(txttotal3.getText());
@@ -1397,7 +1517,7 @@ public class Bill extends javax.swing.JInternalFrame {
        txttax.setText(String.valueOf(tax));
        float bill = amt + tax;
         txtbill.setText(String.valueOf(bill));
-        txtcredit.setText(String.valueOf(bill));
+        //txtcredit.setText(String.valueOf(bill));
     }//GEN-LAST:event_txtqty10FocusLost
 
     private void txtgrandtotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtgrandtotalFocusLost
@@ -1411,7 +1531,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount10KeyReleased
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty10, txtdiscount10, txtprice10, txttotal10, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname10, txtqty10, txtdiscount10, txtprice10, txttotal10, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1428,7 +1548,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                    //txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1438,7 +1558,7 @@ public class Bill extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty1, txtdiscount1, txtprice1, txttotal1, txtgrandtotal, txttax, txtbill, txtcredit);  
+                 getTextValues(comboproductname1, txtqty1, txtdiscount1, txtprice1, txttotal1, txtgrandtotal, txttax, txtbill);  
             }
         } catch (NumberFormatException | NullPointerException e) {}
     }//GEN-LAST:event_txtdiscount1KeyReleased
@@ -1446,7 +1566,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount2KeyReleased
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty2, txtdiscount2, txtprice2, txttotal2, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname2, txtqty2, txtdiscount2, txtprice2, txttotal2, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                    
@@ -1456,7 +1576,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                    //txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1465,7 +1585,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount3KeyReleased
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty3, txtdiscount3, txtprice3, txttotal3, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname3, txtqty3, txtdiscount3, txtprice3, txttotal3, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1476,7 +1596,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                   // txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1485,7 +1605,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount4KeyReleased
        try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty4, txtdiscount4, txtprice4, txttotal4, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname4, txtqty4, txtdiscount4, txtprice4, txttotal4, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1497,7 +1617,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                   // txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1506,7 +1626,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount5KeyReleased
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty5, txtdiscount5, txtprice5, txttotal5, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname5, txtqty5, txtdiscount5, txtprice5, txttotal5, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1519,7 +1639,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                    //txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1528,7 +1648,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount6KeyReleased
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty6, txtdiscount6, txtprice6, txttotal6, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname6, txtqty6, txtdiscount6, txtprice6, txttotal6, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1542,7 +1662,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                    //txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1551,7 +1671,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount7KeyReleased
        try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty7, txtdiscount7, txtprice7, txttotal7, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname7, txtqty7, txtdiscount7, txtprice7, txttotal7, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1566,7 +1686,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                    //txtcredit.setText(String.valueOf(bill));
             }
         } catch (NumberFormatException | NullPointerException e) {}
     }//GEN-LAST:event_txtdiscount7KeyReleased
@@ -1574,7 +1694,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount8KeyReleased
        try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty8, txtdiscount8, txtprice8, txttotal8, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname8, txtqty8, txtdiscount8, txtprice8, txttotal8, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1590,7 +1710,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                    //txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1599,7 +1719,7 @@ public class Bill extends javax.swing.JInternalFrame {
     private void txtdiscount9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiscount9KeyReleased
         try {
             if (evt.getKeyCode() >= KeyEvent.VK_0 && evt.getKeyCode() <= KeyEvent.VK_9) {
-                 getTextValues(txtqty9, txtdiscount9, txtprice9, txttotal9, txtgrandtotal, txttax, txtbill, txtcredit);
+                 getTextValues(comboproductname9, txtqty9, txtdiscount9, txtprice9, txttotal9, txtgrandtotal, txttax, txtbill);
                     float t1 = Float.parseFloat(txttotal1.getText());
                     float t2 = Float.parseFloat(txttotal2.getText());
                     float t3 = Float.parseFloat(txttotal3.getText());
@@ -1617,7 +1737,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     txttax.setText(String.valueOf(tax));
                     float bill = amt + tax;
                     txtbill.setText(String.valueOf(bill));
-                    txtcredit.setText(String.valueOf(bill));
+                    //txtcredit.setText(String.valueOf(bill));
                 
             }
         } catch (NumberFormatException | NullPointerException e) {}
@@ -1627,88 +1747,125 @@ public class Bill extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtdiscount7ActionPerformed
 
-    private void btngeneratebillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngeneratebillActionPerformed
-        String quantity1=txtqty1.getText();
-        String quantity2=txtqty2.getText();
-        String quantity3=txtqty3.getText();
-        String quantity4=txtqty4.getText();
-        String quantity5=txtqty5.getText();
-        String quantity6=txtqty6.getText();
-        String quantity7=txtqty7.getText();
-        String quantity8=txtqty8.getText();
-        String quantity9=txtqty9.getText();
-        String quantity10=txtqty10.getText();
-        String address=txtaddress.getText();
-        String date=txtdate.getText();
-        String discount1=txtdiscount1.getText();
-        String discount2=txtdiscount2.getText();
-        String discount3=txtdiscount3.getText();
-        String discount4=txtdiscount4.getText();
-        String discount5=txtdiscount5.getText();
-        String discount6=txtdiscount6.getText();
-        String discount7=txtdiscount7.getText();
-        String discount8=txtdiscount8.getText();
-        String discount9=txtdiscount9.getText();
-        String discount10=txtdiscount10.getText();
-        String payment=txtbill.getText();
-        String total=txtgrandtotal.getText();
-        boolean status=radiocash.isSelected();
-        String credit=txtcredit.getText();
-        
-        /*here i dont recognise how to insert discount in bill table bcz there is 1-10 discount field
-            after that how to insert selected items in bill table like i want to add only 4 items from 10 in bill table
-            but it generate one bill id how?? also tell me about the query of it
-            
-            After that how to update quantity in product table because there are 10 field of quantity in bill table
-            and how to substract bill table's quantity with product table's quantity before updation??
-            also tell me about the query of it..
-        
-           how to select the status according to radio button of cash and credit before generate bill and 
-                insert into bill table?? and when status true for credit only that time credit textfield shows the
-                payement part means bill part if cash part is clicked and true then no payement is shown in credit textfield
-        
-        */
-        
-        
-        //Insertione part(Bill table)
-        try
-            {
-                con=DBConnection.getConnection();
+    private void getBillDetails(JComboBox cmb, JTextField txt1, JTextField txt2, JTextField txt3, JTextField txt4)
+    {
+        if (cmb.getSelectedIndex() > 0) {
+            if (!txt1.getText().equals("") && !txt2.equals("")) {
+                int quantity=Integer.parseInt(txt1.getText());
+                float discount=Float.parseFloat(txt3.getText());
+                float amount = Float.parseFloat(txt4.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select max(id) from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("max(id)");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, cmb.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(bill_id, product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity);
+                    pst.setFloat(4, discount);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
                 
-                pst = con.prepareStatement("select id from user where name = ?");
-                //pst.setString(1, combocustomername.getSelectedItem().toString());
-                ResultSet rs = pst.executeQuery();
-                rs.next();
-                int userID = rs.getInt("id");
-             
-                pst = con.prepareStatement("select id from customer where name = ?");
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, cmb.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int qty = rs.getInt("quantity");
+                    
+                    int qty1 = qty-quantity;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty1);
+                    pst.setString(2, cmb.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
+        }
+    }
+    
+    private void btngeneratebillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngeneratebillActionPerformed
+        
+        String date=txtdate.getText();
+        float total=Float.parseFloat(txtgrandtotal.getText());
+        float bill=Float.parseFloat(txtbill.getText());
+        boolean status=radiocash.isSelected();
+        float pendingpayment = Float.parseFloat(txtcredit.getText());
+        
+        try
+             {
+                 con=DBConnection.getConnection();
+                
+                  pst = con.prepareStatement("select id from customer where first_name = ?");
                 pst.setString(1, combocustomername.getSelectedItem().toString());
-                rs = pst.executeQuery();
+                ResultSet rs = pst.executeQuery();
                 rs.next();
                 int customerID = rs.getInt("id");
                 
                 
                 
-                pst=con.prepareStatement("insert into bill (User_ID,Customer_ID,Date,Discount,Payment,Total,Status)values(?, ?, ?, ?, ?, ?, ?)");
-                pst.setInt(1, userID);
+                pst=con.prepareStatement("insert into bill (user_id,customer_id,date,total,bill,status,pending)values(?, ?, ?, ?, ?, ?, ?)");
+                pst.setInt(1, UserClass.userid);
                 pst.setInt(2, customerID);
                 pst.setString(3, date);
-                pst.setString(4, discount1);
-                pst.setString(5, payment);
-                pst.setString(6, total);
-                pst.setBoolean(7, status);
-                //pst.setString(8, credit);
-                //pst.setInt(8, categoryID);
-                //pst.setInt(9, supplierID);
+                pst.setFloat(4, total);
+                pst.setFloat(5, bill);
+                pst.setBoolean(6, status);
+                  pst.setFloat(7, pendingpayment);
+
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
-                    JOptionPane.showMessageDialog(this, "Added Successfully");
+                    JOptionPane.showMessageDialog(this, "Bill added Successfully");
                     //clear();
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(this, "Not added Successfully");
+                    JOptionPane.showMessageDialog(this, "Bill not added Successfully");
                 }
                 
             }
@@ -1717,106 +1874,864 @@ public class Bill extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         
-        //Updation Part
-        /* After that how to update quantity in product table because there are 10 field of quantity in bill table
-            and how to substract bill table's quantity with product table's quantity before updation??
-            also tell me about the query of it.. */
+       
+//        // Insert into bill table and get the generated bill ID
         
-        try {
-            
-                //int quantity=
-                con = DBConnection.getConnection();
-                pst = con.prepareStatement("update product set quantity=? where id=?");
+        getBillDetails(comboproductname1, txtqty1, txtprice1, txtdiscount1, txttotal1);
+        getBillDetails(comboproductname2, txtqty2, txtprice2, txtdiscount2, txttotal2);
+        getBillDetails(comboproductname3, txtqty3, txtprice3, txtdiscount3, txttotal3);
+        getBillDetails(comboproductname4, txtqty4, txtprice4, txtdiscount4, txttotal4);
+        getBillDetails(comboproductname5, txtqty5, txtprice5, txtdiscount5, txttotal5);
+        getBillDetails(comboproductname6, txtqty6, txtprice6, txtdiscount6, txttotal6);
+        getBillDetails(comboproductname7, txtqty7, txtprice7, txtdiscount7, txttotal7);
+        getBillDetails(comboproductname8, txtqty8, txtprice8, txtdiscount8, txttotal8);
+        getBillDetails(comboproductname9, txtqty9, txtprice9, txtdiscount9, txttotal9);
+        getBillDetails(comboproductname10, txtqty10, txtprice10, txtdiscount10, txttotal10);
+        
+        
+      /* if (comboproductname1.getSelectedIndex() > 0) {
+            if (!txtqty1.getText().equals("") && !txtprice1.equals("")) {
+                int quantity1=Integer.parseInt(txtqty1.getText());
+                float discount1=Float.parseFloat(txtdiscount1.getText());
+                float amount = Float.parseFloat(txttotal1.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
 
-                //pst.setString(1, quantity);
-               
-                //pst.setString(10, firstname);
-                
-                int i = pst.executeUpdate();
-                if (i > 0) {
-                    JOptionPane.showMessageDialog(this, "Updated Successfully");
-                    //clear();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Not updated Successfully");
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname1.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity1);
+                    pst.setFloat(4, discount1);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
                 }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname1.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity1;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname1.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
             }
-        
-           //PDF Part
-        /* Its simple pdf file generator program which works fine
-            how to add bill layout and generate pdf according to billing */
-        
-            
-            JFileChooser fileChooser = new JFileChooser();
-        fileChooser.showSaveDialog(null);
-        
-        File file = fileChooser.getSelectedFile();
-        
-        try {
-            PdfDocument pdf = new PdfDocument(new PdfWriter(file.getCanonicalPath()));
-            Document document = new Document(pdf);
-            
-            document.add(new Paragraph("Hello, World!"));
-            document.close();
-            pdf.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+       
+       if (comboproductname2.getSelectedIndex() > 0) {
+            if (!txtqty2.getText().equals("") && !txtprice2.equals("")) {
+                int quantity2=Integer.parseInt(txtqty2.getText());
+                float discount2=Float.parseFloat(txtdiscount2.getText());
+                float amount = Float.parseFloat(txttotal2.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname2.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity2);
+                    pst.setFloat(4, discount2);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname2.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity2;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname2.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
+        }
+       
+       
+       if (comboproductname3.getSelectedIndex() > 0) {
+            if (!txtqty3.getText().equals("") && !txtprice3.equals("")) {
+                int quantity3=Integer.parseInt(txtqty3.getText());
+                float discount3=Float.parseFloat(txtdiscount3.getText());
+                float amount = Float.parseFloat(txttotal3.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname3.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity3);
+                    pst.setFloat(4, discount3);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname3.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity3;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname3.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
+        }
+       
+       
+       if (comboproductname4.getSelectedIndex() > 0) {
+            if (!txtqty4.getText().equals("") && !txtprice4.equals("")) {
+                int quantity4=Integer.parseInt(txtqty4.getText());
+                float discount4=Float.parseFloat(txtdiscount4.getText());
+                float amount = Float.parseFloat(txttotal4.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname4.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity4);
+                    pst.setFloat(4, discount4);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname4.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity4;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname4.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
+        }
+       
+       
+        if (comboproductname5.getSelectedIndex() > 0) {
+            if (!txtqty5.getText().equals("") && !txtprice5.equals("")) {
+                int quantity5=Integer.parseInt(txtqty5.getText());
+                float discount5=Float.parseFloat(txtdiscount5.getText());
+                float amount = Float.parseFloat(txttotal5.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname5.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity5);
+                    pst.setFloat(4, discount5);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname5.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity5;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname5.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
         }
         
-        //Insertione part(Bill details table)
-        /*here 1 problem how to fetch product id and product quantity 
-                    according to perticular product name in following query??
-                Also please check the query..
-                */
         
-        try
-            {
-                con=DBConnection.getConnection();
-             
-                
-                
-                pst = con.prepareStatement("select B.ID, P.ID,P.Quantity,B.Payment from Bill B, Product P");
-               
-                ResultSet rs = pst.executeQuery();
-                rs.next();
-                int billID = rs.getInt("B.ID");
-                int productID=rs.getInt("P.ID");
-                int quantity=rs.getInt("P.Quantity");
-                int total_bill=rs.getInt("P.Payment");
-                
-               
-                
-                pst=con.prepareStatement("insert into bill_detail (bill_id, product_id, quantity, payment)values(?, ?, ?, ?)");
-                pst.setInt(1, billID);
-                pst.setInt(2, productID);
-                pst.setInt(3, quantity);
-                pst.setInt(4, total_bill);
-                
-                int i=pst.executeUpdate();
-                if(i>0)
+         if (comboproductname6.getSelectedIndex() > 0) {
+            if (!txtqty6.getText().equals("") && !txtprice6.equals("")) {
+                int quantity6=Integer.parseInt(txtqty6.getText());
+                float discount6=Float.parseFloat(txtdiscount6.getText());
+                float amount = Float.parseFloat(txttotal6.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
                 {
-                    JOptionPane.showMessageDialog(this, "Added to bill detail table Successfully");
-                    //clear();
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname6.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity6);
+                    pst.setFloat(4, discount6);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
                 }
-                else
+                catch(Exception e)
                 {
-                    JOptionPane.showMessageDialog(this, "Not added to bill detail table Successfully");
+                    JOptionPane.showMessageDialog(this, e);
                 }
                 
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname6.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity6;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname6.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
             }
-            catch(Exception e)
-            {
-                JOptionPane.showMessageDialog(this, e);
+        }
+         
+         
+          if (comboproductname7.getSelectedIndex() > 0) {
+            if (!txtqty7.getText().equals("") && !txtprice7.equals("")) {
+                int quantity7=Integer.parseInt(txtqty7.getText());
+                float discount7=Float.parseFloat(txtdiscount7.getText());
+                float amount = Float.parseFloat(txttotal7.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname7.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity7);
+                    pst.setFloat(4, discount7);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname7.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity7;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname7.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
             }
+        }
+          
+          
+           if (comboproductname8.getSelectedIndex() > 0) {
+            if (!txtqty8.getText().equals("") && !txtprice8.equals("")) {
+                int quantity8=Integer.parseInt(txtqty8.getText());
+                float discount8=Float.parseFloat(txtdiscount8.getText());
+                float amount = Float.parseFloat(txttotal8.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname8.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity8);
+                    pst.setFloat(4, discount8);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname8.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity8;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname8.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
+        }
+           
+           
+            if (comboproductname9.getSelectedIndex() > 0) {
+            if (!txtqty9.getText().equals("") && !txtprice9.equals("")) {
+                int quantity9=Integer.parseInt(txtqty9.getText());
+                float discount9=Float.parseFloat(txtdiscount9.getText());
+                float amount = Float.parseFloat(txttotal9.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname9.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity9);
+                    pst.setFloat(4, discount9);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname9.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity9;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname9.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
+        }
+            
+            
+             if (comboproductname10.getSelectedIndex() > 0) {
+            if (!txtqty10.getText().equals("") && !txtprice10.equals("")) {
+                int quantity10=Integer.parseInt(txtqty10.getText());
+                float discount10=Float.parseFloat(txtdiscount10.getText());
+                float amount = Float.parseFloat(txttotal10.getText());
+                // Do required calculations and perform insert on
+                // bill_detail table with generated bill id
+                // Also perform update operation on product
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select id from bill");
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int billID = rs.getInt("id");
+
+                    pst = con.prepareStatement("select id from product where name = ?");
+                    pst.setString(1, comboproductname10.getSelectedItem().toString());
+                    rs = pst.executeQuery();
+                    rs.next();
+                    int productID = rs.getInt("id");
+
+                    pst = con.prepareStatement("insert into bill_detail(max(bill_id), product_id, quantity, discount, amount) values(?, ?, ?, ?, ?)");
+                    pst.setInt(1, billID);
+                    pst.setInt(2, productID);
+                    pst.setInt(3, quantity10);
+                    pst.setFloat(4, discount10);
+                    pst.setFloat(5, amount);
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Added to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not added to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                
+                
+                try
+                {
+                    con=DBConnection.getConnection();
+
+                    pst = con.prepareStatement("select quantity from product where name = ?");
+                    pst.setString(1, comboproductname10.getSelectedItem().toString());
+                    ResultSet rs = pst.executeQuery();
+                    rs.next();
+                    int quantity = rs.getInt("quantity");
+                    
+                    int qty = quantity-quantity10;
+
+                   pst = con.prepareStatement("update product set quantity=? where name=?");
+                    pst.setInt(1, qty);
+                    pst.setString(2, comboproductname10.getSelectedItem().toString());
+                    int i = pst.executeUpdate();
+                    if(i>0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Update to bill details successfully");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not update to bill details successfully");
+                    }
+                }
+                catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+                          
+            }
+        }*/
+        //System.out.println(UserClass.userid);
         
+      
         
+
+//   ----------------------------------------------------------------------------------------------------     
+//           //------------PDF Part----------------
+//        /* Its simple pdf file generator program which works fine
+//            how to add bill layout and generate pdf according to billing */
+//        
+//            
+//            JFileChooser fileChooser = new JFileChooser();
+//        fileChooser.showSaveDialog(null);
+//        
+//        File file = fileChooser.getSelectedFile();
+//        
+//        try {
+//            PdfDocument pdf = new PdfDocument(new PdfWriter(file.getCanonicalPath()));
+//            Document document = new Document(pdf);
+//            
+//            document.add(new Paragraph("Hello, World!"));
+//            document.close();
+//            pdf.close();
+//        } catch (IOException ex) {
+//            Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        
     }//GEN-LAST:event_btngeneratebillActionPerformed
+
+    private void radiocreditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiocreditActionPerformed
+        if (radiocredit.isSelected()) {
+            txtcredit.setEnabled(true);
+        } else {
+            txtcredit.setEnabled(false);
+        }
+    }//GEN-LAST:event_radiocreditActionPerformed
+
+    private void radiocashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiocashActionPerformed
+        if (radiocash.isSelected()) {
+            txtcredit.setText("0.0");
+            txtcredit.setEnabled(false);
+        } else {
+            txtcredit.setEnabled(true);
+        }
+    }//GEN-LAST:event_radiocashActionPerformed
+
+    private void btnrefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrefreshActionPerformed
+        clear();
+    }//GEN-LAST:event_btnrefreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btngeneratebill;
+    private javax.swing.JButton btnrefresh;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox combocustomername;
     private javax.swing.JComboBox comboproductname1;
