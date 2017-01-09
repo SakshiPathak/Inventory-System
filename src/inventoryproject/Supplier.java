@@ -11,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -392,8 +391,8 @@ public class Supplier extends javax.swing.JInternalFrame {
              try
              {
                  con=DBConnection.getConnection();
-            Statement st=con.createStatement();
-            rs=st.executeQuery("select Address,Phone from supplier");
+               pst =con.prepareStatement("select Address,Phone from supplier");
+            rs=pst.executeQuery();
             
             
             int c=0;

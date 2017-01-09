@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -437,8 +436,9 @@ public class Customer extends javax.swing.JInternalFrame {
             boolean unique = true;
             try {
                 con = DBConnection.getConnection();
-                Statement st = con.createStatement();
-                rs = st.executeQuery("select email,address,phone from customer");
+                
+                pst = con.prepareStatement("select email,address,phone from customer");
+                rs = pst.executeQuery();
 
                 int c = 0;
                 while (rs.next()) {

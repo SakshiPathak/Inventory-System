@@ -11,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -216,8 +215,8 @@ public class Register extends javax.swing.JInternalFrame {
              try
              {
                  con=DBConnection.getConnection();
-            Statement st=con.createStatement();
-            rs=st.executeQuery("select Password from user");
+            pst = con.prepareStatement("select Password from user");
+            rs = pst.executeQuery();
             
             
             int c=0;

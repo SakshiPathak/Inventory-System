@@ -8,8 +8,8 @@ import com.inventorysystem.helpers.DBConnection;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -36,8 +36,9 @@ public class ProductReport extends javax.swing.JInternalFrame {
         {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
-            Statement st=con.createStatement();
-            rs=st.executeQuery("select P.name, units, quantity, cost_price, sale_price, status, re_order_level, C.name, S.name from product P, category C, supplier S where P.category_id=C.id and P.supplier_id=S.id");
+            
+            PreparedStatement pst = con.prepareStatement("select P.name, units, quantity, cost_price, sale_price, status, re_order_level, C.name, S.name from product P, category C, supplier S where P.category_id=C.id and P.supplier_id=S.id");
+            rs = pst.executeQuery();
             
             //
             ProductClass product;
