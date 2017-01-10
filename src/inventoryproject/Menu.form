@@ -64,7 +64,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnucategory">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add/Update/Delete Category"/>
+                <Property name="text" type="java.lang.String" value="Add/Delete Category"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnucategoryActionPerformed"/>

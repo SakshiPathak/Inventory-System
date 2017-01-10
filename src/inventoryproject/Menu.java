@@ -130,7 +130,7 @@ public class Menu extends javax.swing.JFrame {
 
         mnucategorydetail.setText("Category Details");
 
-        mnucategory.setText("Add/Update/Delete Category");
+        mnucategory.setText("Add/Delete Category");
         mnucategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnucategoryActionPerformed(evt);

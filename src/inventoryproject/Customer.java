@@ -303,7 +303,7 @@ public class Customer extends javax.swing.JInternalFrame {
                 .addComponent(btndelete)
                 .addGap(28, 28, 28)
                 .addComponent(btnrefresh)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,11 +381,13 @@ public class Customer extends javax.swing.JInternalFrame {
 
     private void radiomaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiomaleActionPerformed
         // TODO add your handling code here:
+        if(radiomale.isSelected()==true)
         Gender = "M";
     }//GEN-LAST:event_radiomaleActionPerformed
 
     private void radiofemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiofemaleActionPerformed
         // TODO add your handling code here:
+        if(radiofemale.isSelected()==true)
         Gender = "F";
     }//GEN-LAST:event_radiofemaleActionPerformed
 
@@ -420,7 +422,7 @@ public class Customer extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please enter valid name");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtlastname.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid name");
-        } else if (!(Pattern.matches("^[A-Za-z0-9]+[@]{1}+[A-Za-z0-9]+[.]{1}+[A-Za-z0-9]+$", txtemailid.getText()))) {
+        } else if (!(Pattern.matches("^[A-Za-z0-9@_.]+[@]{1}+[A-Za-z0-9]+[.]{1}+[A-Za-z0-9]+$", txtemailid.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid email id");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtcity.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid city");
@@ -527,7 +529,7 @@ public class Customer extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please enter valid name");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtlastname.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid name");
-        } else if (!(Pattern.matches("^[A-Za-z0-9]+[@]{1}+[A-Za-z0-9]+[.]{1}+[A-Za-z0-9]+$", txtemailid.getText()))) {
+        } else if (!(Pattern.matches("^[A-Za-z0-9@_.]+[@]{1}+[A-Za-z0-9]+[.]{1}+[A-Za-z0-9]+$", txtemailid.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid email id");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtcity.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid city");

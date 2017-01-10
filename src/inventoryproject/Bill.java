@@ -6,6 +6,9 @@
 package inventoryproject;
 
 import com.inventorysystem.helpers.DBConnection;
+import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -28,9 +31,14 @@ import javax.swing.plaf.DesktopPaneUI;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Div;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 /**
  *
@@ -1830,63 +1838,63 @@ public class Bill extends javax.swing.JInternalFrame {
     
     private void btngeneratebillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngeneratebillActionPerformed
         
-        String date=txtdate.getText();
-        float total=Float.parseFloat(txtgrandtotal.getText());
-        float bill=Float.parseFloat(txtbill.getText());
-        boolean status=radiocash.isSelected();
-        float pendingpayment = Float.parseFloat(txtcredit.getText());
-        
-        try
-             {
-                 con=DBConnection.getConnection();
-                
-                  pst = con.prepareStatement("select id from customer where first_name = ?");
-                pst.setString(1, combocustomername.getSelectedItem().toString());
-                ResultSet rs = pst.executeQuery();
-                rs.next();
-                int customerID = rs.getInt("id");
-                
-                
-                
-                pst=con.prepareStatement("insert into bill (user_id,customer_id,date,total,bill,status,pending)values(?, ?, ?, ?, ?, ?, ?)");
-                pst.setInt(1, UserClass.userid);
-                pst.setInt(2, customerID);
-                pst.setString(3, date);
-                pst.setFloat(4, total);
-                pst.setFloat(5, bill);
-                pst.setBoolean(6, status);
-                  pst.setFloat(7, pendingpayment);
-
-                int i=pst.executeUpdate();
-                if(i>0)
-                {
-                    JOptionPane.showMessageDialog(this, "Bill added Successfully");
-                    //clear();
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(this, "Bill not added Successfully");
-                }
-                
-            }
-            catch(Exception e)
-            {
-                JOptionPane.showMessageDialog(this, e);
-            }
-        
-       
-//        // Insert into bill table and get the generated bill ID
-        
-        getBillDetails(comboproductname1, txtqty1, txtprice1, txtdiscount1, txttotal1);
-        getBillDetails(comboproductname2, txtqty2, txtprice2, txtdiscount2, txttotal2);
-        getBillDetails(comboproductname3, txtqty3, txtprice3, txtdiscount3, txttotal3);
-        getBillDetails(comboproductname4, txtqty4, txtprice4, txtdiscount4, txttotal4);
-        getBillDetails(comboproductname5, txtqty5, txtprice5, txtdiscount5, txttotal5);
-        getBillDetails(comboproductname6, txtqty6, txtprice6, txtdiscount6, txttotal6);
-        getBillDetails(comboproductname7, txtqty7, txtprice7, txtdiscount7, txttotal7);
-        getBillDetails(comboproductname8, txtqty8, txtprice8, txtdiscount8, txttotal8);
-        getBillDetails(comboproductname9, txtqty9, txtprice9, txtdiscount9, txttotal9);
-        getBillDetails(comboproductname10, txtqty10, txtprice10, txtdiscount10, txttotal10);
+//        String date=txtdate.getText();
+//        float total=Float.parseFloat(txtgrandtotal.getText());
+//        float bill=Float.parseFloat(txtbill.getText());
+//        boolean status=radiocash.isSelected();
+//        float pendingpayment = Float.parseFloat(txtcredit.getText());
+//        
+//        try
+//             {
+//                 con=DBConnection.getConnection();
+//                
+//                  pst = con.prepareStatement("select id from customer where first_name = ?");
+//                pst.setString(1, combocustomername.getSelectedItem().toString());
+//                ResultSet rs = pst.executeQuery();
+//                rs.next();
+//                int customerID = rs.getInt("id");
+//                
+//                
+//                
+//                pst=con.prepareStatement("insert into bill (user_id,customer_id,date,total,bill,status,pending)values(?, ?, ?, ?, ?, ?, ?)");
+//                pst.setInt(1, UserClass.userid);
+//                pst.setInt(2, customerID);
+//                pst.setString(3, date);
+//                pst.setFloat(4, total);
+//                pst.setFloat(5, bill);
+//                pst.setBoolean(6, status);
+//                  pst.setFloat(7, pendingpayment);
+//
+//                int i=pst.executeUpdate();
+//                if(i>0)
+//                {
+//                    JOptionPane.showMessageDialog(this, "Bill added Successfully");
+//                    //clear();
+//                }
+//                else
+//                {
+//                    JOptionPane.showMessageDialog(this, "Bill not added Successfully");
+//                }
+//                
+//            }
+//            catch(Exception e)
+//            {
+//                JOptionPane.showMessageDialog(this, e);
+//            }
+//        
+//       
+////        // Insert into bill table and get the generated bill ID
+//        
+//        getBillDetails(comboproductname1, txtqty1, txtprice1, txtdiscount1, txttotal1);
+//        getBillDetails(comboproductname2, txtqty2, txtprice2, txtdiscount2, txttotal2);
+//        getBillDetails(comboproductname3, txtqty3, txtprice3, txtdiscount3, txttotal3);
+//        getBillDetails(comboproductname4, txtqty4, txtprice4, txtdiscount4, txttotal4);
+//        getBillDetails(comboproductname5, txtqty5, txtprice5, txtdiscount5, txttotal5);
+//        getBillDetails(comboproductname6, txtqty6, txtprice6, txtdiscount6, txttotal6);
+//        getBillDetails(comboproductname7, txtqty7, txtprice7, txtdiscount7, txttotal7);
+//        getBillDetails(comboproductname8, txtqty8, txtprice8, txtdiscount8, txttotal8);
+//        getBillDetails(comboproductname9, txtqty9, txtprice9, txtdiscount9, txttotal9);
+//        getBillDetails(comboproductname10, txtqty10, txtprice10, txtdiscount10, txttotal10);
         
         
       
@@ -1907,15 +1915,25 @@ public class Bill extends javax.swing.JInternalFrame {
 //        File file = fileChooser.getSelectedFile();
 //        
 //        try {
-//            PdfDocument pdf = new PdfDocument(new PdfWriter(file.getCanonicalPath()));
+//            PdfDocument pdf = new PdfDocument(new PdfWriter("1.pdf"));
 //            Document document = new Document(pdf);
 //            
-//            document.add(new Paragraph("Hello, World!"));
+//            Div div = new Div();
+//            PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
+//            div.add(new Paragraph(new Text("Pawla Paint Store").setFont(font)));
+//            
+//            document.add(div);
 //            document.close();
 //            pdf.close();
 //        } catch (IOException ex) {
 //            Logger.getLogger(Bill.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+        
+        try {
+            PrintWriter fileWriter = new PrintWriter(new FileOutputStream("1.html"));
+            fileWriter.println("");
+        } catch (Exception e) {}
+              
 //        
 //        
     }//GEN-LAST:event_btngeneratebillActionPerformed
