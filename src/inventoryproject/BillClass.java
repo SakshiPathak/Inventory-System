@@ -11,6 +11,7 @@ package inventoryproject;
  */
 public class BillClass {
     private String billid;
+    private String username;
     private String customername;
     private String amount;
     private String status;
@@ -20,8 +21,9 @@ public class BillClass {
     public BillClass() {
     }
 
-    public BillClass(String billid, String customername, String amount, String status, String pendingpayment, String date) {
+    public BillClass(String billid, String username, String customername, String amount, String status, String pendingpayment, String date) {
         this.billid = billid;
+        this.username = username;
         this.customername = customername;
         this.amount = amount;
         this.status = status;
@@ -35,6 +37,14 @@ public class BillClass {
 
     public void setBillid(String billid) {
         this.billid = billid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getCustomername() {
@@ -77,6 +87,7 @@ public class BillClass {
         this.date = date;
     }
 
+   
     
 
     

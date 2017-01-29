@@ -37,6 +37,7 @@ public class Customer extends javax.swing.JInternalFrame {
         initComponents();
         customerList = new ArrayList<>();
         populateCustomerNameCombo();
+        btndelete.setVisible(false);
         
     }
 
@@ -45,6 +46,7 @@ public class Customer extends javax.swing.JInternalFrame {
         //txtcustomerid.setText("");
         txtfirstname.setText("");
         txtlastname.setText("");
+        buttonGroup1.clearSelection();
         txtemailid.setText("");
         txtaddress.setText("");
         txtcity.setText("");
@@ -125,6 +127,23 @@ public class Customer extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Customer Detail");
         setName("customer"); // NOI18N
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Customer Basic Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 51, 0))); // NOI18N
 
@@ -276,6 +295,7 @@ public class Customer extends javax.swing.JInternalFrame {
 
         btndelete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btndelete.setText("Delete");
+        btndelete.setFocusPainted(false);
         btndelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btndeleteActionPerformed(evt);
@@ -383,18 +403,23 @@ public class Customer extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if(radiomale.isSelected()==true)
         Gender = "M";
+        else
+            Gender = "F";
     }//GEN-LAST:event_radiomaleActionPerformed
 
     private void radiofemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiofemaleActionPerformed
         // TODO add your handling code here:
         if(radiofemale.isSelected()==true)
         Gender = "F";
+        else
+            Gender = "M";
     }//GEN-LAST:event_radiofemaleActionPerformed
 
     private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
         // TODO add your handling code here:
         String firstname = txtfirstname.getText();
         String lastname = txtlastname.getText();
+        boolean status=radiomale.isSelected();
         String emailid = txtemailid.getText();
         String address = txtaddress.getText();
         String city = txtcity.getText();
@@ -419,9 +444,9 @@ public class Customer extends javax.swing.JInternalFrame {
         } else if (phoneno.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Phone No field is empty... please fill it first!!");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtfirstname.getText()))) {
-            JOptionPane.showMessageDialog(this, "Please enter valid name");
+            JOptionPane.showMessageDialog(this, "Please enter valid first name");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtlastname.getText()))) {
-            JOptionPane.showMessageDialog(this, "Please enter valid name");
+            JOptionPane.showMessageDialog(this, "Please enter valid last name");
         } else if (!(Pattern.matches("^[A-Za-z0-9@_.]+[@]{1}+[A-Za-z0-9]+[.]{1}+[A-Za-z0-9]+$", txtemailid.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid email id");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtcity.getText()))) {
@@ -475,10 +500,12 @@ public class Customer extends javax.swing.JInternalFrame {
                     pst.setString(9, phoneno);
                     pst.setString(10, customertype);
                     int i = pst.executeUpdate();
+                 
 
                     if (i > 0) {
                         JOptionPane.showMessageDialog(this, "Added Successfully");
                         clear();
+                        
 
                     } else {
                         JOptionPane.showMessageDialog(this, "Not added Successfully");
@@ -489,7 +516,7 @@ public class Customer extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
-
+         populateCustomerNameCombo();
     }//GEN-LAST:event_btnsaveActionPerformed
 
     private void btnrefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrefreshActionPerformed
@@ -502,6 +529,7 @@ public class Customer extends javax.swing.JInternalFrame {
         //String customerid=txtcustomerid.getText();
         String firstname = txtfirstname.getText();
         String lastname = txtlastname.getText();
+        boolean status=radiomale.isSelected();
         String emailid = txtemailid.getText();
         String address = txtaddress.getText();
         String city = txtcity.getText();
@@ -526,9 +554,9 @@ public class Customer extends javax.swing.JInternalFrame {
         } else if (phoneno.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Phone No field is empty... please fill it first!!");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtfirstname.getText()))) {
-            JOptionPane.showMessageDialog(this, "Please enter valid name");
+            JOptionPane.showMessageDialog(this, "Please enter valid first name");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtlastname.getText()))) {
-            JOptionPane.showMessageDialog(this, "Please enter valid name");
+            JOptionPane.showMessageDialog(this, "Please enter valid last name");
         } else if (!(Pattern.matches("^[A-Za-z0-9@_.]+[@]{1}+[A-Za-z0-9]+[.]{1}+[A-Za-z0-9]+$", txtemailid.getText()))) {
             JOptionPane.showMessageDialog(this, "Please enter valid email id");
         } else if (!(Pattern.matches("^[a-zA-Z ,]+$", txtcity.getText()))) {
@@ -548,6 +576,7 @@ public class Customer extends javax.swing.JInternalFrame {
 
                 pst.setString(1, lastname);
                 pst.setString(2, Gender);
+                //pst.setString(2, radiomale.setSelected(Gender.equals(Gender)));
                 pst.setString(3, emailid);
                 pst.setString(4, address);
                 pst.setString(5, city);
@@ -588,11 +617,12 @@ public class Customer extends javax.swing.JInternalFrame {
 
             con = DBConnection.getConnection();
             pst = con.prepareStatement("delete from customer where id=?");
-            pst.setInt(1, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
+            pst.setInt(1, Integer.parseInt(customerList.get(selectedCustomerId).getId()));
             int i = pst.executeUpdate();
             if (i > 0) {
                 JOptionPane.showMessageDialog(this, "data deleted successfully");
                 clear();
+                
             } else {
                 JOptionPane.showMessageDialog(this, "data not found");
                // txtcustomerid.setText("");
@@ -601,6 +631,7 @@ public class Customer extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+        populateCustomerNameCombo();
         //}
     }//GEN-LAST:event_btndeleteActionPerformed
 
@@ -610,6 +641,7 @@ public class Customer extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_combocustomernameActionPerformed
 
+    int selectedCustomerId = 0;
     private void combocustomernameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combocustomernameItemStateChanged
         try {
             if (customerList == null || combocustomername.getSelectedIndex() == 0)
@@ -625,9 +657,19 @@ public class Customer extends javax.swing.JInternalFrame {
 
             ResultSet rs = pst.executeQuery();
             rs.next();
-
+         
             txtfirstname.setText(rs.getString("first_name"));
             txtlastname.setText(rs.getString("last_name"));
+            //radiomale.setSelected(rs.getBoolean("gender"));
+            if(rs.getString("gender").equals("M"))
+            {
+                radiomale.setSelected(true);
+               
+            }
+           else
+            {
+               radiofemale.setSelected(true);
+            }
             txtemailid.setText(rs.getString("email"));
             txtaddress.setText(rs.getString("address"));
             txtcity.setText(rs.getString("city"));
@@ -635,11 +677,17 @@ public class Customer extends javax.swing.JInternalFrame {
             txtstate.setText(rs.getString("state"));
             txtphoneno.setText(rs.getString("phone"));
             combocustomertype.setSelectedItem(rs.getString("customer_type"));
-
+            
+            selectedCustomerId = combocustomername.getSelectedIndex();
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_combocustomernameItemStateChanged
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -688,6 +736,7 @@ public class Customer extends javax.swing.JInternalFrame {
             int index = 1;
             Item tItem = new Item(0, "Select Customer...");
             model.addElement(tItem);
+            customerList = new ArrayList<>();
             
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
@@ -711,6 +760,7 @@ public class Customer extends javax.swing.JInternalFrame {
             }
 
             combocustomername.setModel(model);
+            
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }

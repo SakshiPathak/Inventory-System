@@ -26,7 +26,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnusupplier">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add/Update/Delete Supplier"/>
+                <Property name="text" type="java.lang.String" value="Add/Update Supplier"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnusupplierActionPerformed"/>
@@ -49,7 +49,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnucustomer">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add/Update/Delete Customer"/>
+                <Property name="text" type="java.lang.String" value="Add/Update Customer"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnucustomerActionPerformed"/>
@@ -64,7 +64,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnucategory">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add/Delete Category"/>
+                <Property name="text" type="java.lang.String" value="Add Category"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnucategoryActionPerformed"/>
@@ -79,7 +79,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnuproduct">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add Product"/>
+                <Property name="text" type="java.lang.String" value="Add/Update Product"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuproductActionPerformed"/>

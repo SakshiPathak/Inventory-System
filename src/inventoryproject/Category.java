@@ -9,9 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 /**
  *
@@ -22,12 +25,15 @@ public class Category extends javax.swing.JInternalFrame {
     Connection con=null;
     PreparedStatement pst=null;
     ResultSet rs=null;
+    List<CategoryClass> categoryList;
     /**
      * Creates new form Category
      */
     public Category() {
         initComponents();
+        categoryList = new ArrayList<>();
         populateCategoryIdCombo();
+        btndelete.setVisible(false);
     }
     
     public void clear() {
@@ -42,7 +48,10 @@ public class Category extends javax.swing.JInternalFrame {
         PreparedStatement pstmt = con.prepareStatement("select id from category");
         
         ResultSet rs = pstmt.executeQuery();
+        combocategoryid.removeAllItems();
+        
         combocategoryid.addItem("");
+//        categoryList = new ArrayList<>();
         while (rs.next())
             combocategoryid.addItem(rs.getString("id"));
         
@@ -249,6 +258,7 @@ public class Category extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
+        populateCategoryIdCombo();
     }//GEN-LAST:event_btnsaveActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
@@ -287,9 +297,11 @@ public class Category extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+        populateCategoryIdCombo();
       //}
     }//GEN-LAST:event_btndeleteActionPerformed
-
+    
+    //String selectedCategoryName = "";
     private void combocategoryidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combocategoryidItemStateChanged
         // TODO add your handling code here:
         try {
@@ -307,10 +319,12 @@ public class Category extends javax.swing.JInternalFrame {
         rs.next();
         
         txtcategoryname.setText(rs.getString("name"));
-        
+        //selectedCategoryName = (String) combocategoryid.getSelectedItem();
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (NullPointerException e) {
+        //populateCategoryIdCombo();
     }
     }//GEN-LAST:event_combocategoryidItemStateChanged
 

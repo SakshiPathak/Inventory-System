@@ -98,7 +98,7 @@ public class Menu extends javax.swing.JFrame {
 
         mnuadmin.setText("Admin Details");
 
-        mnusupplier.setText("Add/Update/Delete Supplier");
+        mnusupplier.setText("Add/Update Supplier");
         mnusupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnusupplierActionPerformed(evt);
@@ -118,7 +118,7 @@ public class Menu extends javax.swing.JFrame {
 
         mnucustomerdetail.setText("Customer Details");
 
-        mnucustomer.setText("Add/Update/Delete Customer");
+        mnucustomer.setText("Add/Update Customer");
         mnucustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnucustomerActionPerformed(evt);
@@ -130,7 +130,7 @@ public class Menu extends javax.swing.JFrame {
 
         mnucategorydetail.setText("Category Details");
 
-        mnucategory.setText("Add/Delete Category");
+        mnucategory.setText("Add Category");
         mnucategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnucategoryActionPerformed(evt);
@@ -142,7 +142,7 @@ public class Menu extends javax.swing.JFrame {
 
         mnuproductdetail.setText("Product Details");
 
-        mnuproduct.setText("Add Product");
+        mnuproduct.setText("Add/Update Product");
         mnuproduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuproductActionPerformed(evt);

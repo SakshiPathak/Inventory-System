@@ -11,9 +11,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +28,7 @@ public class Register extends javax.swing.JInternalFrame {
     Connection con=null;
     PreparedStatement pst=null;
     ResultSet rs=null;
+    List<RegisterClass> registerList;
 
     /**
      * Creates new form Register
@@ -32,6 +36,8 @@ public class Register extends javax.swing.JInternalFrame {
     public Register() {
         initComponents();
         populateRoleNameCombo();
+        registerList = new ArrayList<>();
+        populateUserNameCombo();
     }
     
     public void clear() {
@@ -49,12 +55,62 @@ public class Register extends javax.swing.JInternalFrame {
         PreparedStatement pstmt = con.prepareStatement("select name from role order by name");
         
         ResultSet rs = pstmt.executeQuery();
+        comborolename.addItem("");
         while (rs.next())
             comborolename.addItem(rs.getString("name"));
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
+    }
+    
+    
+    private void populateUserNameCombo() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        
+        try {
+            con = DBConnection.getConnection();
+            PreparedStatement pstmt = con.prepareStatement("select * from user order by username");
+
+            ResultSet rs = pstmt.executeQuery();
+            int index = 1;
+            Item tItem = new Item(0, "Select User...");
+            model.addElement(tItem);
+            registerList = new ArrayList<>();
+            
+            while (rs.next()) {
+               // combocustomername.addItem(rs.getString("First_Name"));
+                Item item = new Item(index++, rs.getString("username"));
+                model.addElement(item);
+                
+                registerList.add(
+                        new RegisterClass(String.valueOf(rs.getInt("id")), 
+                                rs.getString("username"), 
+                                rs.getString("password"))
+                                
+                        );
+            }
+
+            combousername.setModel(model);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    class Item {
+        private int index;
+        private String name;
+
+        public Item(int index, String name) {
+            this.index = index;
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name; //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
     /**
@@ -75,6 +131,10 @@ public class Register extends javax.swing.JInternalFrame {
         txtpassword = new javax.swing.JPasswordField();
         btnrefresh = new javax.swing.JButton();
         comborolename = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        combousername = new javax.swing.JComboBox();
 
         setClosable(true);
         setTitle("Register User");
@@ -112,6 +172,14 @@ public class Register extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -130,15 +198,17 @@ public class Register extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6)
                                 .addGap(92, 92, 92)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtusername, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                            .addComponent(txtpassword, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                            .addComponent(comborolename, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtusername)
+                            .addComponent(txtpassword)
+                            .addComponent(comborolename, 0, 168, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btnregister, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(19, 19, 19)
+                        .addComponent(btnregister, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,11 +225,42 @@ public class Register extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(comborolename, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnregister)
-                    .addComponent(btnrefresh))
-                .addContainerGap())
+                    .addComponent(btnrefresh)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Search By Username");
+
+        combousername.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combousernameItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(47, 47, 47)
+                .addComponent(combousername, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(combousername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,16 +268,19 @@ public class Register extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -269,7 +373,7 @@ public class Register extends javax.swing.JInternalFrame {
              }
          }
 
-        
+        populateUserNameCombo();
 
     }//GEN-LAST:event_btnregisterActionPerformed
 
@@ -282,15 +386,126 @@ public class Register extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comborolenameItemStateChanged
 
+    int selectedUserId = 0;
+    private void combousernameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combousernameItemStateChanged
+       try {
+            if (registerList == null || combousername.getSelectedIndex() == 0)
+            return;
+
+            con = DBConnection.getConnection();
+            pst = con.prepareStatement("select * from user where id = ?");
+            //System.out.println(Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()).getId()));
+
+            System.out.println(registerList.size());
+
+            pst.setInt(1, Integer.parseInt(registerList.get(combousername.getSelectedIndex()-1).getId()));
+
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+
+            txtusername.setText(rs.getString("username"));
+            txtpassword.setText(rs.getString("password"));
+            //radiomale.setSelected(rs.getBoolean("gender"));
+           
+            
+
+            selectedUserId = combousername.getSelectedIndex();
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_combousernameItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String username=txtusername.getText();
+        String password=String.valueOf(txtpassword.getPassword());
+
+        if(username.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Username field is empty...please fill it first");
+        }
+        else if(password.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Password field is empty...please fill it first");
+        }
+
+        else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtusername.getText())))
+        {
+            JOptionPane.showMessageDialog(this, "Please enter valid username");
+        }
+        else if(password.length()>10)
+        {
+            JOptionPane.showMessageDialog(this, "Password should not greater than 10 characters");
+        }
+        
+        else
+        {
+
+            boolean unique = true;
+            try
+            {
+                con=DBConnection.getConnection();
+                pst = con.prepareStatement("select Password from user");
+                rs = pst.executeQuery();
+
+                int c=0;
+                while(rs.next())
+                {
+                    c++;
+                    String pass=rs.getString("password");
+
+                    if (password.equals(pass))
+                    {
+                        JOptionPane.showMessageDialog(this, "Password already exists");
+                        unique = false;
+                    }
+
+                }
+
+                if(unique)
+                {
+
+                    
+                    pst=con.prepareStatement("update user set password = ? where username = ?");
+                    pst.setString(1, password);
+                    pst.setString(2, username);
+                    
+
+                    int i = pst.executeUpdate();
+                if (i > 0)
+                    {
+                        JOptionPane.showMessageDialog(this, "Updated Successfully");
+                        clear();
+
+                    }
+
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Not updated Successfully");
+                    }
+
+                }
+            }
+
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnrefresh;
     private javax.swing.JButton btnregister;
     private javax.swing.JComboBox comborolename;
+    private javax.swing.JComboBox combousername;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField txtpassword;
     private javax.swing.JTextField txtusername;
     // End of variables declaration//GEN-END:variables

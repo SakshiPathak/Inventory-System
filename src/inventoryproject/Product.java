@@ -9,10 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 /**
  *
  * @author HP
@@ -21,13 +25,16 @@ public class Product extends javax.swing.JInternalFrame {
     Connection con=null;
     PreparedStatement pst=null;
     ResultSet rs=null;
+    List<ProductBillClass> productList;
     /**
      * Creates new form Product
      */
     public Product() {
         initComponents();
+        productList = new ArrayList<>();
         populateCategoryNameCombo();
         populateSupplierNameCombo();
+        populateProductNameCombo();
     }
     
     public void clear()
@@ -38,7 +45,9 @@ public class Product extends javax.swing.JInternalFrame {
         txtcostprice.setText("");
         txtsaleprice.setText("");
         txtmrp.setText("");
+        buttonGroup1.clearSelection();
         txtreorderlevel.setText("");
+        comboproductname.setSelectedIndex(-1);
         combocategory.setSelectedIndex(-1);
         combosupplier.setSelectedIndex(-1);
                 
@@ -51,6 +60,8 @@ public class Product extends javax.swing.JInternalFrame {
         PreparedStatement pstmt = con.prepareStatement("select name from category order by name");
         
         ResultSet rs = pstmt.executeQuery();
+        combocategory.addItem("");
+        
         while (rs.next())
             combocategory.addItem(rs.getString("name"));
         
@@ -65,8 +76,28 @@ public class Product extends javax.swing.JInternalFrame {
         PreparedStatement pstmt = con.prepareStatement("select name from supplier order by name");
         
         ResultSet rs = pstmt.executeQuery();
+        combosupplier.addItem("");
         while (rs.next())
             combosupplier.addItem(rs.getString("name"));
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
+     
+     private void populateProductNameCombo() {
+        try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        
+        ResultSet rs = pstmt.executeQuery();
+        comboproductname.removeAllItems();
+        comboproductname.addItem("");
+                productList = new ArrayList<>();
+
+        while (rs.next())
+            comboproductname.addItem(rs.getString("name"));
+        
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -108,6 +139,10 @@ public class Product extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         btnsave = new javax.swing.JButton();
         btnrefresh = new javax.swing.JButton();
+        btnupdate = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        comboproductname = new javax.swing.JComboBox();
 
         setClosable(true);
         setTitle("Add Products");
@@ -149,6 +184,11 @@ public class Product extends javax.swing.JInternalFrame {
 
         buttonGroup1.add(radiotrue);
         radiotrue.setText("True");
+        radiotrue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiotrueActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(radiofalse);
         radiofalse.setText("False");
@@ -190,7 +230,7 @@ public class Product extends javax.swing.JInternalFrame {
                                         .addComponent(combosupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(combocategory, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtmrp)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(25, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtcostprice, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,16 +311,26 @@ public class Product extends javax.swing.JInternalFrame {
             }
         });
 
+        btnupdate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnupdate.setText("Update");
+        btnupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnupdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(36, 36, 36)
                 .addComponent(btnsave, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
+                .addGap(36, 36, 36)
+                .addComponent(btnupdate, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnrefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,8 +338,39 @@ public class Product extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnsave)
-                    .addComponent(btnrefresh))
+                    .addComponent(btnrefresh)
+                    .addComponent(btnupdate))
                 .addContainerGap())
+        );
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setText("Search by Name");
+
+        comboproductname.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboproductnameItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91)
+                .addComponent(comboproductname, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboproductname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -300,17 +381,20 @@ public class Product extends javax.swing.JInternalFrame {
                 .addContainerGap(70, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -336,7 +420,7 @@ public class Product extends javax.swing.JInternalFrame {
          
          else if(units.isEmpty())
         {
-            JOptionPane.showMessageDialog(this, "Price unit field is empty... please fill it first!!");
+            JOptionPane.showMessageDialog(this, "Unit field is empty... please fill it first!!");
         }
          else if(quantity.isEmpty())
          {
@@ -444,6 +528,7 @@ public class Product extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
+        populateProductNameCombo();
        
     }//GEN-LAST:event_btnsaveActionPerformed
 
@@ -456,15 +541,292 @@ public class Product extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtsalepriceActionPerformed
 
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+       String productname=txtproductname.getText();
+        String units=txtunit.getText();
+        String quantity=txtquantity.getText();
+        String costprice=txtcostprice.getText();
+        String saleprice=txtsaleprice.getText();
+        String mrp=txtmrp.getText();
+        boolean status=radiotrue.isSelected();
+        String reorder=txtreorderlevel.getText();
+       // String categoryname=combocategory.getSelectedItem().toString();
+       // String suppliername=combosupplier.getSelectedItem().toString(); 
+        
+        if(productname.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Product Name field is empty... please fill it first!!");
+        }
+         
+         else if(units.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Unit field is empty... please fill it first!!");
+        }
+         else if(quantity.isEmpty())
+         {
+             JOptionPane.showMessageDialog(this, "Quantity field is empty... please fill it first!!");
+         }
+         else if(costprice.isEmpty())
+         {
+             JOptionPane.showMessageDialog(this, "Cost Price field is empty... please fill it first!!");
+         }
+         else if(saleprice.isEmpty())
+         {
+             JOptionPane.showMessageDialog(this, "Sale Price field is empty... please fill it first!!");
+         }
+         else if(mrp.isEmpty())
+         {
+             JOptionPane.showMessageDialog(this, "MRP field is empty... please fill it first!!");
+         }
+         
+         else if(reorder.isEmpty())
+         {
+             JOptionPane.showMessageDialog(this, "Reorder Level field is empty... please fill it first!!");
+         }
+         
+       else  if(combocategory.getSelectedItem().toString().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Please select item first!!");
+        }
+       else  if(combosupplier.getSelectedItem().toString().equals(""))
+        {
+            JOptionPane.showMessageDialog(this, "Please select item first!!");
+        }
+       else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtproductname.getText())))
+         {
+             JOptionPane.showMessageDialog(this, "Please enter valid Productname");
+         }
+        
+         else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtunit.getText())))
+         {
+             JOptionPane.showMessageDialog(this, "Please enter valid Units");
+         }
+        else if(!(Pattern.matches("^[0-9]+", txtquantity.getText())))
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid Quantity");
+            }
+        else if(!(Pattern.matches("^[0-9]+", txtcostprice.getText())))
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid Cost Price");
+            }
+        else if(!(Pattern.matches("^[0-9]+", txtsaleprice.getText())))
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid Sale Price");
+            }
+         else if(!(Pattern.matches("^[0-9]+", txtmrp.getText())))
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid MRP");
+            }
+        else if(!(Pattern.matches("^[0-9]+", txtreorderlevel.getText())))
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid Reorder Level");
+            }
+        
+        else
+        {
+            try
+            {
+                con=DBConnection.getConnection();
+             
+                
+                pst=con.prepareStatement("update product set units=?, quantity=?, cost_price=?, sale_price=?, mrp=?, status=?, re_order_level=? where name = ?");
+                
+                pst.setString(1, units);
+                pst.setString(2, quantity);
+                pst.setString(3, costprice);
+                pst.setString(4, saleprice);
+                pst.setString(5, mrp);
+                pst.setBoolean(6, status);
+                pst.setString(7, reorder);
+               //pst.setInt(8, Integer.parseInt(productList.get(comboproductname.getSelectedIndex()-1).getId()));
+                pst.setString(8, productname);
+                int i=pst.executeUpdate();
+                if(i>0)
+                {
+                    JOptionPane.showMessageDialog(this, "Updated Successfully");
+                    clear();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Not updated Successfully");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        }
+        
+        /*
+        pst=con.prepareStatement("update supplier set Address=?,City=?,Pincode=?,State=?,Phone=? where ID=?");
+             
+                pst.setString(1, address);
+                pst.setString(2, city);
+                pst.setString(3, pincode);
+                pst.setString(4, state);
+                pst.setString(5, phoneno);
+                 pst.setInt(6, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
+                int i=pst.executeUpdate();
+                if(i>0)
+                {
+                    JOptionPane.showMessageDialog(this, "Updated Successfully");
+                    clear();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Not updated Successfully");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        }
+        */
+    }//GEN-LAST:event_btnupdateActionPerformed
+
+    int selectedProductId = 0;
+    private void comboproductnameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboproductnameItemStateChanged
+//        try {
+//        
+//       /* String selectedName = (String) combosuppliername.getSelectedItem();
+//        
+//        if(selectedName.equals("") || selectedName == null)
+//            return;*/
+//            if (productList == null || comboproductname.getSelectedIndex() == 0)
+//                return;
+//        
+//        con = DBConnection.getConnection();
+//        pst = con.prepareStatement("select * from supplier where ID = ?");
+//        //pst.setString(1, selectedName);
+//        pst.setInt(1, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
+//        ResultSet rs = pst.executeQuery();
+//        rs.next();
+//        
+//        
+//        txtsuppliername.setText(rs.getString("Name"));
+//        txtaddress.setText(rs.getString("Address"));
+//        txtcity.setText(rs.getString("City"));
+//        txtpincode.setText(rs.getString("Pincode"));
+//        txtstate.setText(rs.getString("State"));
+//        txtphoneno.setText(rs.getString("Phone"));
+//       selectedSupplierId = combosuppliername.getSelectedIndex();
+//        
+//    } catch (SQLException ex) {
+//        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+        
+        try {
+        
+        String selectedName = (String) comboproductname.getSelectedItem();
+        
+        if(selectedName.equals("") || selectedName == null)
+            return;
+        
+        con = DBConnection.getConnection();
+        
+        pst = con.prepareStatement("select c.name from product p, category c where p.category_id=c.id and p.id = (select id from product where name = ?)");
+            pst.setString(1, selectedName);
+            rs = pst.executeQuery();
+            rs.next(); 
+            String categoryname = rs.getString("c.name");
+         
+            
+            pst = con.prepareStatement("select s.name from product p, supplier s where p.supplier_id=s.id and p.id = (select id from product where name = ?)");
+            pst.setString(1, selectedName);
+            rs = pst.executeQuery();
+            rs.next(); 
+     
+            String suppliertname = rs.getString("s.name");
+            
+        
+        pst = con.prepareStatement("select * from product where id IN (select id from product where name = ?)");
+        pst.setString(1, selectedName);
+        
+        ResultSet rs = pst.executeQuery();
+        rs.next();
+        
+        txtproductname.setText(rs.getString("name"));
+        txtunit.setText(rs.getString("units"));
+        txtquantity.setText(rs.getString("Quantity"));
+        txtcostprice.setText(rs.getString("cost_Price"));
+        txtsaleprice.setText(rs.getString("Sale_Price"));
+        txtmrp.setText(rs.getString("mrp"));
+        
+        //if(radiotrue.isSelected()==true)
+        //{
+//            if(rs.getBoolean("status")==true)
+//            {
+//            radiotrue.setSelected(rs.getBoolean("status"));
+//                System.out.println("true selected");
+//            }
+//            if(rs.getBoolean("status")==false)
+//            {
+//                radiofalse.setSelected(rs.getBoolean("status"));
+//                System.out.println("false selected");
+//            }
+        
+        if(rs.getBoolean("status")==true)
+            {
+                radiotrue.setSelected(true);
+               
+            }
+           else
+            {
+               radiofalse.setSelected(true);
+            }
+            
+            
+        //}
+//        else
+//        {
+//        radiofalse.setSelected(rs.getBoolean("status"));
+//        }
+        //if(radiotrue.isSelected()==true)
+        //{
+           // buttonGroup1.getSelection().getActionCommand();
+        //}
+        txtreorderlevel.setText(rs.getString("re_order_level"));
+        combocategory.setSelectedItem(categoryname);
+        combosupplier.setSelectedItem(suppliertname);
+        selectedProductId = comboproductname.getSelectedIndex();
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (NullPointerException e) {
+        //populateProductNameCombo();
+    }
+    
+    
+    }//GEN-LAST:event_comboproductnameItemStateChanged
+
+    private void radiotrueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiotrueActionPerformed
+//      if(evt.getSource() instanceof JRadioButton){
+//            JRadioButton radioButton = (JRadioButton) evt.getSource();
+//            if(radioButton.isSelected()){
+//                radiotrue.setText(radioButton.getText());
+//            }
+//        }
+        if(radiotrue.isSelected()==true)
+        {
+            buttonGroup1.getSelection().getActionCommand();
+        }
+    }//GEN-LAST:event_radiotrueActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnrefresh;
     private javax.swing.JButton btnsave;
+    private javax.swing.JButton btnupdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox combocategory;
+    private javax.swing.JComboBox comboproductname;
     private javax.swing.JComboBox combosupplier;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -475,6 +837,7 @@ public class Product extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton radiofalse;
     private javax.swing.JRadioButton radiotrue;
     private javax.swing.JTextField txtcostprice;

@@ -29,6 +29,7 @@ public class Role extends javax.swing.JInternalFrame {
     PreparedStatement pst=null;
     ResultSet rs=null;
     List<RoleClass> roleList;
+   
     
 
     /**
@@ -38,6 +39,7 @@ public class Role extends javax.swing.JInternalFrame {
         initComponents();
         roleList = new ArrayList<>();
         populateRoleIdCombo();
+        btndelete.setVisible(false);
     }
     public void clear() {
         //roleList.clear();
@@ -56,7 +58,7 @@ public class Role extends javax.swing.JInternalFrame {
         int index = 1;
             Role.Item tItem = new Role.Item(0, "Select Role...");
             model.addElement(tItem);
-            
+            roleList = new ArrayList<>();
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
                 Role.Item item = new Role.Item(index++, rs.getString("name"));
@@ -136,7 +138,7 @@ public class Role extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(combopermission, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(30, 30, 30))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -150,9 +152,9 @@ public class Role extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addComponent(combopermission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(15, 15, 15)
@@ -322,6 +324,7 @@ public class Role extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
+        populateRoleIdCombo();
     }//GEN-LAST:event_btnsaveActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
@@ -417,6 +420,7 @@ public class Role extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+        populateRoleIdCombo();
       //}
     }//GEN-LAST:event_btndeleteActionPerformed
 
@@ -425,6 +429,7 @@ public class Role extends javax.swing.JInternalFrame {
         clear();
     }//GEN-LAST:event_btnrefreshActionPerformed
 
+    int selectedRoleId = 0;
     private void comborolenameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comborolenameItemStateChanged
         // TODO add your handling code here:
         try {
@@ -446,7 +451,7 @@ public class Role extends javax.swing.JInternalFrame {
         
         txtname.setText(rs.getString("name"));
         combopermission.setSelectedItem(rs.getString("permission"));
-        
+        selectedRoleId = comborolename.getSelectedIndex();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }

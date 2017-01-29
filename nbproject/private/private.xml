@@ -4,27 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Role.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Menu.java</file>
             <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Login.java</file>
             <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/ProductReport.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Supplier.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/CategoryClass.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/SupplierClass.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/UserClass.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/ProductClass.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/BillReport.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/RoleClass.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Register.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/BillClass.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/ReorderClass.java</file>
             <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Product.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/InventoryProject.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/CustomerClass.java</file>
             <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Customer.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/ProductBillClass.java</file>
-            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/ReorderReport.java</file>
+            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/BillReport.java</file>
+            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Register.java</file>
             <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Bill.java</file>
             <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/Category.java</file>
+            <file>file:/G:/swingprogram/InventoryProject/src/inventoryproject/BillClass.java</file>
         </group>
     </open-files>
 </project-private>

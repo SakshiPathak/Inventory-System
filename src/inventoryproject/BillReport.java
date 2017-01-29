@@ -6,8 +6,11 @@
 package inventoryproject;
 
 import com.inventorysystem.helpers.DBConnection;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import sun.swing.SwingUtilities2;
 
 /**
  *
@@ -27,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 public class BillReport extends javax.swing.JInternalFrame {
     Connection con;
     PreparedStatement pst;
+    ResultSet rs;
     List<CustomerClass> billList;
 
     /**
@@ -52,7 +56,11 @@ public class BillReport extends javax.swing.JInternalFrame {
             //String selectedName = (String) combocustomername.getSelectedItem();
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("select B.id, C.first_name, bill, status, pending, date from bill B, customer C where B.customer_id=C.id and C.first_name=?");
+            
+             
+            
+            
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND C.first_name=?");
             pstmt.setString(1, customername);
             //pst.setInt(1, Integer.parseInt(billList.get(combocustomername.getSelectedIndex()-1).getId()));
             ResultSet rs = pstmt.executeQuery();
@@ -61,7 +69,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"),rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -76,15 +84,16 @@ public class BillReport extends javax.swing.JInternalFrame {
     {
         ArrayList<BillClass> list= getBillList();
         DefaultTableModel model=getModel();
-        Object[] row=new Object[6];
+        Object[] row=new Object[7];
         for(int i=0;i<list.size();i++)
         {
             row[0]=list.get(i).getBillid();
-            row[1]=list.get(i).getCustomername();
-            row[2]=list.get(i).getAmount();
-            row[3]=list.get(i).getStatus();
-            row[4]=list.get(i).getPendingpayment();
-            row[5]=list.get(i).getDate();
+            row[1]=list.get(i).getUsername();
+            row[2]=list.get(i).getCustomername();
+            row[3]=list.get(i).getAmount();
+            row[4]=list.get(i).getStatus();
+            row[5]=list.get(i).getPendingpayment();
+            row[6]=list.get(i).getDate();
             
             model.addRow(row);
         }
@@ -111,9 +120,7 @@ public class BillReport extends javax.swing.JInternalFrame {
         combodate = new javax.swing.JComboBox();
         radiocash = new javax.swing.JRadioButton();
         radiocredit = new javax.swing.JRadioButton();
-        btnview = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         txtcustomername = new javax.swing.JTextField();
         txtbillid = new javax.swing.JTextField();
 
@@ -126,9 +133,19 @@ public class BillReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Bill ID", "Customer Name", "Total Bill", "Status", "Pending Payment", "Date"
+                "Bill ID", "User Name", "Customer Name", "Total Bill", "Status", "Pending Payment", "Date"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -163,19 +180,8 @@ public class BillReport extends javax.swing.JInternalFrame {
             }
         });
 
-        btnview.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnview.setText("Click Here");
-        btnview.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnviewActionPerformed(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Search by Pending Payment");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("View Bill through PDF ");
 
         txtcustomername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,35 +201,33 @@ public class BillReport extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(combodate, 0, 129, Short.MAX_VALUE)
-                    .addComponent(txtcustomername)
+                    .addComponent(txtcustomername, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                     .addComponent(txtbillid))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(radiocash)
                         .addGap(18, 18, 18)
-                        .addComponent(radiocredit)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnview, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33))))
+                        .addComponent(radiocredit))
+                    .addComponent(combodate, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(radiocash)
@@ -232,19 +236,13 @@ public class BillReport extends javax.swing.JInternalFrame {
                     .addComponent(txtcustomername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtbillid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(combodate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnview)
-                            .addComponent(jLabel4))
-                        .addContainerGap())))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(combodate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtbillid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -254,43 +252,43 @@ public class BillReport extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
     
-    
+    int billid=0;
     public ArrayList<BillClass> getBillList1()
     {
         ArrayList<BillClass> billList=new ArrayList<BillClass>();
         
         try
         {
-            String billid = txtbillid.getText();
+             billid = Integer.parseInt(txtbillid.getText());
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("select B.id, C.first_name, bill, status, pending, date from bill B, customer C where B.customer_id=C.id and B.id=?");
-            pstmt.setString(1, billid);
+            
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND B.id=?");
+            pstmt.setInt(1, billid);
             ResultSet rs = pstmt.executeQuery();
             
             //
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("C.first_name"),  rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"),rs.getString("U.username"), rs.getString("C.first_name"),  rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -305,15 +303,16 @@ public class BillReport extends javax.swing.JInternalFrame {
     {
         ArrayList<BillClass> list= getBillList1();
         DefaultTableModel model=getModel();
-        Object[] row=new Object[6];
+        Object[] row=new Object[7];
         for(int i=0;i<list.size();i++)
         {
             row[0]=list.get(i).getBillid();
-            row[1]=list.get(i).getCustomername();
-            row[2]=list.get(i).getAmount();
-            row[3]=list.get(i).getStatus();
-            row[4]=list.get(i).getPendingpayment();
-            row[5]=list.get(i).getDate();
+            row[1]=list.get(i).getUsername();
+            row[2]=list.get(i).getCustomername();
+            row[3]=list.get(i).getAmount();
+            row[4]=list.get(i).getStatus();
+            row[5]=list.get(i).getPendingpayment();
+            row[6]=list.get(i).getDate();
             
             model.addRow(row);
         }
@@ -344,7 +343,8 @@ public class BillReport extends javax.swing.JInternalFrame {
             String selectedDate = (String) combodate.getSelectedItem();
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("select B.id, C.first_name, bill, status, pending, date from bill B, customer C where B.customer_id=C.id and date=?");
+            
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND date=?");
             pstmt.setString(1, selectedDate);
             ResultSet rs = pstmt.executeQuery();
             
@@ -352,7 +352,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -369,7 +369,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             new Object [][] {
             },
             new String [] {
-                "Bill ID", "Customer Name", "Total Bill", "Status", "Pending Payment", "Date"
+                "Bill ID", "User Name", "Customer Name", "Total Bill", "Status", "Pending Payment", "Date"
             }
         ));
         
@@ -379,16 +379,17 @@ public class BillReport extends javax.swing.JInternalFrame {
     {
         ArrayList<BillClass> list= getBillList2();
         DefaultTableModel model=getModel();
-        Object[] row=new Object[6];
+        Object[] row=new Object[7];
         
         for(int i=0;i<list.size();i++)
         {
             row[0]=list.get(i).getBillid();
-            row[1]=list.get(i).getCustomername();
-            row[2]=list.get(i).getAmount();
-            row[3]=list.get(i).getStatus();
-            row[4]=list.get(i).getPendingpayment();
-            row[5]=list.get(i).getDate();
+            row[1]=list.get(i).getUsername();
+            row[2]=list.get(i).getCustomername();
+            row[3]=list.get(i).getAmount();
+            row[4]=list.get(i).getStatus();
+            row[5]=list.get(i).getPendingpayment();
+            row[6]=list.get(i).getDate();
             
             model.addRow(row);
         }        
@@ -404,10 +405,6 @@ public class BillReport extends javax.swing.JInternalFrame {
         
         isShown = !isShown;
     }//GEN-LAST:event_combodateItemStateChanged
-
-    private void btnviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnviewActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnviewActionPerformed
     
     public ArrayList<BillClass> getBillList3()
     {
@@ -418,7 +415,8 @@ public class BillReport extends javax.swing.JInternalFrame {
             boolean status=radiocash.isSelected();
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("select B.id, C.first_name, bill, status, pending, date from bill B, customer C where B.customer_id=C.id and status=?");
+            
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND status=?");
             pstmt.setBoolean(1, status);
             ResultSet rs = pstmt.executeQuery();
             
@@ -426,7 +424,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -441,15 +439,16 @@ public class BillReport extends javax.swing.JInternalFrame {
     {
         ArrayList<BillClass> list= getBillList3();
         DefaultTableModel model=getModel();
-        Object[] row=new Object[6];
+        Object[] row=new Object[7];
         for(int i=0;i<list.size();i++)
         {
             row[0]=list.get(i).getBillid();
-            row[1]=list.get(i).getCustomername();
-            row[2]=list.get(i).getAmount();
-            row[3]=list.get(i).getStatus();
-            row[4]=list.get(i).getPendingpayment();
-            row[5]=list.get(i).getDate();
+            row[1]=list.get(i).getUsername();
+            row[2]=list.get(i).getCustomername();
+            row[3]=list.get(i).getAmount();
+            row[4]=list.get(i).getStatus();
+            row[5]=list.get(i).getPendingpayment();
+            row[6]=list.get(i).getDate();
             
             model.addRow(row);
         }
@@ -472,19 +471,154 @@ public class BillReport extends javax.swing.JInternalFrame {
     private void txtbillidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbillidActionPerformed
        showData1();
     }//GEN-LAST:event_txtbillidActionPerformed
+
+    public ArrayList<BillClass> getBillList4()
+    {
+        ArrayList<BillClass> billList=new ArrayList<BillClass>();
+        
+        try
+        {
+            int row = jTable1.getSelectedRow();
+           //int row = jTable1.getSelectedRow();
+           int col = 5;
+            //Class.forName("com.mysql.jdbc.Driver");
+            con=DBConnection.getConnection();
+            
+             pst = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id");
+            //pst.setInt(1, row);
+             rs = pst.executeQuery();
+            
+            //
+            BillClass bill;
+            while(rs.next())
+            {
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            billList.add(bill);
+            }
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return billList;
+    }
+    
+    public void showData4()
+    {
+        ArrayList<BillClass> list= getBillList3();
+        DefaultTableModel model=getModel();
+        Object[] row=new Object[7];
+        for(int i=0;i<list.size();i++)
+        {
+            row[0]=list.get(i).getBillid();
+            row[1]=list.get(i).getUsername();
+            row[2]=list.get(i).getCustomername();
+            row[3]=list.get(i).getAmount();
+            row[4]=list.get(i).getStatus();
+            row[5]=list.get(i).getPendingpayment();
+            row[6]=list.get(i).getDate();
+            
+            model.addRow(row);
+        }
+        jTable1.setModel(model);
+    }
+    
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if (SwingUtilities.isRightMouseButton(evt)) {
+            int row = jTable1.getSelectedRow();
+            int col = 0;
+
+            int billNo = Integer.parseInt((String) jTable1.getValueAt(row, col));
+            //System.out.println(billNo);
+            
+            try {
+                File file = new File(billNo + ".html");
+                FileInputStream inputstream = new FileInputStream(file);
+                inputstream.close();
+            
+          Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
+            //PrintWriter fileWriter = new PrintWriter(new FileOutputStream(file));
+               //  Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + customerNo +".html");
+            } catch (IOException ex) {
+                Logger.getLogger(BillReport.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//            try {
+//                 Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + billNo +".html");
+//            } 
+////            catch (IOException ex) {
+////                Logger.getLogger(BillReport.class.getName()).log(Level.SEVERE, null, ex);
+////            } 
+//            catch (Exception e) {}
+
+    //        try
+    //        {
+    //         row=jTable1.rowAtPoint(evt.getPoint());
+    //        col= 5;
+    //JOptionPane.showMessageDialog(null, jTable1.getValueAt(row,col).toString());
+    ////System.out.println(” Value in the cell clicked :”+ ” ” +table.getValueAt(row,col).toString());
+    //        }catch(Exception e)
+    //        {}
+    //        try
+    //        {
+    //           row = jTable1.rowAtPoint(evt.getPoint());
+    //           col = 5;
+    //           con = DBConnection.getConnection();
+    //           pst = con.prepareStatement("update bill set quantity=? where name=?");
+    //        }catch(Exception e)
+    //        {}
+    //        showData4();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            System.out.println("Working");
+            //---->int row = jTable1.getSelectedRow();
+            int count = jTable1.getRowCount();
+    int col = jTable1.getColumnCount();
+    String billid[] = new String[count];
+//    String username[] = new String[count];
+//    String customername[] = new String[count];
+//    String totalbill[] = new String[count];
+//    String status[] = new String[count];
+    String pending[] = new String[count];
+//    String date[] = new String[count];
+
+    for (int i = 0; i < count; i++) {
+       billid[i] = jTable1.getValueAt(i,0).toString();
+//        username[i] = jTable1.getValueAt(i,1).toString();
+//        customername[i] = jTable1.getValueAt(i,2).toString();
+//        totalbill[i] = jTable1.getValueAt(i,3).toString();
+//        status[i] = jTable1.getValueAt(i,4).toString();
+        pending[i] = jTable1.getValueAt(i, 5).toString();
+//        date[i] = jTable1.getValueAt(i,6).toString();
+
+        try {
+            con = DBConnection.getConnection();
+//            String sql = "update bill set pending='" + pending[i] + "' where  id='"+ + "'";
+            pst = con.prepareStatement("update bill set pending='" + pending[i] + "' where  id='" + billid[i] + "'");
+            int k = pst.executeUpdate();
+            if(k>0)
+            JOptionPane.showMessageDialog(null, "updated");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }  
+
+    }
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
     
     
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnview;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox combodate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

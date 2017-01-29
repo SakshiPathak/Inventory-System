@@ -35,6 +35,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         initComponents();
         supplierList = new ArrayList<>();
         populateSupplierNameCombo();
+        btndelete.setVisible(false);
     }
     public void clear()
     {
@@ -58,7 +59,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         int index = 1;
             Supplier.Item tItem = new Supplier.Item(0, "Select Supplier...");
             model.addElement(tItem);
-            
+            supplierList = new ArrayList<>();
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
                 Supplier.Item item = new Supplier.Item(index++, rs.getString("Name"));
@@ -447,6 +448,7 @@ public class Supplier extends javax.swing.JInternalFrame {
                  JOptionPane.showMessageDialog(this, e);
              }
          }
+         populateSupplierNameCombo();
     }//GEN-LAST:event_btnsaveActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
@@ -536,6 +538,7 @@ public class Supplier extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
+        
     }//GEN-LAST:event_btnupdateActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
@@ -575,9 +578,11 @@ public class Supplier extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+        populateSupplierNameCombo();
       //}
     }//GEN-LAST:event_btndeleteActionPerformed
 
+    int selectedSupplierId = 0;
     private void combosuppliernameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combosuppliernameItemStateChanged
         // TODO add your handling code here:
         try {
@@ -603,7 +608,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         txtpincode.setText(rs.getString("Pincode"));
         txtstate.setText(rs.getString("State"));
         txtphoneno.setText(rs.getString("Phone"));
-       
+       selectedSupplierId = combosuppliername.getSelectedIndex();
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
