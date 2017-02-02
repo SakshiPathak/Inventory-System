@@ -404,7 +404,7 @@ public class Register extends javax.swing.JInternalFrame {
             rs.next();
 
             txtusername.setText(rs.getString("username"));
-            txtpassword.setText(rs.getString("password"));
+            //txtpassword.setText(rs.getString("password"));
             //radiomale.setSelected(rs.getBoolean("gender"));
            
             
