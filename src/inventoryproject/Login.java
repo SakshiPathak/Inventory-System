@@ -208,6 +208,7 @@ public class Login extends javax.swing.JFrame {
             {
                 JOptionPane.showMessageDialog(this, "Login failed");
                 clear();
+                txtusername.requestFocus();
             }
         }
         catch(Exception e)

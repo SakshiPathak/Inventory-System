@@ -255,6 +255,7 @@ public class Bill extends javax.swing.JInternalFrame {
             }
 
             combocustomername.setModel(model);
+            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -271,7 +272,7 @@ public class Bill extends javax.swing.JInternalFrame {
         while (rs.next())
             comboproductname1.addItem(rs.getString("name"));
         
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -285,7 +286,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname2.addItem("");
         while (rs.next())
             comboproductname2.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -299,7 +300,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname3.addItem("");
         while (rs.next())
             comboproductname3.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -313,7 +314,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname4.addItem("");
         while (rs.next())
             comboproductname4.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -327,7 +328,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname5.addItem("");
         while (rs.next())
             comboproductname5.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -341,7 +342,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname6.addItem("");
         while (rs.next())
             comboproductname6.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -355,7 +356,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname7.addItem("");
         while (rs.next())
             comboproductname7.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -369,7 +370,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname8.addItem("");
         while (rs.next())
             comboproductname8.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -383,7 +384,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname9.addItem("");
         while (rs.next())
             comboproductname9.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -397,7 +398,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname10.addItem("");
         while (rs.next())
             comboproductname10.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -412,7 +413,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname11.addItem("");
         while (rs.next())
             comboproductname11.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -427,7 +428,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname12.addItem("");
         while (rs.next())
             comboproductname12.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -442,7 +443,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname13.addItem("");
         while (rs.next())
             comboproductname13.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -457,7 +458,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname14.addItem("");
         while (rs.next())
             comboproductname14.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -472,7 +473,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname15.addItem("");
         while (rs.next())
             comboproductname15.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -487,7 +488,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname16.addItem("");
         while (rs.next())
             comboproductname16.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -502,7 +503,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname17.addItem("");
         while (rs.next())
             comboproductname17.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -517,7 +518,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname18.addItem("");
         while (rs.next())
             comboproductname18.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -532,7 +533,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname19.addItem("");
         while (rs.next())
             comboproductname19.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -547,7 +548,7 @@ public class Bill extends javax.swing.JInternalFrame {
         comboproductname20.addItem("");
         while (rs.next())
             comboproductname20.addItem(rs.getString("name"));
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -1814,7 +1815,7 @@ public class Bill extends javax.swing.JInternalFrame {
            
             txtaddress.setText(rs.getString("Address"));
            selectedCustomerId = combocustomername.getSelectedIndex();
-
+           con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1847,7 +1848,7 @@ public class Bill extends javax.swing.JInternalFrame {
         txt1.setText(rs.getString("Quantity"));
         txt2.setText(rs.getString("Sale_Price"));
         
-        
+        con.close();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -1893,7 +1894,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     //txt6.setText(String.valueOf(tax));
 
                     }
-                    
+                    con.close();
                     
                 }
                 catch(Exception e)
@@ -2378,6 +2379,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     {
                         JOptionPane.showMessageDialog(this, "Not added to bill details");
                     }
+                    con.close();
                 }
                 catch(Exception e)
                 {
@@ -2409,6 +2411,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     {
                         JOptionPane.showMessageDialog(this, "Not update to product table");
                     }
+                    con.close();
                 }
                 catch(Exception e)
                 {
@@ -2461,7 +2464,7 @@ public class Bill extends javax.swing.JInternalFrame {
                 {
                     JOptionPane.showMessageDialog(this, "Bill not added Successfully");
                 }
-                
+                con.close();
             }
             catch(Exception e)
             {
@@ -2697,6 +2700,7 @@ public class Bill extends javax.swing.JInternalFrame {
             fileWriter.close();
             
           Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
+          con.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

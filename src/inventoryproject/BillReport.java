@@ -20,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import sun.swing.SwingUtilities2;
 
@@ -40,6 +42,16 @@ public class BillReport extends javax.swing.JInternalFrame {
         initComponents();
         billList = new ArrayList<>();
         populateBillDateCombo();
+        
+        jTable1.getModel().addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                //jTable1.getValueAt(e.getFirstRow(), e.getColumn());
+                //System.out.println(String.valueOf(jTable1.getValueAt(e.getFirstRow(), e.getColumn())));
+                System.out.println("e");
+            }
+        });
     }
     
   
@@ -572,6 +584,7 @@ public class BillReport extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        System.out.println("working");
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Working");
             //---->int row = jTable1.getSelectedRow();

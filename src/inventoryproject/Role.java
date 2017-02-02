@@ -44,7 +44,7 @@ public class Role extends javax.swing.JInternalFrame {
     public void clear() {
         //roleList.clear();
          txtname.setText("");
-         combopermission.setSelectedIndex(0);
+        // combopermission.setSelectedIndex(0);
          comborolename.setSelectedIndex(0);
          }
     
@@ -65,13 +65,13 @@ public class Role extends javax.swing.JInternalFrame {
                 model.addElement(item);
                 
                 roleList.add(
-                        new RoleClass(
-                               String.valueOf(rs.getInt("id")), 
-                                rs.getString("name"),
-                                rs.getString("permission")
+                        new RoleClass(String.valueOf(rs.getInt("id")), 
+                                rs.getString("name")));
+                               
+//                                rs.getString("permission")
                                 
                             
-                        ));
+                        
             }
 
             comborolename.setModel(model);
@@ -107,8 +107,6 @@ public class Role extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtname = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        combopermission = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         btnsave = new javax.swing.JButton();
         btnupdate = new javax.swing.JButton();
@@ -126,44 +124,25 @@ public class Role extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Name");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("Permission");
-
-        combopermission.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Granted", "Not Granted" }));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(combopermission, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2))
-                    .addGap(111, 111, 111)
-                    .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(143, 143, 143)
+                .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(59, Short.MAX_VALUE)
-                .addComponent(combopermission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(15, 15, 15)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(31, 31, 31)
-                    .addComponent(jLabel3)
-                    .addContainerGap(16, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         btnsave.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -274,9 +253,9 @@ public class Role extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addContainerGap())
         );
 
         pack();
@@ -285,15 +264,15 @@ public class Role extends javax.swing.JInternalFrame {
     private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
         // TODO add your handling code here:
         String name=txtname.getText();
-        String permission=combopermission.getSelectedItem().toString();
+      //  String permission=combopermission.getSelectedItem().toString();
         if(name.isEmpty())
         {
             JOptionPane.showMessageDialog(this, "Name field is empty... please fill it first!!");
         }
-        else if(combopermission.getSelectedItem().toString().equals(""))
+       /* else if(combopermission.getSelectedItem().toString().equals(""))
         {
             JOptionPane.showMessageDialog(this, "Please select item first!!");
-        }
+        }*/
         else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtname.getText())))
         {
             JOptionPane.showMessageDialog(this, "Please enter valid name");
@@ -303,15 +282,15 @@ public class Role extends javax.swing.JInternalFrame {
             try
             {
                 con=DBConnection.getConnection();
-                pst=con.prepareStatement("insert into role(name,permission) values(?,?)");
+                pst=con.prepareStatement("insert into role(name) values(?)");
                 pst.setString(1, name);
-                pst.setString(2, permission);
+//                pst.setString(2, permission);
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
                     JOptionPane.showMessageDialog(this, "Added Successfully");
                     txtname.setText("");
-                    combopermission.setSelectedIndex(0);
+               //     combopermission.setSelectedIndex(0);
                 }
                 else
                 {
@@ -331,7 +310,7 @@ public class Role extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         // String rolename = (String) comborolename.getSelectedItem();
         String name=txtname.getText();
-        String permission=combopermission.getSelectedItem().toString();
+//        String permission=combopermission.getSelectedItem().toString();
         /*if(roleid.isEmpty())
             {
                 JOptionPane.showMessageDialog(this, "Role id field is empty...please fill it first");
@@ -344,10 +323,10 @@ public class Role extends javax.swing.JInternalFrame {
             {
             JOptionPane.showMessageDialog(this, "Name field is empty... please fill it first!!");
             }
-            else if(combopermission.getSelectedItem().toString().equals(""))
+/*            else if(combopermission.getSelectedItem().toString().equals(""))
             {
             JOptionPane.showMessageDialog(this, "Please select item first!!");
-            }
+            }*/
         else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtname.getText())))
         {
             JOptionPane.showMessageDialog(this, "Please enter valid name");
@@ -358,12 +337,12 @@ public class Role extends javax.swing.JInternalFrame {
             try
             {
                 con=DBConnection.getConnection();
-                pst=con.prepareStatement("update role set name=?,permission=? where id=?");
+                pst=con.prepareStatement("update role set name=? where id=?");
                 
                 pst.setString(1, name);
-                pst.setString(2, permission);
+//                pst.setString(2, permission);
                 
-                pst.setInt(3, Integer.parseInt(roleList.get(comborolename.getSelectedIndex()-1).getId()));
+                pst.setInt(2, Integer.parseInt(roleList.get(comborolename.getSelectedIndex()-1).getId()));
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
@@ -450,7 +429,7 @@ public class Role extends javax.swing.JInternalFrame {
         rs.next();
         
         txtname.setText(rs.getString("name"));
-        combopermission.setSelectedItem(rs.getString("permission"));
+       // combopermission.setSelectedItem(rs.getString("permission"));
         selectedRoleId = comborolename.getSelectedIndex();
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -463,11 +442,9 @@ public class Role extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnrefresh;
     private javax.swing.JButton btnsave;
     private javax.swing.JButton btnupdate;
-    private javax.swing.JComboBox combopermission;
     private javax.swing.JComboBox comborolename;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

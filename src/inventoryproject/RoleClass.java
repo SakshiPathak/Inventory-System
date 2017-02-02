@@ -13,15 +13,15 @@ public class RoleClass {
     
     private String id;
     private String name;
-    private String permission;
+    
 
     public RoleClass() {
     }
 
-    public RoleClass(String id, String name, String permission) {
+    public RoleClass(String id, String name) {
         this.id = id;
         this.name = name;
-        this.permission = permission;
+        
     }
 
     public String getId() {
@@ -39,14 +39,5 @@ public class RoleClass {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-    
     
 }
