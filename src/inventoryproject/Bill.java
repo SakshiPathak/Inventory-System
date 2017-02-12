@@ -226,7 +226,7 @@ public class Bill extends javax.swing.JInternalFrame {
         
         try {
              con = DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM CUSTOMER ORDER BY First_Name");
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM CUSTOMER ORDER BY first_name");
 
             ResultSet rs = pstmt.executeQuery();
             int index = 1;
@@ -235,7 +235,7 @@ public class Bill extends javax.swing.JInternalFrame {
             billList = new ArrayList<>();
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
-                Item item = new Item(index++, rs.getString("First_Name"));
+                Item item = new Item(index++, rs.getString("first_name") + " " + rs.getString("last_name"));
                 model.addElement(item);
                 
                 billList.add(
@@ -249,8 +249,7 @@ public class Bill extends javax.swing.JInternalFrame {
                                 rs.getString("City"),
                                 String.valueOf(rs.getInt("Pincode")),
                                 rs.getString("State"),
-                                rs.getString("Phone"),
-                                rs.getString("Customer_Type")
+                                rs.getString("Phone")
                         ));
             }
 
@@ -1873,7 +1872,7 @@ public class Bill extends javax.swing.JInternalFrame {
                     ResultSet rs = pst.executeQuery();
                     rs.next();
                     int qty1 = rs.getInt("quantity");
-                    if(qty > qty1)
+                    if(qty > qty1 || qty1 <= 0 || qty == 0)
                     {
                         JOptionPane.showMessageDialog(this, "Qunatity is higher than available stock quantity.. please fill right quantity");
                     }
@@ -2436,12 +2435,13 @@ public class Bill extends javax.swing.JInternalFrame {
              {
                  con=DBConnection.getConnection();
                 
-                  pst = con.prepareStatement("select id from customer where first_name = ? and id= ?");
-                pst.setString(1, combocustomername.getSelectedItem().toString());
-                pst.setInt(2, Integer.parseInt(billList.get(combocustomername.getSelectedIndex()-1).getId()));
-                ResultSet rs = pst.executeQuery();
-                rs.next();
-                int customerID = rs.getInt("id");
+//                  pst = con.prepareStatement("select id from customer where first_name = ? and id= ?");
+//                pst.setString(1, combocustomername.getSelectedItem().toString());
+//                pst.setInt(2, Integer.parseInt(billList.get(combocustomername.getSelectedIndex()-1).getId()));
+//                ResultSet rs = pst.executeQuery();
+//                rs.next();
+//                int customerID = rs.getInt("id");
+                 int customerID = Integer.parseInt(billList.get(combocustomername.getSelectedIndex()-1).getId());
                 
                 
                 
@@ -2589,7 +2589,7 @@ public class Bill extends javax.swing.JInternalFrame {
                 "			<span>TIN No: 03362196323</span>\n" +
                 "		</div>\n" +
                 "		<div class='col-md-4 text-center'>\n" +
-                "			<span>BILL/CASH BOOK</span>\n" +
+                "			<span>VAT INVOICE</span>\n" +
                 "		</div>\n" +
                 "		<div class='col-md-4'>\n" +
                 "			<div class='pull-right'>\n" +
@@ -2666,7 +2666,7 @@ public class Bill extends javax.swing.JInternalFrame {
                 "						<td>&nbsp;</td>\n" +
                 "						<td>&nbsp;</td>\n" +
                 "						<td class=\"bold\">TOTAL</td>\n" +
-                "						<td class=\"bold\">"+ bill +"</td>\n" +
+                "						<td class=\"bold\">"+ bill +"(Include 14.3% VAT)</td>\n" +
                
                 "					</tr>\n" +
                 "					<tr>\n" +
@@ -2679,6 +2679,32 @@ public class Bill extends javax.swing.JInternalFrame {
                 "			</table>\n" +
                 "		</div>\n" +
                 "	</div>\n" +
+                "   <div class=\"row\">\n" +
+                "   	 <div>\n" +
+                "   <img src=\"images/Dulux.jpg\" width=\"150\" height=\"150\">\n"+
+                "   </img>\n" +
+                "   <img src=\"images/Asian Paints logo 2012.png\" width=\"150\" height=\"150\">\n"+
+                "   </img>\n" +
+                "   <img src=\"images/drfixit.png\" width=\"150\" height=\"150\">\n"+
+                "   </img>\n" +
+                "   <img src=\"images/logo.png\" width=\"300\" height=\"150\">\n"+
+                "   </img>\n" +
+                "   <img src=\"images/masterbrush.jpg\" width=\"150\" height=\"150\">\n"+
+                "   </img>\n" +
+       
+                        
+//                "   	 <h3>Note: </h3>\n" +
+//                "   	 <ul style=\"list-style:none;\">\n" +
+//                "   	 	<li>1. ਵਿਕੇ ਹੋਏ ਮਾਲ ਦੀ ਵਾਪਸੀ 15 ਦਿਨ ਦੇ ਅੰਦਰ ਹੋਵੇਗੀ / बिके हुए माल की वापसी 15 दिन के अंदर होगी |</li>\n" +
+//                "   	 	<li>2. ਡਾਈ ਦੁਆਰਾ ਤਿਆਰ ਕੀਤੇ ਕਲਰ ਦੀ ਗਾਰੰਟੀ ਨਹੀਂ ਹੋਵੇਗੀ / डाई से तयार किये गए कलर की गारंटी नही होगी |</li>\n" +
+//                "   	 	<li>3. ਕਾਉੰਟਰ ਛੱਡਣ ਤੋਂ ਬਾਅਦ ਸਾਡੀ ਕੋਈ ਜਿੰਮੇਵਾਰੀ ਨਹੀਂ ਹੋਵੇਗੀ / कॉउंटर छोड़ने के बाद हमारी कोई जिमेवारी नही होगी |</li>\n" +
+//                "   	 	<li>4. ਕਿਸੇ ਵੀ ਪੈਂਟ ਦੀ ਕੋਈ ਗਾਰੰਟੀ ਨਹੀਂ ਹੋਵੇਗੀ / किसी भी पेंट की कोई गारंटी नही होगी |</li>\n" +
+//                "   	 	<li>5. ਸ਼ੋਰਾ ਸਲਾਭ ਤੇ ਕਿਸੇ ਬ ਪੈਂਟ ਦੀ ਕੋਈ ਗਾਰੰਟੀ ਨਹੀਂ ਹੈ / शोरा सलाभ पर किसी भी पेंट की कोई गारंटी नही है |</li>\n" +
+//                "   	 	<li>6. ਕਿਸੇ ਵੀ ਕਲਰ ਨੂੰ ਤਿਆਰ ਕਰਨ ਦੇ ਕੋਈ ਪੈਸੇ ਨਹੀਂ ਲਾਵਾਂਗੇ / किसी भी कलर को तयार करने के कोई पैसे नही लिए जायेंगे |</li>\n" +
+//                "   	 	<li>7. ਕਲਰ ਹਮੇਸ਼ਾ ਬੇਸ ਵਿਚ ਬਣਾ ਕੇ ਲਵੋ ਜੀ / कलर हमेशा बेस में बना के लो |</li>\n" +
+//                "   	 </ul>\n" +
+                "   	 </div>\n" +
+                "   </div>\n" +
                 "   <div class=\"row\">\n" +
                 "   	 <div class=\"col-md-12 thumbnail\">\n" +
                 "   	 <h3>Note: </h3>\n" +
@@ -2698,8 +2724,9 @@ public class Bill extends javax.swing.JInternalFrame {
                 "</body>\n" +
                 "</html>");
             fileWriter.close();
-            
+            JOptionPane.showMessageDialog(this, "PDF Generated Successfully");
           Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
+          //    Runtime.getRuntime().exec("C:\\Program Files\\Mozilla Firefox\\firefox.exe " + file.getAbsolutePath());
           con.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());

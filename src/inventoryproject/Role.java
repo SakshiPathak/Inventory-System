@@ -38,7 +38,7 @@ public class Role extends javax.swing.JInternalFrame {
     public Role() {
         initComponents();
         roleList = new ArrayList<>();
-        populateRoleIdCombo();
+        populateRoleNameCombo();
         btndelete.setVisible(false);
     }
     public void clear() {
@@ -48,7 +48,7 @@ public class Role extends javax.swing.JInternalFrame {
          comborolename.setSelectedIndex(0);
          }
     
-    private void populateRoleIdCombo() {
+    private void populateRoleNameCombo() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
     try {
         con = DBConnection.getConnection();
@@ -77,7 +77,7 @@ public class Role extends javax.swing.JInternalFrame {
             comborolename.setModel(model);
         
     } catch (SQLException ex) {
-        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(Role.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
     class Item {
@@ -303,7 +303,7 @@ public class Role extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
-        populateRoleIdCombo();
+        populateRoleNameCombo();
     }//GEN-LAST:event_btnsaveActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
@@ -360,7 +360,7 @@ public class Role extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
-        
+        populateRoleNameCombo();
     }//GEN-LAST:event_btnupdateActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
@@ -399,7 +399,7 @@ public class Role extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        populateRoleIdCombo();
+        populateRoleNameCombo();
       //}
     }//GEN-LAST:event_btndeleteActionPerformed
 
@@ -432,7 +432,7 @@ public class Role extends javax.swing.JInternalFrame {
        // combopermission.setSelectedItem(rs.getString("permission"));
         selectedRoleId = comborolename.getSelectedIndex();
     } catch (SQLException ex) {
-        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(Role.class.getName()).log(Level.SEVERE, null, ex);
     }
     }//GEN-LAST:event_comborolenameItemStateChanged
 

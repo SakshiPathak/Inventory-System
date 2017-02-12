@@ -51,8 +51,8 @@ public class Menu extends javax.swing.JFrame {
 
         desktoppane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        mnulogout = new javax.swing.JMenu();
-        mnuexit = new javax.swing.JMenuItem();
+        mnuexit = new javax.swing.JMenu();
+        mnulogout = new javax.swing.JMenuItem();
         mnuadmin = new javax.swing.JMenu();
         mnusupplier = new javax.swing.JMenuItem();
         mnurole = new javax.swing.JMenuItem();
@@ -67,11 +67,14 @@ public class Menu extends javax.swing.JFrame {
         mnureport = new javax.swing.JMenu();
         mnustockreport = new javax.swing.JMenuItem();
         mnureorderreport = new javax.swing.JMenuItem();
+        mnuSupplierReport = new javax.swing.JMenuItem();
         mnubillreport = new javax.swing.JMenuItem();
         mnuregister = new javax.swing.JMenu();
         mnustockreport1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        desktoppane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout desktoppaneLayout = new javax.swing.GroupLayout(desktoppane);
         desktoppane.setLayout(desktoppaneLayout);
@@ -84,17 +87,17 @@ public class Menu extends javax.swing.JFrame {
             .addGap(0, 384, Short.MAX_VALUE)
         );
 
-        mnulogout.setText("File");
+        mnuexit.setText("Exit");
 
-        mnuexit.setText("Logout");
-        mnuexit.addActionListener(new java.awt.event.ActionListener() {
+        mnulogout.setText("Logout");
+        mnulogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuexitActionPerformed(evt);
+                mnulogoutActionPerformed(evt);
             }
         });
-        mnulogout.add(mnuexit);
+        mnuexit.add(mnulogout);
 
-        jMenuBar1.add(mnulogout);
+        jMenuBar1.add(mnuexit);
 
         mnuadmin.setText("Admin Details");
 
@@ -182,6 +185,14 @@ public class Menu extends javax.swing.JFrame {
         });
         mnureport.add(mnureorderreport);
 
+        mnuSupplierReport.setText("Supplier Report");
+        mnuSupplierReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSupplierReportActionPerformed(evt);
+            }
+        });
+        mnureport.add(mnuSupplierReport);
+
         mnubillreport.setText("Bill Report");
         mnubillreport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,12 +266,12 @@ public class Menu extends javax.swing.JFrame {
         prod.setVisible(true);
     }//GEN-LAST:event_mnuproductActionPerformed
 
-    private void mnuexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuexitActionPerformed
+    private void mnulogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnulogoutActionPerformed
         // TODO add your handling code here:
         Login login = new Login();
         login.setVisible(true);
         setVisible(false);
-    }//GEN-LAST:event_mnuexitActionPerformed
+    }//GEN-LAST:event_mnulogoutActionPerformed
 
     private void mnubillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnubillActionPerformed
         // TODO add your handling code here:
@@ -294,6 +305,12 @@ public class Menu extends javax.swing.JFrame {
         desktoppane.add(bill);
         bill.setVisible(true);
     }//GEN-LAST:event_mnubillreportActionPerformed
+
+    private void mnuSupplierReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSupplierReportActionPerformed
+        SupplierReport supplier=new SupplierReport();
+        desktoppane.add(supplier);
+        supplier.setVisible(true);
+    }//GEN-LAST:event_mnuSupplierReportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,6 +350,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktoppane;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mnuSupplierReport;
     private javax.swing.JMenu mnuadmin;
     private javax.swing.JMenuItem mnubill;
     private javax.swing.JMenu mnubillgenerate;
@@ -341,8 +359,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu mnucategorydetail;
     private javax.swing.JMenuItem mnucustomer;
     private javax.swing.JMenu mnucustomerdetail;
-    private javax.swing.JMenuItem mnuexit;
-    private javax.swing.JMenu mnulogout;
+    private javax.swing.JMenu mnuexit;
+    private javax.swing.JMenuItem mnulogout;
     private javax.swing.JMenuItem mnuproduct;
     private javax.swing.JMenu mnuproductdetail;
     private javax.swing.JMenu mnuregister;

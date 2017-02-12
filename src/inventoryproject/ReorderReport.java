@@ -37,7 +37,7 @@ public class ReorderReport extends javax.swing.JInternalFrame {
         {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("select * from product where quantity < re_order_level");
+            PreparedStatement pstmt = con.prepareStatement("select p.id, p.name, c.name, p.quantity, p.re_order_level from product p, category c where p.category_id=c.id AND quantity < re_order_level");
 
             rs = pstmt.executeQuery();
             
@@ -45,7 +45,7 @@ public class ReorderReport extends javax.swing.JInternalFrame {
             ReorderClass reorder;
             while(rs.next())
             {
-            reorder=new ReorderClass(rs.getString("id"), rs.getString("name"), rs.getString("quantity"), rs.getString("re_order_level"));
+            reorder=new ReorderClass(rs.getString("p.id"), rs.getString("p.name"), rs.getString("c.name"), rs.getString("p.quantity"), rs.getString("p.re_order_level"));
             reorderList.add(reorder);
             }
         }
@@ -60,13 +60,14 @@ public class ReorderReport extends javax.swing.JInternalFrame {
     {
         ArrayList<ReorderClass> list= getReorderList();
         DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
-        Object[] row=new Object[9];
+        Object[] row=new Object[5];
         for(int i=0;i<list.size();i++)
         {
             row[0]=list.get(i).getProductid();
             row[1]=list.get(i).getProductname();
-            row[2]=list.get(i).getQuantity();
-            row[3]=list.get(i).getReorderlevel();
+            row[2]=list.get(i).getCategoryname();
+            row[3]=list.get(i).getQuantity();
+            row[4]=list.get(i).getReorderlevel();
             
             model.addRow(row);
         }
@@ -110,7 +111,7 @@ public class ReorderReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Product ID", "Product Name", "Quantity", "Reorder Level"
+                "Product ID", "Product Name", "Category Name", "Quantity", "Reorder Level"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

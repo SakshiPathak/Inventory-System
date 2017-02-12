@@ -17,6 +17,7 @@ public class ProductBillClass {
     private String costprice;
     private String saleprice;
     private String status;
+    private String mrp;
     private String reorderlevel;
     private String categoryid;
     private String supplierid;
@@ -24,19 +25,20 @@ public class ProductBillClass {
     public ProductBillClass() {
     }
 
-    public ProductBillClass(String id, String productname, String units, String quantity, String costprice, String saleprice, String status, String reorderlevel, String categoryid, String supplierid) {
-        this.id=id;
+    public ProductBillClass(String id, String productname, String units, String quantity, String costprice, String saleprice, String status, String mrp, String reorderlevel, String categoryid, String supplierid) {
+        this.id = id;
         this.productname = productname;
         this.units = units;
         this.quantity = quantity;
         this.costprice = costprice;
         this.saleprice = saleprice;
         this.status = status;
+        this.mrp = mrp;
         this.reorderlevel = reorderlevel;
         this.categoryid = categoryid;
         this.supplierid = supplierid;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -93,6 +95,14 @@ public class ProductBillClass {
         this.status = status;
     }
 
+    public String getMrp() {
+        return mrp;
+    }
+
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
+    }
+
     public String getReorderlevel() {
         return reorderlevel;
     }
@@ -116,6 +126,8 @@ public class ProductBillClass {
     public void setSupplierid(String supplierid) {
         this.supplierid = supplierid;
     }
+
+   
     
     
 }

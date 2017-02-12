@@ -20,12 +20,11 @@ public class CustomerClass {
     private String pincode;
     private String state;
     private String phoneno;
-    private String customertype;
 
     public CustomerClass() {
     }
 
-    public CustomerClass(String id, String firstrname, String lastname, String gender, String emailid, String address, String city, String pincode, String state, String phoneno, String customertype) {
+    public CustomerClass(String id, String firstrname, String lastname, String gender, String emailid, String address, String city, String pincode, String state, String phoneno) {
         this.id = id;
         this.firstrname = firstrname;
         this.lastname = lastname;
@@ -36,7 +35,6 @@ public class CustomerClass {
         this.pincode = pincode;
         this.state = state;
         this.phoneno = phoneno;
-        this.customertype = customertype;
     }
 
     public String getId() {
@@ -118,14 +116,9 @@ public class CustomerClass {
     public void setPhoneno(String phoneno) {
         this.phoneno = phoneno;
     }
+    
 
-    public String getCustomertype() {
-        return customertype;
-    }
-
-    public void setCustomertype(String customertype) {
-        this.customertype = customertype;
-    }
+    
     
    
     

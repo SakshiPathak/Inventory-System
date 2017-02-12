@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -85,24 +86,84 @@ public class Product extends javax.swing.JInternalFrame {
     }
     }
      
+//     private void populateProductNameCombo() {
+//        try {
+//        con = DBConnection.getConnection();
+//        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+//        
+//        ResultSet rs = pstmt.executeQuery();
+//        comboproductname.removeAllItems();
+//        comboproductname.addItem("");
+//                productList = new ArrayList<>();
+//
+//        while (rs.next())
+//            comboproductname.addItem(rs.getString("name"));
+//        
+//        
+//    } catch (SQLException ex) {
+//        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+//    }
+     
      private void populateProductNameCombo() {
-        try {
+         DefaultComboBoxModel model = new DefaultComboBoxModel();
+    try {
         con = DBConnection.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("select name from product order by name");
+        PreparedStatement pstmt = con.prepareStatement("select * from product order by name");
         
         ResultSet rs = pstmt.executeQuery();
-        comboproductname.removeAllItems();
-        comboproductname.addItem("");
-                productList = new ArrayList<>();
+        int index = 1;
+            Product.Item tItem = new Product.Item(0, "Select Product...");
+            model.addElement(tItem);
+            productList = new ArrayList<>();
+            while (rs.next()) {
+               // combocustomername.addItem(rs.getString("First_Name"));
+                Product.Item item = new Product.Item(index++, rs.getString("name"));
+                model.addElement(item);
+                
+                productList.add(
+                        new ProductBillClass(String.valueOf(rs.getInt("id")), 
+                                rs.getString("name"),
+                                rs.getString("units"),
+                                rs.getString("quantity"),
+                                rs.getString("cost_price"),
+                                rs.getString("sale_price"),
+                                rs.getString("mrp"),
+                                rs.getString("status"),
+                                rs.getString("re_order_level"),
+                                rs.getString("category_id"),
+                                rs.getString("supplier_id")
+                        
+                        )
+                );
+                               
+//                                rs.getString("permission")
+                                
+                            
+                        
+            }
 
-        while (rs.next())
-            comboproductname.addItem(rs.getString("name"));
-        
+            comboproductname.setModel(model);
         
     } catch (SQLException ex) {
-        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
+    class Item {
+        private int index;
+        private String name;
+
+        public Item(int index, String name) {
+            this.index = index;
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name; //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,6 +207,7 @@ public class Product extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Add Products");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Product Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 0, 0))); // NOI18N
 
@@ -452,15 +514,15 @@ public class Product extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(this, "Please select item first!!");
         }
-       else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtproductname.getText())))
-         {
-             JOptionPane.showMessageDialog(this, "Please enter valid Productname");
-         }
-        
-         else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtunit.getText())))
-         {
-             JOptionPane.showMessageDialog(this, "Please enter valid Units");
-         }
+//       else if(!(Pattern.matches("^[A-Za-z0-9 ,]+$", txtproductname.getText())))
+//         {
+//             JOptionPane.showMessageDialog(this, "Please enter valid Productname");
+//         }
+//        
+//         else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtunit.getText())))
+//         {
+//             JOptionPane.showMessageDialog(this, "Please enter valid Units");
+//         }
         else if(!(Pattern.matches("^[0-9]+", txtquantity.getText())))
             {
                 JOptionPane.showMessageDialog(this, "Please enter valid Quantity");
@@ -592,15 +654,15 @@ public class Product extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(this, "Please select item first!!");
         }
-       else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtproductname.getText())))
-         {
-             JOptionPane.showMessageDialog(this, "Please enter valid Productname");
-         }
-        
-         else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtunit.getText())))
-         {
-             JOptionPane.showMessageDialog(this, "Please enter valid Units");
-         }
+//       else if(!(Pattern.matches("^[A-Za-z0-9 ,]+$", txtproductname.getText())))
+//         {
+//             JOptionPane.showMessageDialog(this, "Please enter valid Productname");
+//         }
+//        
+//         else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtunit.getText())))
+//         {
+//             JOptionPane.showMessageDialog(this, "Please enter valid Units");
+//         }
         else if(!(Pattern.matches("^[0-9]+", txtquantity.getText())))
             {
                 JOptionPane.showMessageDialog(this, "Please enter valid Quantity");
@@ -629,17 +691,18 @@ public class Product extends javax.swing.JInternalFrame {
                 con=DBConnection.getConnection();
              
                 
-                pst=con.prepareStatement("update product set units=?, quantity=?, cost_price=?, sale_price=?, mrp=?, status=?, re_order_level=? where name = ?");
+                pst=con.prepareStatement("update product set name=?, units=?, quantity=?, cost_price=?, sale_price=?, mrp=?, status=?, re_order_level=? where id = ?");
                 
-                pst.setString(1, units);
-                pst.setString(2, quantity);
-                pst.setString(3, costprice);
-                pst.setString(4, saleprice);
-                pst.setString(5, mrp);
-                pst.setBoolean(6, status);
-                pst.setString(7, reorder);
-               //pst.setInt(8, Integer.parseInt(productList.get(comboproductname.getSelectedIndex()-1).getId()));
-                pst.setString(8, productname);
+                pst.setString(1, productname);
+                pst.setString(2, units);
+                pst.setString(3, quantity);
+                pst.setString(4, costprice);
+                pst.setString(5, saleprice);
+                pst.setString(6, mrp);
+                pst.setBoolean(7, status);
+                pst.setString(8, reorder);
+               pst.setInt(9, Integer.parseInt(productList.get(comboproductname.getSelectedIndex()-1).getId()));
+                //pst.setString(9, productname);
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
@@ -685,6 +748,7 @@ public class Product extends javax.swing.JInternalFrame {
             }
         }
         */
+        populateProductNameCombo();
     }//GEN-LAST:event_btnupdateActionPerformed
 
     int selectedProductId = 0;
@@ -718,32 +782,113 @@ public class Product extends javax.swing.JInternalFrame {
 //        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
 //    }
         
+//        try {
+//        
+//        String selectedName = (String) comboproductname.getSelectedItem();
+//        
+//        if(selectedName.equals("") || selectedName == null)
+//            return;
+//        
+//        con = DBConnection.getConnection();
+//        
+//        pst = con.prepareStatement("select c.name from product p, category c where p.category_id=c.id and p.id = (select id from product where name = ?)");
+//            pst.setString(1, selectedName);
+//            rs = pst.executeQuery();
+//            rs.next(); 
+//            String categoryname = rs.getString("c.name");
+//         
+//            
+//            pst = con.prepareStatement("select s.name from product p, supplier s where p.supplier_id=s.id and p.id = (select id from product where name = ?)");
+//            pst.setString(1, selectedName);
+//            rs = pst.executeQuery();
+//            rs.next(); 
+//     
+//            String suppliertname = rs.getString("s.name");
+//            
+//        
+//        pst = con.prepareStatement("select * from product where id IN (select id from product where name = ?)");
+//        pst.setString(1, selectedName);
+//        
+//        ResultSet rs = pst.executeQuery();
+//        rs.next();
+//        
+//        txtproductname.setText(rs.getString("name"));
+//        txtunit.setText(rs.getString("units"));
+//        txtquantity.setText(rs.getString("Quantity"));
+//        txtcostprice.setText(rs.getString("cost_Price"));
+//        txtsaleprice.setText(rs.getString("Sale_Price"));
+//        txtmrp.setText(rs.getString("mrp"));
+//        
+//        //if(radiotrue.isSelected()==true)
+//        //{
+////            if(rs.getBoolean("status")==true)
+////            {
+////            radiotrue.setSelected(rs.getBoolean("status"));
+////                System.out.println("true selected");
+////            }
+////            if(rs.getBoolean("status")==false)
+////            {
+////                radiofalse.setSelected(rs.getBoolean("status"));
+////                System.out.println("false selected");
+////            }
+//        
+//        if(rs.getBoolean("status")==true)
+//            {
+//                radiotrue.setSelected(true);
+//               
+//            }
+//           else
+//            {
+//               radiofalse.setSelected(true);
+//            }
+//            
+//            
+//        //}
+////        else
+////        {
+////        radiofalse.setSelected(rs.getBoolean("status"));
+////        }
+//        //if(radiotrue.isSelected()==true)
+//        //{
+//           // buttonGroup1.getSelection().getActionCommand();
+//        //}
+//        txtreorderlevel.setText(rs.getString("re_order_level"));
+//        combocategory.setSelectedItem(categoryname);
+//        combosupplier.setSelectedItem(suppliertname);
+//        selectedProductId = comboproductname.getSelectedIndex();
+//        
+//    } catch (SQLException ex) {
+//        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+//    } catch (NullPointerException e) {
+//        //populateProductNameCombo();
+//    }
         try {
         
-        String selectedName = (String) comboproductname.getSelectedItem();
+        /*String selectedName = (String) comborolename.getSelectedItem();
         
         if(selectedName.equals("") || selectedName == null)
-            return;
+            return;*/
+             if (productList == null || comboproductname.getSelectedIndex() == 0)
+                return;
         
         con = DBConnection.getConnection();
-        
-        pst = con.prepareStatement("select c.name from product p, category c where p.category_id=c.id and p.id = (select id from product where name = ?)");
-            pst.setString(1, selectedName);
+        pst = con.prepareStatement("select c.name from product p, category c where p.category_id=c.id and p.id = ?");
+             pst.setInt(1, Integer.parseInt(productList.get(comboproductname.getSelectedIndex()-1).getId()));
             rs = pst.executeQuery();
             rs.next(); 
             String categoryname = rs.getString("c.name");
          
             
-            pst = con.prepareStatement("select s.name from product p, supplier s where p.supplier_id=s.id and p.id = (select id from product where name = ?)");
-            pst.setString(1, selectedName);
+            pst = con.prepareStatement("select s.name from product p, supplier s where p.supplier_id=s.id and p.id = ?");
+             pst.setInt(1, Integer.parseInt(productList.get(comboproductname.getSelectedIndex()-1).getId()));
             rs = pst.executeQuery();
             rs.next(); 
      
             String suppliertname = rs.getString("s.name");
             
         
-        pst = con.prepareStatement("select * from product where id IN (select id from product where name = ?)");
-        pst.setString(1, selectedName);
+        pst = con.prepareStatement("select * from product where id = ?");
+         pst.setInt(1, Integer.parseInt(productList.get(comboproductname.getSelectedIndex()-1).getId()));
         
         ResultSet rs = pst.executeQuery();
         rs.next();
@@ -795,10 +940,9 @@ public class Product extends javax.swing.JInternalFrame {
         
     } catch (SQLException ex) {
         Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (NullPointerException e) {
+    } catch (Exception e) {
         //populateProductNameCombo();
     }
-    
     
     }//GEN-LAST:event_comboproductnameItemStateChanged
 

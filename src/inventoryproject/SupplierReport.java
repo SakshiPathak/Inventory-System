@@ -18,18 +18,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author HP
  */
-public class ProductReport extends javax.swing.JInternalFrame {
+public class SupplierReport extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ProductReport
      */
-    public ProductReport() {
+    public SupplierReport() {
         initComponents();
     }
     
-    public ArrayList<ProductClass> getProductList()
+    public ArrayList<SupplierReportClass> getSupplierList()
     {
-        ArrayList<ProductClass> productList=new ArrayList<ProductClass>();
+        ArrayList<SupplierReportClass> supplierList=new ArrayList<SupplierReportClass>();
         Connection con=null;
         ResultSet rs=null;
         try
@@ -37,42 +37,38 @@ public class ProductReport extends javax.swing.JInternalFrame {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
             
-            PreparedStatement pst = con.prepareStatement("select P.name, units, quantity, cost_price, sale_price, mrp, status, re_order_level, C.name, S.name from product P, category C, supplier S where P.category_id=C.id and P.supplier_id=S.id");
+            PreparedStatement pst = con.prepareStatement("select name, address, city, pincode, state, phone from supplier");
             rs = pst.executeQuery();
             
             //
-            ProductClass product;
+            SupplierReportClass supplier;
             while(rs.next())
             {
-            product=new ProductClass(rs.getString("name"), rs.getString("units"), rs.getString("quantity"), rs.getString("cost_price"), rs.getString("sale_price"), rs.getString("mrp"), rs.getString("status"), rs.getString("re_order_level"), rs.getString("C.name"), rs.getString("S.name"));
-            productList.add(product);
+            supplier=new SupplierReportClass(rs.getString("name"), rs.getString("address"), rs.getString("city"), rs.getString("pincode"), rs.getString("state"), rs.getString("phone"));
+            supplierList.add(supplier);
             }
         }
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        return productList;
+        return supplierList;
     }
     
     public void showData()
     {
-        ArrayList<ProductClass> list= getProductList();
+        ArrayList<SupplierReportClass> list= getSupplierList();
         DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
-        Object[] row=new Object[10];
+        Object[] row=new Object[6];
         for(int i=0;i<list.size();i++)
         {
             
-            row[0]=list.get(i).getProductname();
-            row[1]=list.get(i).getUnits();
-            row[2]=list.get(i).getQuantity();
-            row[3]=list.get(i).getCostprice();
-            row[4]=list.get(i).getSaleprice();
-            row[5]=list.get(i).getMrp();
-            row[6]=list.get(i).getStatus();
-            row[7]=list.get(i).getReorderlevel();
-            row[8]=list.get(i).getCategoryname();
-            row[9]=list.get(i).getSuppliername();
+            row[0]=list.get(i).getName();
+            row[1]=list.get(i).getAddress();
+            row[2]=list.get(i).getCity();
+            row[3]=list.get(i).getState();
+            row[4]=list.get(i).getPincode();
+            row[5]=list.get(i).getPhoneno();
             model.addRow(row);
         }
     }
@@ -91,7 +87,7 @@ public class ProductReport extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setMaximizable(true);
-        setTitle("Product Report");
+        setTitle(" Supplier Report");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -115,7 +111,7 @@ public class ProductReport extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Product Name", "Units", "Quantity", "Cost Price", "Sale Price", "MRP", "Status", "Reorder Level", "Category Name", "Supplier Name"
+                "Supplier Name", "Address", "City", "State", "Pincode", "Phone No"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -125,16 +121,16 @@ public class ProductReport extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
-                .addGap(68, 68, 68))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

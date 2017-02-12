@@ -30,13 +30,40 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-         jLabel4.setText(("<html>Designed and Developed By:<br>Tri Infotech<br>Approved by Govt. of India<br>An ISO Certified Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Office No. 9872444955<br>S.C.O.#4 Shine Complex,Fatehgarh Road,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Official E-Mail:triinfotechindia@gmail.com<br>Hshiarpur Punjab,(INDIA)-146001&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Website:www.triinfotech.in<br>(Software, App and Web Development & IT Training Company)</html>"));
+        checkAndCreateAdmin();
+         jLabel4.setText(("<html>Designed and Developed By:<br><p style=\"color:red;\">Tri Infotech</p><br>Approved by Govt. of India<br>An ISO Certified Company&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Office No. 9872444955<br>S.C.O.#4 Shine Complex,Fatehgarh Road,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Official E-Mail:triinfotechindia@gmail.com<br>Hshiarpur Punjab,(INDIA)-146001&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Website:www.triinfotech.in<br>(Software, App and Web Development & IT Training Company)</html>"));
     }
     public void clear()
     {
         txtusername.setText("");
         txtpassword.setText("");
     
+    }
+    
+    private void checkAndCreateAdmin() {
+        try
+            {
+            con=DBConnection.getConnection();
+            pst=con.prepareStatement("select count(*) as count from role");
+            rs = pst.executeQuery();
+            rs.next();
+            
+            int count = rs.getInt("count");
+            System.out.println(count);
+            
+            if (count == 0)
+            {
+                new Temporary().setVisible(true);
+            }
+            else
+            {
+                return;
+            }
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -175,9 +202,9 @@ public class Login extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this, "Please enter valid username");
         }
-        else if(password.length()>8)
+        else if(password.length()>10)
         {
-            JOptionPane.showMessageDialog(this, "Password should not greater than 8 characters");
+            JOptionPane.showMessageDialog(this, "Password should not greater than 10 characters");
         }
         
         else

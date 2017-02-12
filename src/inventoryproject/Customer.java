@@ -54,7 +54,7 @@ public class Customer extends javax.swing.JInternalFrame {
         txtstate.setText("");
         txtphoneno.setText("");
         combocustomername.setSelectedIndex(0);
-        combocustomertype.setSelectedIndex(0);
+      //  combocustomertype.setSelectedIndex(0);
     }
 //    
 //    public ArrayList<CustomerClass> getCustomerList()
@@ -113,8 +113,6 @@ public class Customer extends javax.swing.JInternalFrame {
         txtstate = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtphoneno = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        combocustomertype = new javax.swing.JComboBox();
         jPanel2 = new javax.swing.JPanel();
         btnsave = new javax.swing.JButton();
         btnupdate = new javax.swing.JButton();
@@ -190,11 +188,6 @@ public class Customer extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setText("Phone No");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel11.setText("Customer Type");
-
-        combocustomertype.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Normal Customer", "Regular Customer", "Frequent Customer", " " }));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -211,9 +204,8 @@ public class Customer extends javax.swing.JInternalFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(148, 148, 148)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(177, 177, 177)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(radiomale)
@@ -226,8 +218,7 @@ public class Customer extends javax.swing.JInternalFrame {
                     .addComponent(txtcity)
                     .addComponent(txtpincode)
                     .addComponent(txtstate)
-                    .addComponent(txtphoneno)
-                    .addComponent(combocustomertype, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtphoneno))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -270,11 +261,7 @@ public class Customer extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtphoneno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(combocustomertype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnsave.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -426,7 +413,7 @@ public class Customer extends javax.swing.JInternalFrame {
         String pincode = txtpincode.getText();
         String state = txtstate.getText();
         String phoneno = txtphoneno.getText();
-        String customertype = combocustomertype.getSelectedItem().toString();
+//        String customertype = combocustomertype.getSelectedItem().toString();
         if (firstname.isEmpty()) {
             JOptionPane.showMessageDialog(this, "First Name field is empty... please fill it first!!");
         } else if (lastname.isEmpty()) {
@@ -457,8 +444,6 @@ public class Customer extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please enter valid state");
         } else if (!(phoneno.matches("\\d{10}"))) {
             JOptionPane.showMessageDialog(this, "Please enter 10 digit phone no");
-        } else if (combocustomertype.getSelectedItem().toString().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please select item first!!");
         } else {
             boolean unique = true;
             try {
@@ -488,7 +473,7 @@ public class Customer extends javax.swing.JInternalFrame {
                 }
 
                 if (unique) {
-                    pst = con.prepareStatement("insert into customer(first_name,last_name,gender,email,address,city,pincode,state,phone,customer_type) values(?,?,?,?,?,?,?,?,?,?)");
+                    pst = con.prepareStatement("insert into customer(first_name,last_name,gender,email,address,city,pincode,state,phone) values(?,?,?,?,?,?,?,?,?)");
                     pst.setString(1, firstname);
                     pst.setString(2, lastname);
                     pst.setString(3, Gender);
@@ -498,7 +483,7 @@ public class Customer extends javax.swing.JInternalFrame {
                     pst.setString(7, pincode);
                     pst.setString(8, state);
                     pst.setString(9, phoneno);
-                    pst.setString(10, customertype);
+//                    pst.setString(10, customertype);
                     int i = pst.executeUpdate();
                  
 
@@ -536,7 +521,7 @@ public class Customer extends javax.swing.JInternalFrame {
         String pincode = txtpincode.getText();
         String state = txtstate.getText();
         String phoneno = txtphoneno.getText();
-        String customertype = combocustomertype.getSelectedItem().toString();
+//        String customertype = combocustomertype.getSelectedItem().toString();
         if (firstname.isEmpty()) {
             JOptionPane.showMessageDialog(this, "First Name field is empty... please fill it first!!");
         } else if (lastname.isEmpty()) {
@@ -567,26 +552,26 @@ public class Customer extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please enter valid state");
         } else if (!(phoneno.matches("\\d{10}"))) {
             JOptionPane.showMessageDialog(this, "Please enter 10 digit phone no");
-        } else if (combocustomertype.getSelectedItem().toString().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please select item first!!");
         } else {
             try {
                 con = DBConnection.getConnection();
-                pst = con.prepareStatement("update customer set last_name=?,gender=?,email=?,address=?,city=?,pincode=?,state=?,phone=?,customer_type=? where id=?");
+                pst = con.prepareStatement("update customer set first_name=?,last_name=?,gender=?,email=?,address=?,city=?,pincode=?,state=?,phone=? where id=?");
 
-                pst.setString(1, lastname);
-                pst.setString(2, Gender);
+                pst.setString(1, firstname);
+                pst.setString(2, lastname);
+                pst.setString(3, radiomale.isSelected() ? "M" : "F");
                 //pst.setString(2, radiomale.setSelected(Gender.equals(Gender)));
-                pst.setString(3, emailid);
-                pst.setString(4, address);
-                pst.setString(5, city);
-                pst.setString(6, pincode);
-                pst.setString(7, state);
-                pst.setString(8, phoneno);
-                pst.setString(9, customertype);
+                pst.setString(4, emailid);
+                pst.setString(5, address);
+                pst.setString(6, city);
+                pst.setString(7, pincode);
+                pst.setString(8, state);
+                pst.setString(9, phoneno);
+//                pst.setString(9, customertype);
                 //pst.setString(10, firstname);
                 pst.setInt(10, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
                 int i = pst.executeUpdate();
+                
                 if (i > 0) {
                     JOptionPane.showMessageDialog(this, "Updated Successfully");
                     clear();
@@ -598,6 +583,7 @@ public class Customer extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
+        populateCustomerNameCombo();
     }//GEN-LAST:event_btnupdateActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
@@ -643,22 +629,68 @@ public class Customer extends javax.swing.JInternalFrame {
 
     int selectedCustomerId = 0;
     private void combocustomernameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combocustomernameItemStateChanged
+//        try {
+//            if (customerList == null || combocustomername.getSelectedIndex() == 0)
+//                return;
+//            
+//            con = DBConnection.getConnection();
+//            pst = con.prepareStatement("select * from customer where id = ?");
+//            //System.out.println(Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()).getId()));
+//            
+//            System.out.println(customerList.size());
+//            
+//            pst.setInt(1, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
+//
+//            ResultSet rs = pst.executeQuery();
+//            rs.next();
+//         
+//            txtfirstname.setText(rs.getString("first_name"));
+//            txtlastname.setText(rs.getString("last_name"));
+//            //radiomale.setSelected(rs.getBoolean("gender"));
+//            if(rs.getString("gender").equals("M"))
+//            {
+//                radiomale.setSelected(true);
+//               
+//            }
+//           else
+//            {
+//               radiofemale.setSelected(true);
+//            }
+//            txtemailid.setText(rs.getString("email"));
+//            txtaddress.setText(rs.getString("address"));
+//            txtcity.setText(rs.getString("city"));
+//            txtpincode.setText(rs.getString("pincode"));
+//            txtstate.setText(rs.getString("state"));
+//            txtphoneno.setText(rs.getString("phone"));
+////            combocustomertype.setSelectedItem(rs.getString("customer_type"));
+//            
+//            selectedCustomerId = combocustomername.getSelectedIndex();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch(Exception e) {
+//            
+//        }
+        
         try {
-            if (customerList == null || combocustomername.getSelectedIndex() == 0)
+        
+        /*String selectedName = (String) comborolename.getSelectedItem();
+        
+        if(selectedName.equals("") || selectedName == null)
+            return;*/
+             if (customerList == null || combocustomername.getSelectedIndex() == 0)
                 return;
+        
+        con = DBConnection.getConnection();
+//        
             
-            con = DBConnection.getConnection();
-            pst = con.prepareStatement("select * from customer where id = ?");
-            //System.out.println(Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()).getId()));
-            
-            System.out.println(customerList.size());
-            
-            pst.setInt(1, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
-
-            ResultSet rs = pst.executeQuery();
-            rs.next();
-         
-            txtfirstname.setText(rs.getString("first_name"));
+        
+        pst = con.prepareStatement("select * from customer where id = ?");
+         pst.setInt(1, Integer.parseInt(customerList.get(combocustomername.getSelectedIndex()-1).getId()));
+        
+        ResultSet rs = pst.executeQuery();
+        rs.next();
+        
+        txtfirstname.setText(rs.getString("first_name"));
             txtlastname.setText(rs.getString("last_name"));
             //radiomale.setSelected(rs.getBoolean("gender"));
             if(rs.getString("gender").equals("M"))
@@ -676,12 +708,13 @@ public class Customer extends javax.swing.JInternalFrame {
             txtpincode.setText(rs.getString("pincode"));
             txtstate.setText(rs.getString("state"));
             txtphoneno.setText(rs.getString("phone"));
-            combocustomertype.setSelectedItem(rs.getString("customer_type"));
-            
-            selectedCustomerId = combocustomername.getSelectedIndex();
-        } catch (SQLException ex) {
-            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        selectedCustomerId = combocustomername.getSelectedIndex();
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception e) {
+        //populateProductNameCombo();
+    }
         
     }//GEN-LAST:event_combocustomernameItemStateChanged
 
@@ -698,9 +731,7 @@ public class Customer extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox combocustomername;
-    private javax.swing.JComboBox combocustomertype;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -726,26 +757,77 @@ public class Customer extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void populateCustomerNameCombo() {
+//        DefaultComboBoxModel model = new DefaultComboBoxModel();
+//        
+//        try {
+//            con = DBConnection.getConnection();
+//            PreparedStatement pstmt = con.prepareStatement("select * from customer order by first_name");
+//
+//            ResultSet rs = pstmt.executeQuery();
+//            int index = 1;
+//            Customer.Item tItem = new Customer.Item(0, "Select Customer...");
+//            model.addElement(tItem);
+//            customerList = new ArrayList<>();
+//            
+//            while (rs.next()) {
+//               // combocustomername.addItem(rs.getString("First_Name"));
+//                Customer.Item item = new Customer.Item(index++, rs.getString("first_name") + " " + rs.getString("last_name"));
+//                model.addElement(item);
+//                
+//                customerList.add(
+//                        new CustomerClass(
+//                                String.valueOf(rs.getInt("id")), 
+//                                rs.getString("first_name"),
+//                                rs.getString("last_name"),
+//                                rs.getString("gender"), 
+//                                rs.getString("email"),
+//                                rs.getString("address"),
+//                                rs.getString("city"),
+//                                String.valueOf(rs.getInt("pincode")),
+//                                rs.getString("state"),
+//                                rs.getString("phone")
+//                                
+//                        ));
+//            }
+//
+//            combocustomername.setModel(model);
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//    
+//    class Item {
+//        private int index;
+//        private String name;
+//
+//        public Item(int index, String name) {
+//            this.index = index;
+//            this.name = name;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return name; //To change body of generated methods, choose Tools | Templates.
+//        }
+//    }
         DefaultComboBoxModel model = new DefaultComboBoxModel();
+    try {
+        con = DBConnection.getConnection();
+        PreparedStatement pstmt = con.prepareStatement("select * from customer order by first_name");
         
-        try {
-            con = DBConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("select * from customer order by first_name");
-
-            ResultSet rs = pstmt.executeQuery();
-            int index = 1;
-            Item tItem = new Item(0, "Select Customer...");
+        ResultSet rs = pstmt.executeQuery();
+        int index = 1;
+            Customer.Item tItem = new Customer.Item(0, "Select Customer...");
             model.addElement(tItem);
             customerList = new ArrayList<>();
-            
             while (rs.next()) {
                // combocustomername.addItem(rs.getString("First_Name"));
-                Item item = new Item(index++, rs.getString("first_name"));
+                Customer.Item item = new Customer.Item(index++, rs.getString("first_name") + " " + rs.getString("last_name"));
                 model.addElement(item);
                 
                 customerList.add(
-                        new CustomerClass(
-                                String.valueOf(rs.getInt("id")), 
+                        new CustomerClass(String.valueOf(rs.getInt("id")), 
                                 rs.getString("first_name"),
                                 rs.getString("last_name"),
                                 rs.getString("gender"), 
@@ -754,18 +836,25 @@ public class Customer extends javax.swing.JInternalFrame {
                                 rs.getString("city"),
                                 String.valueOf(rs.getInt("pincode")),
                                 rs.getString("state"),
-                                rs.getString("phone"),
-                                rs.getString("customer_type")
-                        ));
+                                rs.getString("phone")
+                        
+                        )
+                );
+                               
+//                                rs.getString("permission")
+                                
+                            
+                        
             }
 
             combocustomername.setModel(model);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
     }
     
+    updateUI();
+    }
     class Item {
         private int index;
         private String name;

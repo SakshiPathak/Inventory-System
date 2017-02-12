@@ -513,14 +513,15 @@ public class Supplier extends javax.swing.JInternalFrame {
             try
             {
                 con=DBConnection.getConnection();
-                pst=con.prepareStatement("update supplier set Address=?,City=?,Pincode=?,State=?,Phone=? where ID=?");
+                pst=con.prepareStatement("update supplier set name=?,Address=?,City=?,Pincode=?,State=?,Phone=? where ID=?");
              
-                pst.setString(1, address);
-                pst.setString(2, city);
-                pst.setString(3, pincode);
-                pst.setString(4, state);
-                pst.setString(5, phoneno);
-                 pst.setInt(6, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
+                pst.setString(1, name);
+                pst.setString(2, address);
+                pst.setString(3, city);
+                pst.setString(4, pincode);
+                pst.setString(5, state);
+                pst.setString(6, phoneno);
+                 pst.setInt(7, Integer.parseInt(supplierList.get(combosuppliername.getSelectedIndex()-1).getId()));
                 int i=pst.executeUpdate();
                 if(i>0)
                 {
@@ -538,7 +539,7 @@ public class Supplier extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
-        
+        populateSupplierNameCombo();
     }//GEN-LAST:event_btnupdateActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed

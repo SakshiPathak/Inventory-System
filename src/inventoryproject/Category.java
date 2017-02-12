@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 /**
@@ -32,32 +33,80 @@ public class Category extends javax.swing.JInternalFrame {
     public Category() {
         initComponents();
         categoryList = new ArrayList<>();
-        populateCategoryIdCombo();
+       // populateCategoryIdCombo();
+        populateCategoryNameCombo();
         btndelete.setVisible(false);
     }
     
     public void clear() {
 
-        combocategoryid.setSelectedIndex(0);
+        combocategoryname.setSelectedIndex(0);
         txtcategoryname.setText("");
     }
     
-    private void populateCategoryIdCombo() {
+//    private void populateCategoryIdCombo() {
+//    try {
+//        con = DBConnection.getConnection();
+//        PreparedStatement pstmt = con.prepareStatement("select id from category");
+//        
+//        ResultSet rs = pstmt.executeQuery();
+//        combocategoryid.removeAllItems();
+//        
+//        combocategoryid.addItem("");
+////        categoryList = new ArrayList<>();
+//        while (rs.next())
+//            combocategoryid.addItem(rs.getString("id"));
+//        
+//    } catch (SQLException ex) {
+//        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+//    }
+//    }
+    
+    private void populateCategoryNameCombo() {
+    DefaultComboBoxModel model = new DefaultComboBoxModel();
     try {
         con = DBConnection.getConnection();
-        PreparedStatement pstmt = con.prepareStatement("select id from category");
+        PreparedStatement pstmt = con.prepareStatement("select * from category order by name");
         
         ResultSet rs = pstmt.executeQuery();
-        combocategoryid.removeAllItems();
-        
-        combocategoryid.addItem("");
-//        categoryList = new ArrayList<>();
-        while (rs.next())
-            combocategoryid.addItem(rs.getString("id"));
+        int index = 1;
+            Category.Item tItem = new Category.Item(0, "Select Category...");
+            model.addElement(tItem);
+            categoryList = new ArrayList<>();
+            while (rs.next()) {
+               // combocustomername.addItem(rs.getString("First_Name"));
+                Category.Item item = new Category.Item(index++, rs.getString("name"));
+                model.addElement(item);
+                
+                categoryList.add(
+                        new CategoryClass(String.valueOf(rs.getInt("id")), 
+                                rs.getString("name")));
+                               
+//                                rs.getString("permission")
+                                
+                            
+                        
+            }
+
+            combocategoryname.setModel(model);
         
     } catch (SQLException ex) {
-        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
     }
+    }
+    class Item {
+        private int index;
+        private String name;
+
+        public Item(int index, String name) {
+            this.index = index;
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name; //To change body of generated methods, choose Tools | Templates.
+        }
     }
     
 
@@ -77,9 +126,10 @@ public class Category extends javax.swing.JInternalFrame {
         btnsave = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
         btnrefresh = new javax.swing.JButton();
+        btnupdate = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        combocategoryid = new javax.swing.JComboBox();
+        combocategoryname = new javax.swing.JComboBox();
 
         setClosable(true);
         setTitle("Category");
@@ -134,36 +184,47 @@ public class Category extends javax.swing.JInternalFrame {
             }
         });
 
+        btnupdate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnupdate.setText("Update");
+        btnupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnupdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addContainerGap()
                 .addComponent(btnsave, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btndelete)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
+                .addComponent(btnupdate)
+                .addGap(18, 18, 18)
                 .addComponent(btnrefresh)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btndelete)
+                .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnsave)
                     .addComponent(btndelete)
+                    .addComponent(btnupdate)
                     .addComponent(btnrefresh))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel12.setText("Search by ID");
+        jLabel12.setText("Search by Name");
 
-        combocategoryid.addItemListener(new java.awt.event.ItemListener() {
+        combocategoryname.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                combocategoryidItemStateChanged(evt);
+                combocategorynameItemStateChanged(evt);
             }
         });
 
@@ -173,10 +234,10 @@ public class Category extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
-                .addComponent(combocategoryid, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68)
+                .addComponent(combocategoryname, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +245,7 @@ public class Category extends javax.swing.JInternalFrame {
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combocategoryid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(combocategoryname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -205,7 +266,7 @@ public class Category extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,7 +319,8 @@ public class Category extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
-        populateCategoryIdCombo();
+//        populateCategoryIdCombo();
+        populateCategoryNameCombo();
     }//GEN-LAST:event_btnsaveActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
@@ -297,43 +359,124 @@ public class Category extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        populateCategoryIdCombo();
+//        populateCategoryIdCombo();
       //}
     }//GEN-LAST:event_btndeleteActionPerformed
     
     //String selectedCategoryName = "";
-    private void combocategoryidItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combocategoryidItemStateChanged
+    int selectedCategoryId = 0;
+    private void combocategorynameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combocategorynameItemStateChanged
         // TODO add your handling code here:
+//        try {
+//        
+//        String selectedId = (String) combocategoryid.getSelectedItem();
+//        
+//        if(selectedId.equals("") || selectedId == null)
+//            return;
+//        
+//        con = DBConnection.getConnection();
+//        pst = con.prepareStatement("select * from category where name in (select name from category where id = ?)");
+//        pst.setString(1, selectedId);
+//        
+//        ResultSet rs = pst.executeQuery();
+//        rs.next();
+//        
+//        txtcategoryname.setText(rs.getString("name"));
+//        //selectedCategoryName = (String) combocategoryid.getSelectedItem();
+//        
+//    } catch (SQLException ex) {
+//        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+//    } catch (NullPointerException e) {
+//        //populateCategoryIdCombo();
+//    }
         try {
         
-        String selectedId = (String) combocategoryid.getSelectedItem();
+        /*String selectedName = (String) comborolename.getSelectedItem();
         
-        if(selectedId.equals("") || selectedId == null)
-            return;
+        if(selectedName.equals("") || selectedName == null)
+            return;*/
+             if (categoryList == null || combocategoryname.getSelectedIndex() == 0)
+                return;
         
         con = DBConnection.getConnection();
-        pst = con.prepareStatement("select * from category where name in (select name from category where id = ?)");
-        pst.setString(1, selectedId);
+        pst = con.prepareStatement("select * from category where id=?");
+        //pst.setString(1, selectedName);
+        pst.setInt(1, Integer.parseInt(categoryList.get(combocategoryname.getSelectedIndex()-1).getId()));
         
         ResultSet rs = pst.executeQuery();
         rs.next();
         
         txtcategoryname.setText(rs.getString("name"));
-        //selectedCategoryName = (String) combocategoryid.getSelectedItem();
-        
+       // combopermission.setSelectedItem(rs.getString("permission"));
+        selectedCategoryId = combocategoryname.getSelectedIndex();
     } catch (SQLException ex) {
-        Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (NullPointerException e) {
-        //populateCategoryIdCombo();
+        Logger.getLogger(Category.class.getName()).log(Level.SEVERE, null, ex);
     }
-    }//GEN-LAST:event_combocategoryidItemStateChanged
+    }//GEN-LAST:event_combocategorynameItemStateChanged
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+     String categoryname=txtcategoryname.getText();
+//        String permission=combopermission.getSelectedItem().toString();
+        /*if(roleid.isEmpty())
+            {
+                JOptionPane.showMessageDialog(this, "Role id field is empty...please fill it first");
+            }
+            else if(!(Pattern.matches("^[0-9]+", txtroleid.getText())))
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid role id");
+            }*/
+             if(categoryname.isEmpty())
+            {
+            JOptionPane.showMessageDialog(this, "Category Name field is empty... please fill it first!!");
+            }
+/*            else if(combopermission.getSelectedItem().toString().equals(""))
+            {
+            JOptionPane.showMessageDialog(this, "Please select item first!!");
+            }*/
+        else if(!(Pattern.matches("^[a-zA-Z ,]+$", txtcategoryname.getText())))
+        {
+            JOptionPane.showMessageDialog(this, "Please enter valid Category Name");
+        }
+        
+        else
+        {
+            try
+            {
+                con=DBConnection.getConnection();
+                pst=con.prepareStatement("update category set name=? where id=?");
+                
+                pst.setString(1, categoryname);
+//                pst.setString(2, permission);
+                
+                pst.setInt(2, Integer.parseInt(categoryList.get(combocategoryname.getSelectedIndex()-1).getId()));
+                int i=pst.executeUpdate();
+                if(i>0)
+                {
+                    JOptionPane.showMessageDialog(this, "Updated Successfully");
+                    clear();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Not updated Successfully");
+                }
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        }
+//        populateCategoryIdCombo();
+             populateCategoryNameCombo();
+    }//GEN-LAST:event_btnupdateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btndelete;
     private javax.swing.JButton btnrefresh;
     private javax.swing.JButton btnsave;
-    private javax.swing.JComboBox combocategoryid;
+    private javax.swing.JButton btnupdate;
+    private javax.swing.JComboBox combocategoryname;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

@@ -12,15 +12,17 @@ package inventoryproject;
 public class ReorderClass {
     private String productid;
     private String productname;
+    private String categoryname;
     private String quantity;
     private String reorderlevel;
 
     public ReorderClass() {
     }
 
-    public ReorderClass(String productid, String productname, String quantity, String reorderlevel) {
+    public ReorderClass(String productid, String productname, String categoryname, String quantity, String reorderlevel) {
         this.productid = productid;
         this.productname = productname;
+        this.categoryname = categoryname;
         this.quantity = quantity;
         this.reorderlevel = reorderlevel;
     }
@@ -41,6 +43,14 @@ public class ReorderClass {
         this.productname = productname;
     }
 
+    public String getCategoryname() {
+        return categoryname;
+    }
+
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
+    }
+
     public String getQuantity() {
         return quantity;
     }
@@ -56,6 +66,8 @@ public class ReorderClass {
     public void setReorderlevel(String reorderlevel) {
         this.reorderlevel = reorderlevel;
     }
+
+    
     
     
 }

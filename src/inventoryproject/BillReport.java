@@ -41,20 +41,42 @@ public class BillReport extends javax.swing.JInternalFrame {
     public BillReport() {
         initComponents();
         billList = new ArrayList<>();
-        populateBillDateCombo();
         
+        populateBillDateCombo();
+    }
+    
+    private void addEventToTable() {
         jTable1.getModel().addTableModelListener(new TableModelListener() {
 
             @Override
             public void tableChanged(TableModelEvent e) {
+                int row = jTable1.getSelectedRow();
+                //int col = 0;
+                //String billid[] = new String[row];
+                //String pending[] = new String[row];
+                //for (int i = 0; i < row; i++) {
+                String billid = jTable1.getValueAt(row,0).toString();
+                 String pending = jTable1.getValueAt(row, 5).toString();
+                
+                //int billNo = Integer.parseInt((String)jTable1.getValueAt(e.getFirstRow(), 0));
                 //jTable1.getValueAt(e.getFirstRow(), e.getColumn());
                 //System.out.println(String.valueOf(jTable1.getValueAt(e.getFirstRow(), e.getColumn())));
-                System.out.println("e");
+                //System.out.println("e");
+                try {
+            con = DBConnection.getConnection();
+//            String sql = "update bill set pending='" + pending[i] + "' where  id='"+ + "'";
+             pst = con.prepareStatement("update bill set pending='" + pending + "' where  id='" + billid + "'");
+             //pst.setInt(1, billNo);
+            int k = pst.executeUpdate();
+            if(k>0)
+            JOptionPane.showMessageDialog(null, "updated");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }  
+                //}
             }
         });
     }
-    
-  
     
          
     
@@ -72,7 +94,7 @@ public class BillReport extends javax.swing.JInternalFrame {
              
             
             
-            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND C.first_name=?");
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, C.last_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND C.first_name=?");
             pstmt.setString(1, customername);
             //pst.setInt(1, Integer.parseInt(billList.get(combocustomername.getSelectedIndex()-1).getId()));
             ResultSet rs = pstmt.executeQuery();
@@ -81,7 +103,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"),rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"),rs.getString("C.first_name") + " " + rs.getString("C.last_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -110,6 +132,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             model.addRow(row);
         }
         jTable1.setModel(model);
+        addEventToTable();
     }
    
 
@@ -292,7 +315,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
             
-            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND B.id=?");
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, C.last_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND B.id=?");
             pstmt.setInt(1, billid);
             ResultSet rs = pstmt.executeQuery();
             
@@ -300,7 +323,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"),rs.getString("U.username"), rs.getString("C.first_name"),  rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"),rs.getString("U.username"), rs.getString("C.first_name") + " " + rs.getString("C.last_name"),  rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -329,6 +352,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             model.addRow(row);
         }
         jTable1.setModel(model);
+        addEventToTable();
     }
     
     private void populateBillDateCombo() {
@@ -356,7 +380,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
             
-            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND date=?");
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, C.last_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND date=?");
             pstmt.setString(1, selectedDate);
             ResultSet rs = pstmt.executeQuery();
             
@@ -364,7 +388,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name") + " " + rs.getString("C.last_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -407,6 +431,7 @@ public class BillReport extends javax.swing.JInternalFrame {
         }        
         
         jTable1.setModel(model);
+        addEventToTable();
     }
     
     boolean isShown = false;
@@ -428,7 +453,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
             
-            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND status=?");
+            PreparedStatement pstmt = con.prepareStatement("select B.id, U.username, C.first_name, C.last_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id AND status=?");
             pstmt.setBoolean(1, status);
             ResultSet rs = pstmt.executeQuery();
             
@@ -436,7 +461,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name") + " " + rs.getString("C.last_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -465,6 +490,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             model.addRow(row);
         }
         jTable1.setModel(model);
+        addEventToTable();
     }
    
     
@@ -496,7 +522,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             //Class.forName("com.mysql.jdbc.Driver");
             con=DBConnection.getConnection();
             
-             pst = con.prepareStatement("select B.id, U.username, C.first_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id");
+             pst = con.prepareStatement("select B.id, U.username, C.first_name, C.last_name, bill, status, pending, date from bill B, customer C, user U where B.customer_id=C.id and B.user_id=U.id");
             //pst.setInt(1, row);
              rs = pst.executeQuery();
             
@@ -504,7 +530,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             BillClass bill;
             while(rs.next())
             {
-            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
+            bill=new BillClass(rs.getString("B.id"), rs.getString("U.username"), rs.getString("C.first_name") + " " + rs.getString("C.last_name"), rs.getString("bill"), rs.getString("status"), rs.getString("pending"), rs.getString("date"));
             billList.add(bill);
             }
         }
@@ -533,6 +559,7 @@ public class BillReport extends javax.swing.JInternalFrame {
             model.addRow(row);
         }
         jTable1.setModel(model);
+        addEventToTable();
     }
     
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -549,11 +576,12 @@ public class BillReport extends javax.swing.JInternalFrame {
                 inputstream.close();
             
           Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
+           //Runtime.getRuntime().exec("C:\\Program Files\\Mozilla Firefox\\firefox.exe " + file.getAbsolutePath());
             //PrintWriter fileWriter = new PrintWriter(new FileOutputStream(file));
                //  Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + customerNo +".html");
             } catch (IOException ex) {
                 Logger.getLogger(BillReport.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } catch(Exception e) { }
 
 //            try {
 //                 Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + billNo +".html");
@@ -584,42 +612,42 @@ public class BillReport extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-        System.out.println("working");
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            System.out.println("Working");
-            //---->int row = jTable1.getSelectedRow();
-            int count = jTable1.getRowCount();
-    int col = jTable1.getColumnCount();
-    String billid[] = new String[count];
-//    String username[] = new String[count];
-//    String customername[] = new String[count];
-//    String totalbill[] = new String[count];
-//    String status[] = new String[count];
-    String pending[] = new String[count];
-//    String date[] = new String[count];
-
-    for (int i = 0; i < count; i++) {
-       billid[i] = jTable1.getValueAt(i,0).toString();
-//        username[i] = jTable1.getValueAt(i,1).toString();
-//        customername[i] = jTable1.getValueAt(i,2).toString();
-//        totalbill[i] = jTable1.getValueAt(i,3).toString();
-//        status[i] = jTable1.getValueAt(i,4).toString();
-        pending[i] = jTable1.getValueAt(i, 5).toString();
-//        date[i] = jTable1.getValueAt(i,6).toString();
-
-        try {
-            con = DBConnection.getConnection();
-//            String sql = "update bill set pending='" + pending[i] + "' where  id='"+ + "'";
-            pst = con.prepareStatement("update bill set pending='" + pending[i] + "' where  id='" + billid[i] + "'");
-            int k = pst.executeUpdate();
-            if(k>0)
-            JOptionPane.showMessageDialog(null, "updated");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }  
-
-    }
-        }
+//        System.out.println("working");
+//        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            System.out.println("Working");
+//            //---->int row = jTable1.getSelectedRow();
+//            int count = jTable1.getRowCount();
+//    int col = jTable1.getColumnCount();
+//    String billid[] = new String[count];
+////    String username[] = new String[count];
+////    String customername[] = new String[count];
+////    String totalbill[] = new String[count];
+////    String status[] = new String[count];
+//    String pending[] = new String[count];
+////    String date[] = new String[count];
+//
+//    for (int i = 0; i < count; i++) {
+//       billid[i] = jTable1.getValueAt(i,0).toString();
+////        username[i] = jTable1.getValueAt(i,1).toString();
+////        customername[i] = jTable1.getValueAt(i,2).toString();
+////        totalbill[i] = jTable1.getValueAt(i,3).toString();
+////        status[i] = jTable1.getValueAt(i,4).toString();
+//        pending[i] = jTable1.getValueAt(i, 5).toString();
+////        date[i] = jTable1.getValueAt(i,6).toString();
+//
+//        try {
+//            con = DBConnection.getConnection();
+////            String sql = "update bill set pending='" + pending[i] + "' where  id='"+ + "'";
+//            pst = con.prepareStatement("update bill set pending='" + pending[i] + "' where  id='" + billid[i] + "'");
+//            int k = pst.executeUpdate();
+//            if(k>0)
+//            JOptionPane.showMessageDialog(null, "updated");
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e);
+//        }  
+//
+//    }
+//        }
     }//GEN-LAST:event_jTable1KeyPressed
     
     

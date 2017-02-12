@@ -16,6 +16,7 @@ public class ProductClass {
     private String quantity;
     private String costprice;
     private String saleprice;
+    private String mrp;
     private String status;
     private String reorderlevel;
     private String categoryname;
@@ -24,12 +25,13 @@ public class ProductClass {
     public ProductClass() {
     }
 
-    public ProductClass(String productname, String units, String quantity, String costprice, String saleprice, String status, String reorderlevel, String categoryname, String suppliername) {
+    public ProductClass(String productname, String units, String quantity, String costprice, String saleprice, String mrp, String status, String reorderlevel, String categoryname, String suppliername) {
         this.productname = productname;
         this.units = units;
         this.quantity = quantity;
         this.costprice = costprice;
         this.saleprice = saleprice;
+        this.mrp = mrp;
         this.status = status;
         this.reorderlevel = reorderlevel;
         this.categoryname = categoryname;
@@ -76,6 +78,14 @@ public class ProductClass {
         this.saleprice = saleprice;
     }
 
+    public String getMrp() {
+        return mrp;
+    }
+
+    public void setMrp(String mrp) {
+        this.mrp = mrp;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -107,6 +117,8 @@ public class ProductClass {
     public void setSuppliername(String suppliername) {
         this.suppliername = suppliername;
     }
+
+    
     
     
     
