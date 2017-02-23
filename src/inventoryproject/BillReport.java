@@ -575,14 +575,15 @@ public class BillReport extends javax.swing.JInternalFrame {
                 FileInputStream inputstream = new FileInputStream(file);
                 inputstream.close();
             
-          Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
+          
            //Runtime.getRuntime().exec("C:\\Program Files\\Mozilla Firefox\\firefox.exe " + file.getAbsolutePath());
+           //     Runtime.getRuntime().exec("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
             //PrintWriter fileWriter = new PrintWriter(new FileOutputStream(file));
                //  Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + customerNo +".html");
             } catch (IOException ex) {
                 Logger.getLogger(BillReport.class.getName()).log(Level.SEVERE, null, ex);
-            } catch(Exception e) { }
 
+            } catch(Exception e) { }
 //            try {
 //                 Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + billNo +".html");
 //            } 

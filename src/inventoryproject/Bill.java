@@ -2725,8 +2725,9 @@ public class Bill extends javax.swing.JInternalFrame {
                 "</html>");
             fileWriter.close();
             JOptionPane.showMessageDialog(this, "PDF Generated Successfully");
-          Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
+       
           //    Runtime.getRuntime().exec("C:\\Program Files\\Mozilla Firefox\\firefox.exe " + file.getAbsolutePath());
+          //  Runtime.getRuntime().exec("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe " + file.getAbsolutePath());
           con.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
